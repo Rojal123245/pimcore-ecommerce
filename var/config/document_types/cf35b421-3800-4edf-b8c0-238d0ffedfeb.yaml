@@ -1,0 +1,14 @@
+pimcore:
+    documents:
+        doc_types:
+            definitions:
+                cf35b421-3800-4edf-b8c0-238d0ffedfeb:
+                    name: 'Quick Links Snippet'
+                    group: ''
+                    controller: 'App\Controller\DefaultController::renderQuickLinksAction'
+                    template: null
+                    type: snippet
+                    priority: 0
+                    creationDate: 1699442933
+                    modificationDate: 1699442952
+                    staticGeneratorEnabled: false

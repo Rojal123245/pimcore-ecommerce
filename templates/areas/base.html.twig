@@ -1,0 +1,102 @@
+{% set margin_before = pimcore_select('margin_before', {
+    store: [
+        ['', 'None'],
+        ['pt-[72px]', 'XL'],
+        ['pt-[112px]', 'XXL'],
+        ['pt-[136px]', 'XXXL'],
+        ['pt-[168px]', 'XXXXL'],
+    ]
+}) %}
+
+{% if remove_h1_tag is not defined %}
+    {% set heading_tag = pimcore_select('heading_tag', {
+        store: allowed_headings|default([
+            ['h1', 'H1'],
+            ['h2', 'H2'],
+            ['h3', 'H3'],
+            ['h4', 'H4'],
+            ['h5', 'H5'],
+            ['h6', 'H6'],
+        ]),
+        defaultValue: default_heading|default('h1'),
+    }) %}
+{% endif %}
+
+{% set anchor = pimcore_input('anchor', { placeholder: 'Enter anchor id here' | trans }) %}
+{% set margin_after = pimcore_select('margin_after', {
+    store: [
+        ['', 'None'],
+        ['pb-[72px]', 'XL'],
+        ['pb-[112px]', 'XXL'],
+        ['pb-[136px]', 'XXXL'],
+        ['pb-[168px]', 'XXXXL'],
+    ]
+}) %}
+
+{% set classes = '' %}
+
+{% if not margin_before.isEmpty() %}
+    {% set classes = classes ~ ' ' ~ margin_before.getData() %}
+{% endif %}
+
+{% if not margin_after.isEmpty() %}
+    {% set classes = classes ~ ' ' ~ margin_after.getData() %}
+{% endif %}
+
+{% set editableId = 'editable_' ~ (brick_title|lower|replace({' ': '_', ',': '_'})) ~ random(9999999999, 99999999999) %}
+
+<div
+    class="w-full mx-auto font-noto-regular {% if editmode %} border-2 border-primary-500 my-md {% endif %} {{ classes }}">
+    <a href="#" id="{{ anchor.getText() }}"></a>
+    {% if editmode %}
+        {% set id = random(0, 9999999999) %}
+        <div
+            class="w-full bg-primary text-black bg-primary-500 px-4 py-4 font-bold items-center flex flex-row justify-between">
+            <h2 class="text-h3 text-white">{{ brick_title }}</h2>
+            <div class="flex flex-row justify-end gap-2">
+                <button data-target="#areabrickConfig{{ id }}" class="collapsible bg-white rounded-full py-2 px-3"><i
+                        class="fa fa-pen text-primary-500"></i></button>
+                <button data-target="#{{ editableId }}" data-open="true"
+                        class="collapsible bg-white rounded-full py-2 px-4">
+                    <i class="fa fa-arrows-alt-v text-primary-500"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="grid grid-cols-4 gap-4 p-4 border-b-2 border-red-500" id="areabrickConfig{{ id }}">
+            {% block configuration %}
+                {% if editmode %}
+                    <div class="w-full flex flex-col">
+                        <span class="font-bold font-noto-regular">{{ 'Margin Before' | trans }}</span>
+                        <div class="w-full pt-3">
+                            {{ margin_before|raw }}
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-col">
+                        <span class="font-bold font-noto-regular">{{ 'Margin After' | trans }}</span>
+                        <div class="w-full pt-3">
+                            {{ margin_after|raw }}
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-col">
+                        <span class="font-bold font-noto-regular">{{ 'Anchor' | trans }}</span>
+                        <div class="w-full pt-3">
+                            {{ anchor|raw }}
+                        </div>
+                    </div>
+                    {% if remove_h1_tag is not defined %}
+                        <div class="w-full flex flex-col">
+                            <span class="font-bold font-noto-regular">{{ 'Header Tag' | trans }}</span>
+                            <div class="w-full pt-3">
+                                {{ heading_tag|raw }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endblock configuration %}
+        </div>
+    {% endif %}
+    <div class="w-full" id="{{ editableId }}">
+        {{ block('section') }}
+    </div>
+</div>

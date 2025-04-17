@@ -1,0 +1,17 @@
+@import "typography.css";
+@import "megamenu.css";
+@import "fonts.css";
+@import "icons.css";
+@import "components/main.css";
+@import "area/main.css";
+@import "typography.css";
+
+/* tocco */
+@import "tocco/tocco.css";
+
+/* overwrites */
+@import "overwrites/overwrites.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

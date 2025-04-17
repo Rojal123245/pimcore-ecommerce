@@ -1,0 +1,49 @@
+{% set block = pimcore_block('navigation_links_with_icons', {manual: true}) %}
+
+{% if editmode %}
+    {{ encore_entry_link_tags('css') }}
+{% endif %}
+
+{% do block.start() %}
+<ul class="{{ editmode ? 'grid grid-cols-4' : 'flex flex-col' }}">
+    {% for b in block.iterator %}
+
+        {% do block.blockConstruct() %}
+
+        {% set icon = pimcore_image('icon') %}
+        {% set link = pimcore_link('link') %}
+
+        {% do block.blockStart() %}
+
+        {% if editmode %}
+            <li class="flex flex-col gap-10 cursor-pointer p-4">
+                <div class="w-full">
+                    <span class="text-bold">{{ 'Icon'|trans }}</span>
+                    {{ icon|raw }}
+                </div>
+                <div class="w-full">
+                    {{ link|raw }}
+                </div>
+            </li>
+        {% else %}
+
+            {% if link.href is not empty %}
+                <li class="flex flex-col cursor-pointer p-xs lg:p-2 border-neutral-300 border-b lg:border-b-0">
+                    <a href="{{ link.href }}" class="font-noto-bold flex flex-row gap-xs items-center">
+                        {% if icon.data is not empty %}
+                            {{ icon.thumbnail({
+                                height: 25,
+                                width: 25
+                            }).html|raw }}
+                        {% endif %}
+                        <span class="text-black text-body lg:text-[16px] font-bold font-noto">{{ link.text}}</span>
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
+        {% do block.blockEnd() %}
+        {% do block.blockDestruct() %}
+    {% endfor %}
+
+</ul>
+{% do block.end() %}

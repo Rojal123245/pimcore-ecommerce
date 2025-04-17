@@ -1,0 +1,148 @@
+{% set brick_title = 'Accordion Areabrick' | trans %}
+
+{% set close_others = pimcore_checkbox('close_others') %}
+{% set open_first = pimcore_checkbox('open_first') %}
+{% set heading = pimcore_input('accordion_heading') %}
+{% set lead = pimcore_wysiwyg('accordion_lead') %}
+
+
+{% extends 'areas/base.html.twig' %}
+
+{% block configuration %}
+    {% if editmode %}
+        {{ parent() }}
+        <div class="w-full flex flex-col">
+            <span class="font-bold font-noto-regular">{{ 'Close open accordions when opening a new one' | trans }}</span>
+            <div class="w-full pt-3">
+                {{ close_others|raw }}
+            </div>
+        </div>
+
+        <div class="w-full flex flex-col">
+            <span class="font-bold font-noto-regular">{{ 'Open First Accordion' | trans }}</span>
+            <div class="w-full pt-3">
+                {{ open_first|raw }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block section %}
+    {% set block = pimcore_block('accordions', { manual: true }) %}
+    {% do block.start() %}
+    <section class="bg-white w-full py-xl">
+
+        {% if editmode %}
+            <div class="flex container mx-auto flex-col gap-sm">
+                <div class="flex flex-col gap-2">
+                    <span class="font-bold">{{ 'Title'|trans }}</span>
+                    <div class="w-full">
+                        {{ heading |raw }}
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span class="font-bold">{{ 'Lead'|trans }}</span>
+                    <div class="w-full mb-xl prose prose-li:m-0 max-w-full prose-ul:ml-sm prose-ol:ml-sm prose-a:text-body prose-li:text-body prose-p:text-body prose-lg  font-noto-regular">
+                        {{ lead|raw }}
+                    </div>
+                </div>
+            </div>
+        {% endif  %}
+
+        <div
+            class="flex flex-col px-2 md:px-0 accordion-group overwrite-accordion"
+            data-close-others="{{ close_others.data }}"
+            data-open-first="{{ open_first.data }}"
+        >
+            {% if not editmode %}
+                <div class="w-full flex flex-col gap-sm container mx-auto max-w-[640px] px-[24px] md:max-w-full md:mx-0 md:px-[60px] lg:max-w-[920px] lg:px-0 lg:mx-auto group">
+
+                    {% if not heading.isEmpty() %}
+                        <div class="text-black overwrite-button">
+                            <{{ heading_tag.data }} class="text-h3">{{ heading|raw }}</{{ heading_tag.data }}>
+                        </div>
+                    {% endif %}
+                    <div class="w-full container mx-auto text-left transition-height overflow-hidden delay-150 overwrite-text">
+                        <div class="mb-xl prose prose-li:m-0 max-w-full prose-ul:ml-sm prose-ol:ml-sm prose-a:text-body prose-li:text-body prose-p:text-body prose-lg  font-noto-regular">
+                            {{ lead|raw }}
+                        </div>
+                    </div>
+
+                </div>
+            {% endif %}
+            {% for b in block.iterator %}
+                {% do block.blockConstruct() %}
+                {% do block.blockStart() %}
+                {% set title = pimcore_input('title', {
+                    class: 'w-full',
+                    placeholder: 'Accordion title'|trans
+                }) %}
+
+
+
+                {% set body = pimcore_wysiwyg('body', {
+                    palceholder: 'Accordion body'|trans,
+                    toolbarGroups: [
+                        {
+                            name: 'basicstyles',
+                            groups: ['basicstyles', 'cleanup']
+                        },
+                        {
+                            name: 'links',
+                            groups: ['links']
+                        },
+                        {
+                            name: 'paragraph',
+                            groups: ['list', 'indent', 'blocks', 'align']
+                        },
+                        {
+                            name: 'document',
+                            groups: ['mode']
+                        },
+                        {
+                            name: 'insert',
+                            groups: ['insert']
+                        }
+                    ]
+                }) %}
+                {% set id = "now"|date('Uv') ~ random(0, 99999) %}
+
+                {% if editmode %}
+                    <div class="w-full flex flex-col gap-5 px-4">
+                        <div class="flex flex-col gap-2">
+                            <b>{{ 'Title'|trans }}</b>
+                            {{ title|raw }}
+                        </div>
+                        <div class="flex flex-col gap-2 overwrite-editmode">
+                            <b>{{ 'Body'|trans }}</b>
+                            {{ body|raw }}
+                        </div>
+                    </div>
+                {% else %}
+                    {% if title.data is not empty and body.data is not empty %}
+                        <div class="w-full {% if loop.first %} border-t-2 {% endif %} border-b-2 border-neutral-200 group overwrite-border">
+
+                            <div class="text-black hover:text-primary-500 active:text-primary-500 focus:text-primary-500 overwrite-button">
+                                <button data-close-icon="icon-plus" data-hover-icon="icon-plus-red" role="button" class="container text-h4 mx-auto w-full cursor-pointer py-md items-center accordion flex flex-row justify-between"
+                                        data-target="#accordion{{ id }}">
+                                    <span class="text-h4  font-noto-regular">{{ title|raw }}</span>
+                                    <span class="icon icon-regular collapsible-chevron"></span>
+                                </button>
+                            </div>
+
+                            <div class="w-full container mx-auto transition-height overflow-hidden delay-150 overwrite-text" id="accordion{{ id }}">
+                                <div class="mb-xl text-left font-noto-regular">
+                                    {{ body|raw }}
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% do block.blockEnd() %}
+                {% do block.blockDestruct() %}
+            {% endfor %}
+        </div>
+    </section>
+    {% do block.end() %}
+{% endblock %}

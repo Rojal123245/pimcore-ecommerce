@@ -1,0 +1,77 @@
+{% if editmode %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('css') }}
+    {% endblock %}
+{% endif %}
+
+{% if editmode %}
+    <div class="w-full flex flex-col gap-sm">
+        <div class="w-full flex flex-col gap-2">
+            <span>{{ 'Footer Links'|trans }}</span>
+            <div class="w-full flex">
+                {% include 'partials/footer/links.html.twig' %}
+            </div>
+        </div>
+        <div class="w-full flex flex-col gap-2">
+            <span>{{ 'Footer Address'|trans }}</span>
+            <div class="w-full flex">
+                {% include 'partials/footer/address.html.twig' %}
+            </div>
+        </div>
+
+        <div class="w-full flex flex-col gap-2">
+            <span>
+                {{ 'Footer Bottom Links'|trans }}
+                <span class="text-red">{{ '* Footer links like Privacy Policy, Cookies etc goes here!' }}</span>
+            </span>
+            <div class="w-full flex">
+                {% include 'partials/footer/bottom-links.html.twig' %}
+            </div>
+        </div>
+
+    </div>
+{% else %}
+
+<footer class="w-full bg-neutral-200 pt-xxxl flex flex-col text-white">
+
+    {% set footer_title = pimcore_input('footer_title', {
+        placeholder: 'Footer Title Text' | trans
+    }) %}
+
+    <div class="my-xxl bg-neutral-700">
+        <div class="relative flex justify-center items-center bg-neutral-700 w-full">
+            <div
+                class="absolute container mx-auto md:pt-xxxxl md:mt-xxxxl flex flex-col md:justify-between gap-10 md:flex-row">
+                <div class="px-lg lg:px-0">
+                    <a href="{{ '/' ~ app.request.locale }}">
+                        <img src="{{ asset('logo.svg') }}" alt="logo" class="w-[132px]">
+                    </a>
+                </div>
+                <div class="w-full md:w-[70%] px-sm md:px-0 text-black">
+                    <div class="flex bg-white shadow w-full">
+                        {% include 'partials/footer/links.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-full pt-xl mt-xxxxl pb-xxxxl bg-neutral-700">
+        <div class="container px-sm lg:px-0 gap-sm md:gap-0 mt-lg md:mt-0 mx-auto flex flex-col md:flex-row">
+            <div class="w-full md:w-[30%] box-border {% if editmode %} md:mt-xxxl {% endif %}">
+                <h4 class="font-noto-medium text-h4">{{ footer_title|raw }}</h4>
+                {% include 'partials/footer/address.html.twig' %}
+            </div>
+
+            <div class="w-full md:w-[70%] md:mt-xxxl bg-image">
+                <div class="backdrop-image z-0"></div>
+                {% include 'partials/footer/login.html.twig' %}
+
+                <div class="flex flex-row gap-10 mt-xxl justify-center font-noto md:justify-start">
+                    {% include 'partials/footer/bottom-links.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endif %}

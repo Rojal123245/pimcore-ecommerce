@@ -1,0 +1,42 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+
+{% set carousel = brick.slides %}
+{% set slide_time = brick.slideTime %}
+
+{% set slides = [] %}
+
+
+
+{% for slide in brick.slides %}
+    {% set type = slide.sliderType.data %}
+    {% if type == 'image' and slide.thumbnail is not empty %}
+        {% set slides = slides|merge([{ 
+            type: type, 
+            thumbnail: slide.thumbnail.data, 
+            video: null,
+            youtube_id: null
+        }]) %}
+    {% elseif type == 'video' and slide.video is not empty %}
+        {% set slides = slides|merge([{ 
+            type: type, 
+            thumbnail: slide.thumbnail.data, 
+            video: slide.video.data.data,
+            youtube_id: null
+        }]) %}
+    {% elseif type == 'youtube_id' and slide.youtubeID is not empty %}
+        {% set slides = slides|merge([{ 
+            type: type, 
+            thumbnail: slide.thumbnail.data, 
+            youtube_id: slide.youtubeID.data,
+            video: null
+        }]) %}
+    {% endif %}
+{% endfor %}
+
+<div class="w-full lg:max-w-[60%] mx-auto container">
+    {% include 'components/carousel/carousel.html.twig' with { slides: slides, configuration: {}, slide_time: slide_time } %}
+</div>
+
+{% endblock %}

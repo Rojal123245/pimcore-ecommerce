@@ -1,0 +1,119 @@
+<div class="intro">
+
+    <div class="breadcrumbs-container">
+
+        <div class="breadcrumbs">
+            --- BREADCRUMBS ---
+        </div>
+
+    </div>
+
+    <div class="intro-container">
+        <div class="alignment">
+            
+            <div class="left">
+
+                <div class="date">
+
+                    {% if veranstaltung.abgesagt and not veranstaltung.archiv %}
+                        <div class="abgesagt">
+                            <span>Veranstaltung abgesagt</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="big-date">
+                        <span>{{ veranstaltung.day }}</span>
+                    </div>
+
+                    <div class="small-date">
+                        <span>{{ veranstaltung.month }}</span>
+                        <span>{{ veranstaltung.year }}</span>
+                    </div>
+
+                </div>
+
+                {# only mobile #}
+                {% if veranstaltung.archiv %}
+                    <div class="archiv">
+                        <span>Veranstaltung archiviert</span>
+                    </div>
+                {% endif %}
+
+                {% if veranstaltung.themen|length > 0 %}
+                    <div class="themes">
+                        <span>Thema:</span>
+                        <p>
+                            {% for thema in veranstaltung.themen %}
+                                {{ thema[app.request.locale] }}<br>
+                            {% endfor %}
+                        </p>
+                    </div>
+                {% endif %}
+
+                {% if veranstaltung.sprache[app.request.locale] %}
+                    <div class="language">
+                        <span>Sprache:</span>
+                        <p>
+                            {{ veranstaltung.sprache[app.request.locale] }}
+                        </p>
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="right">
+
+                {% if veranstaltung.archiv %}
+                    <div class="archiv">
+                        <span>Veranstaltung archiviert</span>
+                    </div>
+                {% endif %}
+
+                <div class="title">
+                    <span>{{ veranstaltung.bezeichnung[app.request.locale] }}</span>
+                </div>
+
+                <div class="subtitle">
+
+                    {# only mobile #}
+                    {% if veranstaltung.themen|length > 0 %}
+                        <div class="themes">
+                            <span>Thema:</span>
+                            <p>
+                                {% for thema in veranstaltung.themen %}
+                                    {{ thema[app.request.locale] }}<br>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    {% endif %}
+    
+                    {# only mobile #}
+                    {% if veranstaltung.sprache[app.request.locale] %}
+                        <div class="language">
+                            <span>Sprache:</span>
+                            <p>
+                                {{ veranstaltung.sprache[app.request.locale] }}
+                            </p>
+                        </div>
+                    {% endif %}
+
+                    {% if veranstaltung.typ[app.request.locale] %}
+                        <div class="type">
+                            <span>{{ veranstaltung.typ[app.request.locale] }}</span>
+                        </div>
+                    {% endif %}
+
+                    {% if veranstaltung.lehrmethode_event[app.request.locale] %}
+                        <div class="lehrmethode">
+                            <span>{{ veranstaltung.lehrmethode_event[app.request.locale] }}</span>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

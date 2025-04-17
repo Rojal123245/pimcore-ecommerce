@@ -1,0 +1,112 @@
+{% set brick_title = 'Benefits Areabrick' | trans %}
+{% set remove_h1_tag = true %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+    {% set block = pimcore_block('benefits', { manual: true }).start() %}
+    <div class="container mx-auto flex flex-col overwrite-benefits">
+        {% for b in block.iterator %}
+            {% do block.blockConstruct() %}
+            {% do block.blockStart() %}
+            {% set verticalText = pimcore_input('verticalText',{
+                class: 'w-full text-3xl font-bold',
+                placeholder: 'Vertical Text' | trans
+            }) %}
+
+            {% set image = pimcore_image('image', {
+                class: 'w-full'
+            }) %}
+
+            {% set header = pimcore_input('heading', {
+                class: 'w-full text-3xl font-bold',
+                placeholder: 'Heading' | trans
+            }) %}
+            {% set text = pimcore_wysiwyg('text', {
+                class: 'w-full',
+                placeholder: 'Description' | trans
+            }) %}
+
+            {% set link = pimcore_link('link', {
+                class: 'w-full',
+                title: 'Link' | trans
+            }) %}
+
+            {% if editmode %}
+                <div class="container mx-auto">
+                    <div class="bg-white shadow-lg rounded-lg p-6 flex gap-5">
+                        <div class="w-full">
+                            {{ image|raw }}
+                        </div>
+                        <div class="w-full ml-4">
+                            <div class="flex flex-col">
+                                <div class="w-full mb-5">
+                                    <h2 class="text-3xl font-bold mb-4">{{ header | raw }}</h2>
+                                </div>
+                                <div class="w-full mb-5">
+                                    <p class="text-regular">{{ text | raw }}</p>
+                                </div>
+                                <div class="w-full mb-5">
+                                    <span class="text-lg ">{{ verticalText | raw }}</span>
+                                    <span class="text-sm text-red-800">*only 56 characters will be displayed.</span>
+                                </div>
+                                <div class="w-full mb-4">
+                                    {{ link | raw }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="w-full hover:bg-white flex flex-col lg:flex-row border-b {% if loop.first %} border-t {% endif %} overwrite-container">
+
+                    <div class="relative overflow-x-hidden flex w-full lg:w-1/2 overwrite-position">
+                        
+                        <div class="absolute lg:bottom-0 lg:-rotate-90 lg:origin-bottom-left lg:translate-x-32 items-center lg:h-36 py-md w-full flex left-0 bg-gradient-to-b from-primary-400 to-primary-800 overwrite-gradient">
+                            <span class="lg:max-w-[350px] mx-lg leading-none text-h3 text-center text-white">{{ verticalText| raw |slice(0, 56) }}</span>
+                        </div>
+
+                        {% if not image.isEmpty() %}
+                            {{ image.thumbnail('area-image-text-element-thumbnail').html({
+                                imgAttributes: {
+                                    class: 'w-full h-full'
+                                }
+                            })|raw }}
+                        {% endif %}
+
+                    </div>
+
+                    <div class="flex flex-1 flex-col justify-around mx-lg overwrite-content">
+
+                        <div class="w-full py-4  flex flex-row justify-start items-center overwrite-title">
+                            <div class="  text-h3 font-noto-regular ">
+                                {{ header |raw }}
+                            </div>
+                        </div>
+
+                        <div class="w-full flex flex-col gap-lg overwrite-text">
+                            <div class="w-full py-4 font-noto-regular-medium text-regular">
+                                {{ text |raw }}
+                            </div>
+                        </div>
+
+                        {% if link.href %}
+                            <div class="flex justify-end overwrite-link">
+                                <div class="flex flex-row-reverse">
+                                    <a href="{{ link.href }}" class="px-10 py-2 bg-primary-500 font-noto hover:bg-primary-700 active:bg-primary-700">
+                                        {{ link.text }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            {% endif %}
+            {% do block.blockEnd() %}
+            {% do block.blockDestruct() %}
+        {% endfor %}
+    </div>
+    {% do block.end() %}
+{% endblock %}

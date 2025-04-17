@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                3744f551-12ef-4256-a63e-ecfbaf5b569c:
+                    name: 'Show footer in edit mode'
+                    description: ''
+                    key: show_footer_in_editmode
+                    type: bool
+                    data: '0'
+                    config: ''
+                    ctype: document
+                    inheritable: false
+                    creationDate: 1700998944
+                    modificationDate: 1700998987

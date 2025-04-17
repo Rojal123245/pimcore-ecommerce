@@ -1,0 +1,9 @@
+<div class="flex flex-row gap-10" id="languageSwitcher">
+    <label class="hidden" for="localeSwitcher">{{ 'Switch Language'|trans }}</label>
+    <select name="localeSwitcher" class="localeSwitcher {{ shouldBeWhite ? 'lg:bg-white lg:text-black' : 'bg-transparent lg:text-white' }}" id="localeSwitcher">
+        {% for language in app_locales() %}
+            <option {{ app.request.locale == language ? 'selected' : ''}} value="{{ language }}">{{ language|upper }}</option>
+        {% endfor %}
+    </select>
+
+</div>

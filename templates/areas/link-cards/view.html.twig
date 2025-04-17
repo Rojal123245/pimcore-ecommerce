@@ -1,0 +1,71 @@
+{% set brick_title = 'Link Cards' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+
+    <section class="link-cards">
+        <div class="link-cards-container">
+            <div class="{% if editmode %}alignment-editmode{% else %}alignment{% endif %}">
+    
+                {% for i in pimcore_block('regionen').iterator %}
+
+                    {% set link = pimcore_link('link', {
+                        required: true
+                    }) %}
+                    
+                    {% set title = pimcore_input('title', {
+                        placeholder: 'Titel'
+                    }) %}
+
+                    {% set titleBold = pimcore_input('titleBold', {
+                        placeholder: 'Titel'
+                    }) %}
+    
+                    {% if editmode %}
+                    
+                        <div>
+
+                            <div class="link-editmode">
+                                {{ link|raw }}
+                            </div>
+
+                            <div class="card">
+                                <div class="title">
+                                    <span>{{ title|raw }}&nbsp;</span>
+                                    <span class="bold">{{ titleBold|raw }}</span>
+                                </div>
+                                <div class="arrow">
+                                    {{ include('svg/arrow/arrow.html.twig') }}
+                                </div>
+                                <div class="card-overlay">
+                                </div>
+                            </div>
+
+                        </div>
+                    
+                    {% else %}
+
+                        <a href="{{ link.href }}" {% if link.target %}target="{{ link.target }}"{% endif %}>
+                            <div class="card">
+                                <div class="title">
+                                    <span>{{ title|raw }}&nbsp;</span>
+                                    <span class="bold">{{ titleBold|raw }}</span>
+                                </div>
+                                <div class="arrow">
+                                    {{ include('svg/arrow/arrow.html.twig') }}
+                                </div>
+                                <div class="card-overlay">
+                                </div>
+                            </div>
+                        </a>
+
+                    {% endif %}
+    
+                {% endfor %}
+    
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

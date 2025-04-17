@@ -1,0 +1,13 @@
+<svg id="Icon_Set_Social_Media" data-name="Icon Set Social Media" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_4604" data-name="Rechteck 4604" width="21.651" height="20.176" transform="translate(0 0)" fill="none"/>
+    </clipPath>
+  </defs>
+  <rect id="Rechteck_4603" data-name="Rechteck 4603" width="50" height="50" fill="#fff"/>
+  <g id="Gruppe_16860" data-name="Gruppe 16860" transform="translate(14 15)">
+    <g id="Gruppe_16860-2" data-name="Gruppe 16860" clip-path="url(#clip-path)">
+      <path id="Pfad_6803" data-name="Pfad 6803" d="M7.215,5.72V20.176h4.338V12.358A3.424,3.424,0,0,1,14.962,9.1c1.568,0,2.366,1.084,2.366,3.223v7.858h4.323V12c0-3.071-.828-6.729-4.79-6.729a6.482,6.482,0,0,0-5.305,2.458V5.716ZM.019,20.176H4.343V5.768H.019ZM2.161,0A2.163,2.163,0,1,0,4.326,2.164,2.162,2.162,0,0,0,2.161,0"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+<svg id="Icon_Set_Quick_Links" data-name="Icon Set Quick Links" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_4327" data-name="Rechteck 4327" width="19.94" height="14.606" fill="none"/>
+    </clipPath>
+  </defs>
+  <path id="Pfad_6585" data-name="Pfad 6585" d="M0,0H24V24H0Z" fill="none"/>
+  <g id="Gruppe_15683" data-name="Gruppe 15683" transform="translate(2 5)">
+    <g id="Gruppe_15683-2" data-name="Gruppe 15683" transform="translate(0 0)" clip-path="url(#clip-path)">
+      <path id="Pfad_6520" data-name="Pfad 6520" d="M16.988,13.745l-1.7-.147a.448.448,0,0,1-.356-.252l-.651-1.574a.425.425,0,0,0-.776,0l-.651,1.574a.385.385,0,0,1-.356.252l-1.679.147a.411.411,0,0,0-.231.734l1.3,1.113a.391.391,0,0,1,.126.419l-.4,1.658a.427.427,0,0,0,.629.462l1.448-.881a.416.416,0,0,1,.44,0l1.448.881a.423.423,0,0,0,.63-.462l-.4-1.658a.447.447,0,0,1,.126-.419l1.3-1.113a.421.421,0,0,0-.252-.734" transform="translate(-3.933 -4.344)"/>
+      <path id="Pfad_6521" data-name="Pfad 6521" d="M8.983,9.146,9.34,8.2a.31.31,0,0,0-.294-.42H2.331A2.075,2.075,0,0,0,.253,9.65L0,12.189a.485.485,0,0,0,.4.525,10.172,10.172,0,0,0,1.028.147l.231,4.05a.646.646,0,0,0,.65.609H4.261a.661.661,0,0,0,.65-.609l.336-6.946a.645.645,0,0,1,.629-.63H8.71a.249.249,0,0,0,.273-.189" transform="translate(0 -2.934)"/>
+      <path id="Pfad_6522" data-name="Pfad 6522" d="M3.962,0a2.14,2.14,0,1,1-2.14,2.14A2.14,2.14,0,0,1,3.962,0" transform="translate(-0.687 0)"/>
+      <path id="Pfad_6523" data-name="Pfad 6523" d="M26.06,9.65a2.075,2.075,0,0,0-2.078-1.868H17.267a.319.319,0,0,0-.294.42l.357.944a.314.314,0,0,0,.293.21h2.833a.618.618,0,0,1,.63.63l.336,6.946a.647.647,0,0,0,.65.609h1.952a.662.662,0,0,0,.651-.609l.23-4.05c.378-.042.734-.084,1.028-.147a.485.485,0,0,0,.4-.525Z" transform="translate(-6.394 -2.934)"/>
+      <path id="Pfad_6524" data-name="Pfad 6524" d="M25.455,0a2.14,2.14,0,1,1-2.14,2.14A2.14,2.14,0,0,1,25.455,0" transform="translate(-8.791 0)"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,84 @@
+@import 'select2/dist/css/select2.min.css';
+
+
+.select2-container--open {
+    .select2-selection {
+        .select2-search {
+            .icon {
+                background-color: black;
+                background-image: url('../../images/chevron-up.svg') !important;
+                border-color: black !important;
+            }
+        }
+    }
+}
+
+.select2 {
+    @apply flex w-full border-0 bg-white;
+
+    .selection {
+        @apply w-full flex flex-row items-center;
+
+        .select2-selection--multiple {
+            @apply h-[38px];
+
+            .select2-search {
+                @apply flex !important;
+            }
+        }
+
+        .select2-selection {
+            @apply p-0 border-0 w-full relative;
+
+            .select2-selection__rendered {
+                @apply w-full flex flex-row gap-2 flex-wrap relative z-10;
+            }
+
+            .select2-search {
+
+                @apply w-full absolute top-0 right-0 hidden;
+                height: 40px;
+                .icon {
+                    height: 40px;
+                    width: 40px;
+                    @apply absolute top-0 right-0 flex items-center justify-center border-l border-neutral-300 rounded-none;
+                    @apply bg-white bg-center bg-no-repeat;
+                    background-image: url('../../images/chevron-down.svg');
+                    background-size: 50%;
+                }
+
+                & textarea {
+                    @apply py-0 m-0 pl-4 pr-[40px] relative;
+                    height: 40px;
+                    line-height: 40px;
+                }
+            }
+        }
+    }
+}
+
+.select2-container {
+    @apply rounded-none;
+
+    .select2-dropdown {
+        @apply rounded-none shadow border-none;
+
+        .select2-search--dropdown {
+            @apply hidden;
+        }
+        .select2-results {
+            @apply rounded-none;
+            .select2-results__options {
+                @apply rounded-none border-none;
+                .select2-results__option {
+                    @apply border-0 rounded-none;
+
+                }
+
+                .select2-results__option--highlighted, .select2-results__option--selected {
+                    @apply bg-primary-500 text-white;
+                }
+            }
+        }
+    }
+}

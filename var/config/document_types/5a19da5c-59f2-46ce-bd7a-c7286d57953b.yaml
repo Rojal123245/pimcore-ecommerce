@@ -1,0 +1,14 @@
+pimcore:
+    documents:
+        doc_types:
+            definitions:
+                5a19da5c-59f2-46ce-bd7a-c7286d57953b:
+                    name: 'Navigation Links With Icons'
+                    group: ''
+                    controller: 'App\Controller\DefaultController::renderNavigationLinksWithIconsAction'
+                    template: null
+                    type: snippet
+                    priority: 0
+                    creationDate: 1699940263
+                    modificationDate: 1699940362
+                    staticGeneratorEnabled: false

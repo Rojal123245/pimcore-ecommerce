@@ -1,0 +1,63 @@
+{% set brick_title = 'Call to action Social Media   Areabrick'|trans %}
+
+{% extends 'areas/base.html.twig' %}
+{% set social_media = pimcore_block('social_media', {reload: true, manual: true}) %}
+
+{% block section %}
+
+    <section class="px-2 md:px-0 w-full bg-gradient-to-b from-primary-400 to-primary-800">
+        {% set title = pimcore_input('text', {placeholder: 'Enter text here'|trans}) %}
+        <div
+            class="container mx-auto flex flex-col justify-between items-center {{ editmode ? 'lg:flex-col' : 'lg:flex-row' }} py-10">
+
+            {% if editmode %}
+            <div class="w-full flex flex-col gap-2">
+                <span class="text-white font-bold">{{ 'Title'|raw }}</span>
+                <div class="w-full text-white text-h3">
+                    {{ title|raw }}
+                </div>
+                <style>
+                    .pimcore_editable_image {
+                        width: 100% !important;
+                    }
+                </style>
+            </div>
+            {% elseif not title.isEmpty() %}
+            <{{ heading_tag.data }} class="text-white text-h3">{{ title }}</{{ heading_tag.data }}>
+        {% endif %}
+
+        <div class="flex">
+            {% do social_media.start() %}
+            <div class="{{ editmode ? 'grid grid-cols-4 w-full' : 'flex flex-row' }} gap-md">
+                {% for media in social_media.iterator %}
+                    {% do social_media.blockConstruct() %}
+                    {% do social_media.blockStart(false) %}
+                    {% set icon = pimcore_image('icon') %}
+                    {% set link = pimcore_link('link') %}
+                        {% do social_media.blockControls() %}
+                        {% if editmode %}
+                            <div class="flex flex-col p-sm gap-2">
+                                <span>{{ 'Icon'|trans }}</span>
+                                <div class="grid grid-cols-1">
+                                    {{ icon|raw }}
+                                </div>
+                                <span>{{ 'Link'|raw }}</span>
+                                <div class="grid grid-cols-1">
+                                    {{ link|raw }}
+                                </div>
+                            </div>
+                        {% elseif not link.isEmpty() and not icon.isEmpty() %}
+                            <a href="{{ link.href }}" target="{{ link.target ?? '_self' }}">
+                                {{ icon.thumbnail('cta-social-media-thumbnail').html()|raw }}
+                            </a>
+                        {% endif %}
+
+                    {% do social_media.blockEnd() %}
+                    {% do social_media.blockDestruct() %}
+                {% endfor %}
+            </div>
+            {% do social_media.end() %}
+        </div>
+        </div>
+    </section>
+{% endblock %}

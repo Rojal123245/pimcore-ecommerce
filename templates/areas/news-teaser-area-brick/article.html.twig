@@ -1,0 +1,26 @@
+<article class="bg-white group w-full flex flex-col gap-sm relative">
+    <span class="absolute top-0 left-0 w-0 h-[5px] transition-all group-hover:w-full bg-primary-500"></span>
+    {% if news.banner is not empty %}
+        {{ news.banner.thumbnail('news-teaser-thumbnail').html({
+            imgAttributes: {
+                class: 'w-full'
+            }
+        })|raw }}
+    {% endif %}
+
+    <div class="p-sm flex flex-col justify-between pb-md">
+        <div class="w-full flex justify-between items-start flex-row gap-sm">
+            <h4 class="text-h4">{{ news.title }}</h4>
+            <a href="{{ path('news-detail', {
+                _locale: app.request.locale,
+                title: toUrl(news.title),
+                id: news.id
+            }) }}" class="pt-2 group-hover:text-primary-500">
+                <svg id="Icon_Pfeil" class="rotate-180 group-hover:fill-primary-500 group-hover:stroke-primary-500" data-name="Icon Pfeil" xmlns="http://www.w3.org/2000/svg" width="29.17" height="29.17" viewBox="0 0 29.17 29.17">
+                    <path id="Pfad_6592" data-name="Pfad 6592" d="M138.389,4.044l-2.828-2.828L113.22,23.557V7.582h-4v22.8h22.8v-4H116.047Z" transform="translate(-109.219 -1.216)"/>
+                </svg>
+            </a>
+        </div>
+        <p class="text-sm text-neutral-500 mt-md">{{ news.date|date('d. M Y') }}</p>
+    </div>
+</article>

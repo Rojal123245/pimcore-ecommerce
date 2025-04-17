@@ -1,0 +1,76 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    homepage-hero-thumbnail:
+                        items:
+                            -
+                                method: cover
+                                arguments:
+                                    width: 2500
+                                    height: 800
+                                    positioning: center
+                                    forceResize: true
+                        medias:
+                            '(max-width: 576px)':
+                                -
+                                    method: cover
+                                    arguments:
+                                        width: 576
+                                        height: 700
+                                        positioning: center
+                                        forceResize: true
+                            '(max-width: 768px)':
+                                -
+                                    method: cover
+                                    arguments:
+                                        width: 768
+                                        height: 700
+                                        positioning: center
+                                        forceResize: true
+                            '(max-width: 1024px)':
+                                -
+                                    method: cover
+                                    arguments:
+                                        width: 1024
+                                        height: 650
+                                        positioning: center
+                                        forceResize: true
+                            '(max-width: 1600px)':
+                                -
+                                    method: cover
+                                    arguments:
+                                        width: 1600
+                                        height: 650
+                                        positioning: center
+                                        forceResize: true
+                            '(max-width: 1800px)':
+                                -
+                                    method: cover
+                                    arguments:
+                                        width: 1800
+                                        height: 650
+                                        positioning: center
+                                        forceResize: true
+                            '(max-width: 2200px)':
+                                -
+                                    method: cover
+                                    arguments:
+                                        width: 2200
+                                        height: 800
+                                        positioning: center
+                                        forceResize: true
+                        name: homepage-hero-thumbnail
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703060828
+                        creationDate: 1700111972
+                        preserveAnimation: false

@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                ac4c8e15-c362-44a4-b70d-954b0d80cade:
+                    name: 'Navigation should be transparent'
+                    description: ''
+                    key: navigation_is_transparent
+                    type: bool
+                    data: ''
+                    config: ''
+                    ctype: document
+                    inheritable: false
+                    creationDate: 1695897111
+                    modificationDate: 1701003998

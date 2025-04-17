@@ -1,0 +1,8 @@
+footer {
+    & p {
+        @apply text-sm;
+        & a {
+            color: white;
+        }
+    }
+}

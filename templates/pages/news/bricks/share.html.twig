@@ -1,0 +1,31 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+{% set news_link = url('news-detail', {
+    _locale: app.request.locale,
+    title: toUrl(news.title),
+    id: news.id
+}) %}
+
+<div class="w-full py-xl bg-gradient-to-b from-primary-800 to-primary-500">
+    <div class="container overwrite-container flex flex-col md:flex-row md:gap-sm justify-between items-center mx-auto px-sm lg:px-0">
+        <h3 class="text-h3 text-white">
+            {{ 'Share in social media'|trans }}
+        </h3>
+
+        <div class="flex flex-row gap-sm">
+            <a href="https://facebook.com/share.php?u={{ news_link }}">
+                <i class="fa fa-facebook text-white fa-2x"></i>
+            </a>
+            <a href="https://twitter.com/share?url={{ news_link }}">
+                <i class="fa fa-twitter text-white fa-2x"></i>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ news_link }}">
+                <i class="fa fa-linkedin text-white fa-2x"></i>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

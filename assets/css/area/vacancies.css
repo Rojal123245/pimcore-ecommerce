@@ -1,0 +1,29 @@
+.vacancies {
+    .search-container {
+
+        .search {
+            @apply h-[40px];
+            line-height: 40px;
+        }
+        .search-button {
+            @apply w-[40px] h-[40px] border border-l-0 border-neutral-300 bg-white;
+            background: url("../../images/search.svg") center no-repeat;
+        }
+    }
+
+    .select2 {
+        @apply w-full border border-neutral-300 !important;
+
+        .select2-selection__arrow {
+            @apply hidden;
+        }
+    }
+
+    .location {
+        .select2 {
+            .select2-selection__arrow {
+                @apply block;
+            }
+        }
+    }
+}

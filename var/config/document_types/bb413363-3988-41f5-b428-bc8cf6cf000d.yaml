@@ -1,0 +1,14 @@
+pimcore:
+    documents:
+        doc_types:
+            definitions:
+                bb413363-3988-41f5-b428-bc8cf6cf000d:
+                    name: 'Error Page'
+                    group: ''
+                    controller: 'App\Controller\DefaultController::errorPageAction'
+                    template: null
+                    type: page
+                    priority: 0
+                    creationDate: 1700999534
+                    modificationDate: 1700999548
+                    staticGeneratorEnabled: false

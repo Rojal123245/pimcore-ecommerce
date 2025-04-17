@@ -1,0 +1,26 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+<div class="w-full bg-neutral-100">
+    <div class="w-full py-2 flex gap-16 container overwrite-container mx-auto">
+        <a class="text-primary-700" href="{{ '/' ~ app.request.locale ~ '/news' }}">
+            <div class="flex items-center">
+                <span class="flex items-center icon icon-regular icon-arrow-left-primary"><span>{{ 'Go Back' |trans }}</span></span>
+            </div>
+        </a>
+        <ul class="flex gap-2 divide flex-wrap divide-solid divide-black">
+            <li>
+                <a href="{{ '/' ~ app.request.locale ~ '/news' }}">{{ 'News'|trans }}</a>
+                <span class="px-2">/</span>
+            </li>
+            <li>
+                <a disabled="true" class="text-neutral-500" href="{{ path('news-detail', {
+                    _locale: app.request.locale,
+                    title: toUrl(news.title),
+                    id: news.id
+                }) }}">{{ news.title }}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

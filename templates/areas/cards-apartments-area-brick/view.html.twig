@@ -1,0 +1,154 @@
+{% set brick_title = 'Cards Apartments'|trans %}
+{% set remove_h1_tag = true %}
+
+
+{% extends 'areas/base.html.twig' %}
+
+
+{% set carousel = pimcore_block('cards-apartment', {manual: true}) %}
+
+{% set slide_time = pimcore_numeric('slide_time', {
+    minValue: 3
+}) %}
+
+{% set title = pimcore_input('title', {
+    class: 'w-full',
+    placeholder: 'Title' | trans
+}) %}
+
+{% set body =  pimcore_textarea('body', {
+    class: 'w-full',
+    placeholder: 'Description' | trans
+})%}
+
+{% set linkTitle = pimcore_input('link_title', {
+    class: 'w-full',
+    placeholder: 'Title of the link' | trans
+})%}
+
+{% set underText = pimcore_textarea('under_text', {
+    class: 'w-full',
+    placeholder: 'Text under the list' | trans
+}) %}
+
+{% set cardApartment = pimcore_relations('cardApartment', {
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['cardApartment']
+}) %}
+
+{% set valid_slides = 0 %}
+
+{% block configuration %}
+    {{ parent() }}
+    {% if editmode %}
+        <div class="flex flex-col gap-3">
+            <span class="font-bold">{{ 'Slide time (in seconds)'|trans }}</span>
+            <div class="w-full">
+                {{ slide_time|raw }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block section %}
+ 
+    {% if editmode %}
+        {{ cardApartment | raw }}
+    {% else %}
+    {% for apartment in cardApartment %}
+    {% set rand = random(1000000000, 9999999999) %}
+        <div class="w-full">
+            <div class="w-full lg:flex">
+                <div class="w-full lg:w-1/2 relative">
+                    <div class="w-full {{ editmode ? 'flex flex-col' : 'carousel' }}" data-carousel-control="#carouselControl{{rand}}" data-slide-time="{{ slide_time.getData()|default(7) }}" data-enable="{{ editmode ? 0 : 1 }}">
+                       
+                       
+                            {% if apartment.getSliderImages() is not empty %}
+                                {% set card_images = apartment.getSliderImages() %}
+                                {% for card_image in card_images %}
+
+                                 {% set valid_slides = valid_slides + 1 %}
+                                 <div class="w-full">
+                                    {{ card_image.thumbnail('card-apartment-thumbnail').html ({
+                                        imgAttributes: {
+                                            class: 'w-full'
+                                        }
+                                    }) | raw }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        
+                        
+                    </div>
+                    {% if valid_slides > 0 %}
+                            <button class="carousel-control-prev bg-white px-3 py-3 absolute top-[calc(50%-27px)] left-0">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <button class="carousel-control-next bg-white absolute px-3 py-3 top-[calc(50%-27px)] right-0">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                    {% endif %}
+                    
+
+                    <div class="w-full container mt-sm flex flex-row justify-end relative">
+
+                        <div class="w-full container px-sm md:px-0 mx-auto pt-sm md:pb-sm md:pt-0 md:max-w-full md:w-[300px] flex flex-row items-center lg:mx-0 lg:justify-end gap-10">
+                            <button id=""
+                                    class="carousel-pauser border-red-500 border rounded-full flex items-center justify-center p-4">
+                                <span class="text-primary-500 fa fa-pause text-[10px]"></span>
+                            </button>
+                            <button id="" style="display: none"
+                                    class="carousel-player flex border-red-500 border rounded-full items-center justify-center p-4">
+                                <span class="text-primary-500 fa fa-play text-[10px]"></span>
+                            </button>
+                            <div class="w-full carousel-dots flex gap-5" id="carouselControl{{rand}}">
+                                {% for item in range(0, valid_slides - 1) %}
+                                    <div>
+                                        <div class="w-3 h-3 bg-primary-500 cursor-pointer"
+                                            data-slide-to="{{ loop.index }}"></div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% set valid_slides = 0 %}
+
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2 flex flex-col mx-4 pr-4 lg:pl-10">
+                    <div class="w-full gap-md">
+                        <h2 class="text-2xl font-bold mb-2 mt-5">{{ apartment.getTitle() }}</h2>
+                        <p class="text-sm mb-lg">{{ apartment.getDescription() }}</p>
+                        <p class="font-bold mb-1">{{ apartment.getLinkTitle()}}: </p>
+                        <ul>
+                        {% for data in apartment.getApartments() %}
+                            <li class="py-2 {% if loop.first %} border-t {% endif %} border-b flex pr-4">
+                                <span class="mt-1"> {{ data.getTitle() }} </span>
+                                {% for img in data.getIcon() %}
+                                    <span class="mt-1"> {{ img.thumbnail('apartment-icon-thumbnail').html | raw  }} </span>
+                                {% endfor %}
+                                {% if data.getLink() %}
+                                    <a href="{{ data.getLink().href }}" class="ml-auto px-6 py-1 text-white bg-primary-500 font-noto hover:bg-primary-700 active:bg-primary-700">
+                                        {{ data.getLink().text }}
+                                    </a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                        <div class="mt-md mb-md">{{ apartment.getListData() | raw }}</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+        </div>
+        
+    {% endfor %}
+    {% endif %}
+
+{% endblock %}

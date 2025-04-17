@@ -1,0 +1,124 @@
+{% set brick_title = 'Statements Areabrick' | trans %}
+{% set individual_h_tag = pimcore_select('individual_h_tag', {
+    store: [
+        ['h3', 'H3'],
+        ['h4', 'H4'],
+        ['h5', 'H5'],
+        ['h6', 'H6'],
+    ],
+    defaultValue: 'h3',
+}) %}
+
+{% set statementCategory = pimcore_relation('statementCategory', {
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['StatementCategory'],
+}) %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block configuration %}
+    {{ parent() }}
+    {% if editmode %}
+        <div class="w-full flex flex-col">
+            <span class="font-bold font-noto-regular">{{ 'Statement title tag' | trans }}</span>
+            <div class="w-full pt-3">
+                {{ individual_h_tag|raw }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% set rand = random(0, 9999999999) %}
+{% block section %}
+    <section data-category-id="{{ statementCategory.element ? statementCategory.element.id : '' }}" data-statement-brick-id="{{ rand }}" class="w-full statement-container py-xl flex flex-col bg-neutral-200 gap-lg">
+        <div class="container mx-auto flex flex-col gap-md">
+            <{{ heading_tag.data }} class="text-h1">{{ pimcore_input('statement_heading', {
+                placeholder: 'Statement heading'| trans
+            }) }}</{{ heading_tag.data }}>
+
+        {% set content = pimcore_wysiwyg('statement_body') %}
+
+        {% if editmode %}
+            <div class="w-full">
+                {{ content|raw }}
+            </div>
+            <div class="mt-5">
+                {{ statementCategory|raw }}
+            </div>
+        {% elseif not content.isEmpty() %}
+            <article class="lg:max-w-[80%]">
+                {{ content|raw }}
+            </article>
+        {% endif %}
+        </div>
+
+        <div class="flex flex-col px-2 md:px-0 gap-md">
+
+            <div class="container mx-auto filters-container">
+                <div class="flex flex-col md:flex-row gap-5 w-full lg:w-1/4 ">
+                    <div class="select">
+                        <label for="filter_category" class="sr-only">{{ 'Filter by category'|trans }}</label>
+                        <select data-statement-category="{{ statementCategory.element.id ?? '' }}" id="filter_category" data-placeholder="{{ 'Filter by category'|trans }}" multiple class="filter-category select2 px-4 py-2 after:hidden min-w-[300px]">
+                        </select>
+                    </div>
+                    <div class="date relative">
+                        <label for="filter_date" class="sr-only">{{ 'Filter by date'|trans }}</label>
+                        <select id="filter_date" data-placeholder="{{ 'Filter by date'|trans }}" multiple class="filter-date select2 px-4 py-2 after:hidden min-w-[300px]">
+                        </select>
+{#                        <span class="icon"></span>#}
+                    </div>
+                </div>
+
+                <template class="statement-template">
+                    <div class="group w-full border-neutral-200 border-b-2 statement">
+                        <div
+                                class="w-full statement group-hover:bg-white transition-colors py-sm">
+                            <div class="container mx-auto flex flex-row">
+                                <div class="w-full lg:w-[15%] flex flex-col gap-sm">
+                                    <div class="statement__icon transition-colors group-hover:text-primary-500">
+                                    </div>
+                                    <div class="statement__icon__colored hidden transition-colors group-hover:text-primary-500">
+                                    </div>
+                                    <div class="flex flex-col">
+                                    <span
+                                            class="text-neutral-500 transition-colors group-hover:text-primary-500 text-small statement__date"></span>
+                                        <span
+                                                class="text-neutral-500 transition-colors group-hover:text-primary-500 text-small statement__categories"></span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex flex-col gap-[43.43px] lg:w-[70%]">
+                                    {% set header = '<' ~ individual_h_tag ~ ' class="statement__title transition-colors font-noto-regular text-h4"></' ~ individual_h_tag.data ~ '>' %}
+                                    {{ header | raw }}
+                                    <p class="text-lg text-left text-body statement__content"></p>
+                                </div>
+                                <div class="w-full lg:w-[15%] flex justify-end">
+                                    <a href="" class="statement__link">
+                                        <svg id="Icon_Pfeil" class="rotate-180" data-name="Icon Pfeil" xmlns="http://www.w3.org/2000/svg"
+                                             width="29.17" height="29.17" viewBox="0 0 29.17 29.17">
+                                            <path id="Pfad_6592" data-name="Pfad 6592"
+                                                  d="M138.389,4.044l-2.828-2.828L113.22,23.557V7.582h-4v22.8h22.8v-4H116.047Z"
+                                                  class="group-hover:fill-primary-500"
+                                                  transform="translate(-109.219 -1.216)"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template class="no-statements-to-show">
+                    <div class="container mx-auto">
+                        <h3 class="text-h3">{{ 'No statements found. Please try other category/date.' | trans }}</h3>
+                    </div>
+                </template>
+            </div>
+            <div class="statement-container w-full flex flex-col items-start">
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        window.statementsPage = true;
+    </script>
+{% endblock %}

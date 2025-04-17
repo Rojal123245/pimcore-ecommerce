@@ -1,0 +1,90 @@
+{% set brick_title = 'Divider Image' | trans %}
+{% set allowed_headings = [
+    ['h2', 'H2'],
+    ['h3', 'H3'],
+] %}
+{% set default_heading = 'h2' %}
+
+{% set title = pimcore_input('title', {
+    placeholder: 'title'|trans
+}) %}
+
+{% set body = pimcore_wysiwyg('body', {
+    placeholder: 'body'|trans,
+}) %}
+
+{% set link = pimcore_link('link') %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+
+    {% set background = pimcore_relation('divider_background', {
+        types: ['asset'],
+        subtypes: {
+            asset: ['image', 'video']
+        }
+    }) %}
+
+    {% set thumbnailUrl = '' %}
+
+    {% if background is not empty %}
+    {% endif %}
+
+    {% set srcset  = '' %}
+    {% if editmode %}
+        <section class="w-full container mx-auto flex flex-col">
+            <div
+                class="flex flex-col gap-sm">
+                <div class="flex container mx-auto flex-col gap-2">
+                    <b>{{ 'Background'|trans }}</b>
+                    {{ background|raw }}
+                </div>
+                <{{ heading_tag.getData() }} class="text-h3 group-hover/card:text-white">{{ title|raw }}</{{ heading_tag.getData() }}>
+                <div class="group-hover/card:text-white">
+                    {{ body|raw }}
+                </div>
+
+                {{ link|raw }}
+            </div>
+        </section>
+
+    {% else %}
+        <section class="w-full bg-cover relative mb-[30%] lg:mb-[15%] h-full md:h-full overwrite-divider">
+
+            {% if background.element is not empty and background.element.type == 'image' %}
+                {{ background.element.thumbnail('divider-thumbnail').html({
+                    imgAttributes: {
+                        class: 'w-full'
+                    }
+                })|raw }}
+            {% endif %}
+            {% if background.element is not empty and background.element.type == 'video' %}
+                <video autoplay muted loop playsinline class="w-full max-w-full object-cover max-h-[70vh]">
+                    <source src="{{ background.element|raw }}" type="video/mp4">
+                </video>
+            {% endif %}
+
+            <div class="absolute -bottom-[100px] left-0 w-full">
+                <div class="container mx-auto">
+                    <div class="group max-w-5xl">
+                        {% if not title.isEmpty() or not (body.data|striptags) == '' or not link.isEmpty() %}
+                            <div
+                            class="shadow mx-sm lg:mx-auto bg-white group-hover:bg-primary-500 py-sm px-md lg:py-lg lg:px-xl md:px-lg md:py-md flex flex-col gap-sm">
+                            <h3 class="text-h3 group-hover:text-white">{{ title|raw }}</h3>
+                            <article class="prose group-hover:text-white group-hover:prose-a:text-white group-hover:prose-strong:text-white group-hover:prose-li:marker:text-white prose-li:marker:text-black prose-marker:black group-hover:prose-li:before:text-white">
+                                {{ body|raw }}
+                            </article>
+
+                            {% if link.href is not empty %}
+                                <a href="{{ link.href }}"
+                                   class="text-primary-500 font-noto-regular group-hover:text-white">{{ link.text }}</a>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

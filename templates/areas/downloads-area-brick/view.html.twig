@@ -1,0 +1,50 @@
+{% set brick_title = 'Downloads Brick' %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+
+    <section class="w-full bg-neutral-100">
+
+        {% set downloads = pimcore_relations('downloads') %}
+        {% set downloads_title = pimcore_input('downloads_title', {placeholder: 'Downloads title'|trans}) %}
+        {% set downloads_text = pimcore_textarea('downloads_text', {placeholder: 'Downloads text'|trans, nl2br: true}) %}
+
+        <div class="p-4 max-w-4xl mx-auto">
+            {% if editmode or downloads_title.data is not empty %}
+            <{{ heading_tag.data }} class="text-h2 my-sm">
+                {{ downloads_title|raw }}
+            </{{ heading_tag.data }}>
+            {% endif %}
+
+            {% if editmode or downloads_text.data is not empty %}
+                <div class="text-body mb-sm">
+                    {{ downloads_text|raw }}
+                </div>
+            {% endif %}
+
+            {% if editmode %}
+                {{ downloads|raw }}
+            {% endif %}
+
+            <ul class="">
+                {% for download in downloads %}
+                    <li class="p-4 bg-white border-neutral-100 {% if not loop.first %} border-t {% endif %}">
+                        <a class="flex items-center text-primary-500 hover:text-primary-700" href="{{ path('asset-download', {assetId: download.id}) }}">
+                            <div class="mr-2">
+                                <svg id="Icon_Set_Funktions" data-name="Icon Set Funktions" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 50 50">
+                                    <rect id="Rechteck_4603" data-name="Rechteck 4603" width="50" height="50" fill="none"/>
+                                    <path id="download_FILL1_wght400_GRAD0_opsz24" d="M172-782l-7.5-7.5,2.1-2.175,3.9,3.9V-800h3v12.225l3.9-3.9,2.1,2.175Zm-9,6a2.889,2.889,0,0,1-2.119-.881A2.889,2.889,0,0,1,160-779v-4.5h3v4.5h18v-4.5h3v4.5a2.889,2.889,0,0,1-.881,2.119A2.889,2.889,0,0,1,181-776Z" transform="translate(-147 813)" fill="#FF0000"/>
+                                </svg>
+                                
+                            </div>
+                            <div>
+                                {{ download.getMetadata('title') ?? download.filename }}
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% endblock %}

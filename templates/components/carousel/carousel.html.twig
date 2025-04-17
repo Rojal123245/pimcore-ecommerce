@@ -1,0 +1,114 @@
+{# 
+Carousel Component
+
+Props:
+
+configurations: {
+
+	thumbnail_name: string 	=>  name of thumbnail configuration to be applied for the slider images.
+								Default: 'media-slider-thumbnail'
+
+	config: object			=>  Slick Slider configurations
+								The following configurations are always overridden.
+									- arrowPrev => set to empty string ''
+									- arrowNext => set to empty string ''
+},
+slides: Array<Slide>		=>  See below for the type of <Slide>
+
+
+
+Type Definitions:
+
+Slide: {
+	thumbnail: \Pimcore\Model\Asset\Image,				=> required
+	youtube_id: string,									=> required when type == 'youtube' || type == 'youtube_id'
+	type: 'image'|'video'|'youtube_id'|'youtube', 		=> required
+	video: \Pimcore\Model\Asset\Video					=> required when type == 'video'
+}
+
+
+#}
+
+{% set id = random(1000000000, 99999999999) %}
+{% set thumbnail_name = configurations.thumbnail_name|default('media-slider-thumbnail') %}
+{% set slider_config = configurations.config|default({}) %}
+
+{% set modal_contents = [] %}
+
+<div class="w-full flex flex-col gap-sm carousel-with-controls">
+	<div class="w-full relative">
+
+		<div data-slide-time="{{ configurations.slide_time|default(7) }}" id="carousel{{id}}" class="w-full carousel-slider" data-slider="{{slider_config|json_encode}}" data-enable="true" data-carousel-control="#carouselControl{{id}}">
+			{% for slide in slides %}
+				{% set thumbnail = slide.thumbnail %}
+				{% set type = slide.type %}
+				
+
+				<div class="relative w-full">
+					{{ thumbnail.thumbnail(thumbnail_name).html({
+                        imgAttributes: {
+                            class: 'w-full'
+                        }
+                    })|raw }}
+
+                    {% if type == 'video' or type == 'youtube_id' or type == 'youtube' %}
+
+						{% set data = null %}
+
+						{% if type == 'video' %}
+							{% set data = slide.video.fullpath %}
+						{% elseif type == 'youtube' or type == 'youtube_id' %}
+							{% set data = slide.youtube_id %}
+						{% endif %}
+
+                        {% set modal_id = random(100000000000, 999999999999) %}
+                        {% set modal_contents = modal_contents|merge([{
+                            id: 'modal' ~ modal_id,
+                            type: type,
+                            data: data
+                        }]) %}
+                        <div class="absolute flex flex-col justify-center items-center top-0 left-0 w-full h-full">
+                            <button data-target="#modal{{modal_id}}" class="modal-open rounded-full shadow-lg flex justify-center items-center h-12 w-12 bg-neutral-900">
+                                <i class="fa fa-play text-white"></i>
+                            </button>
+                        </div>
+                    {% endif %}
+				</div>
+			{% endfor %}
+		</div>
+
+		{% if slides|length > 1 %}
+			<div class="w-full flex flex-row">
+				<div class="absolute top-0 left-0 flex flex-col justify-center items-center h-[100%]">
+					<button class="bg-white p-3 carousel-control-prev">
+						<i class="fa fa-chevron-left"></i>
+					</button>
+				</div>
+				<div class="absolute top-0 right-0 flex flex-col justify-center items-center h-[100%]">
+					<button class="bg-white p-3 carousel-control-next">
+						<i class="fa fa-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+
+	{% if slides|length > 1 %}
+		<div class="w-full flex flex-row justify-end items-center gap-sm">
+			<button class="rounded-full carousel-pauser pointer h-8 w-8 flex flex-row justify-center items-center border border-primary-500 bg-white">
+				<i class="fa fa-pause text-primary-500"></i>
+			</button>
+
+			<div id="carouselControl{{id}}" class="carousel-dots flex flex-row gap-2">
+				{% for slide in slides %}
+					<button class="w-2 h-2 bg-primary-500"></button>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+</div>
+
+
+{% for modal in modal_contents %}
+    {% include 'components/modal/modal.html.twig' with { modal: modal } %}
+{% endfor %}

@@ -1,0 +1,30 @@
+{% set level = level|default(0) %}
+
+{% set hasChildren = page.hasChildren() %}
+
+{% set shouldRenderChildren = hasChildren and level > 0 %}
+<li class="w-full border-t flex flex-col border-neutral-300">
+    <div class="flex p-4 justify-between items-center {{ shouldRenderChildren ? 'collapsible' : '' }}" {% if shouldRenderChildren %} data-target="#page{{ page.id }}" {% endif %}>
+        {% set target = pimcore_document(page._documentId).getProperty('navigation_target')|default('_self') %}
+        <a target="{{ target }}" href="{{ page.href }}" class="font-noto-bold text-body">{{ page.label }}</a>
+
+        {% if shouldRenderChildren %}
+            <button class="collapsible-chevron fa fa-chevron-down">
+
+            </button>
+        {% endif %}
+    </div>
+
+    {% if shouldRenderChildren %}
+        <div class="hidden" id="page{{ page.id }}">
+            <ul class="flex flex-col">
+                {% set children = page.getPages() %}
+                {% for child in children %}
+                    {% if child.isVisible() and menuRenderer.accept(child) %}
+                        {% include 'partials/navigation/mobile-menu.html.twig' with {page: child, menuRenderer: menuRenderer, level: level - 1} %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</li>

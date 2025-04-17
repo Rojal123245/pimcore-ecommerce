@@ -1,0 +1,142 @@
+{% set brick_title = 'Vorstandsliste' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+
+    {% set id = pimcore_input('id', {
+        'placeholder': 'ID'
+    }) %}
+
+    <section class="tocco-vorstandsliste">
+
+        {# settings #}
+        {% if editmode %}
+
+            <div class="tocco-editmode">
+
+                <div style="display: flex;">
+                    <label style="margin-right: 10px;">ID:</label>
+                    {{ id|raw }}
+                </div>
+
+                <div class="debug-info" style="margin-top: 5px;">
+
+                    {# <span style="font-weight: bold;">Debug-Info: </span> #}
+                    <span>Gewähltes Organ: <strong>{{ vorstandsliste.label }}</strong></span>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+        <div class="title-container">
+
+            <div class="title">
+                <{{ heading_tag.data }} class="title-tag">
+                    {{ pimcore_textarea('title', {
+                        placeholder: 'Titel',
+                        nl2br: true
+                    }) }}
+                </{{ heading_tag.data }}>
+            </div>
+
+        </div>
+
+        <div class="sort-container">
+
+            <div class="space">
+
+                <div class="mobile-sort">
+                    <span>Sortieren nach</span>
+                    {{ include('svg/vorstandsliste/sortieren.html.twig') }}
+                </div>
+
+            </div>
+
+            <div class="details">
+
+                <div class="firstname sortByFirstname">
+                    <span>Vorname</span>
+                    {{ include('svg/vorstandsliste/sortieren.html.twig') }}
+                </div>
+
+                <div class="lastname sortByLastname ascending">
+                    <span>Nachname</span>
+                    {{ include('svg/vorstandsliste/sortieren.html.twig') }}
+                </div>
+
+                <div class="function sortByFunction">
+                    <span>Funktion</span>
+                    {{ include('svg/vorstandsliste/sortieren.html.twig') }}
+                </div>
+
+                <div class="space">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="vorstandslisteList">
+
+            {% for person in vorstandsliste.personen %}
+
+                <div class="alignment">
+                    <div class="person">
+
+                        <div class="image">
+
+                            {# {% if person.detail_picture %}
+                                <img src="{{ person.detail_picture }}">
+                            {% elseif person.preview_picture %}
+                                <img src="{{ person.preview_picture }}">
+                            {% else %}
+                                <div class="image-placeholder">
+                                </div>
+                            {% endif %} #}
+
+                            {% if person.preview_picture %}
+                                <img src="{{ person.preview_picture }}">
+                            {% else %}
+                                <div class="image-placeholder">
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="details">
+
+                            <div class="firstname">
+                                <span>{{ person.firstname }}</span>
+                            </div>
+
+                            <div class="lastname">
+                                <span>{{ person.lastname }}</span>
+                            </div>
+
+                            <div class="function">
+                                {% for function in person.function %}
+                                    <span>{{ function[app.request.locale] }}</span><br>
+                                {% endfor %}
+                            </div>
+
+                            {% if not person.hideEmail %}
+                                <div class="email">
+                                    <a href="{{ person.email|raw }}" target="_blank">E-Mail</a>
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+{% endblock %}

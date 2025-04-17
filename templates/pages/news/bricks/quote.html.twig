@@ -1,0 +1,15 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+
+{% set text = brick.text %}
+{% set author = brick.author %}
+
+<div class="w-full">
+    <div class="container lg:max-w-[60%] mx-auto px-sm lg:px-0">
+            <span class="flex w-full lg:text-[32px] text-quote">«{{ text }}»</span>
+            <span class="flex text-body w-full pt-sm text-primary-500">{{ author ~ '.' }}</span>
+    </div>
+</div>
+
+{% endblock %}

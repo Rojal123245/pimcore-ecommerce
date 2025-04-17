@@ -1,0 +1,18 @@
+body .overwrite-quicklinks-button {
+    width: 101px;
+    height: 101px;
+    padding: 10px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background: #C90000;
+    }
+
+    span {
+        padding-right: 0;
+        font-size: 19px;
+        line-height: 1.2;
+        margin-bottom: 5px;
+    }
+
+}

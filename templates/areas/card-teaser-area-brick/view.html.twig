@@ -1,0 +1,130 @@
+{% set brick_title = 'Card Teaser' | trans %}
+{% set allowed_headings = [
+    ['h1', 'H1'],
+    ['h2', 'H2'],
+    ['h3', 'H3'],
+] %}
+
+{% set card_header_tag = pimcore_select('card_header_tag', {
+    store: [
+        ['h2', 'H2'],
+        ['h3', 'H3'],
+        ['h4', 'H4'],
+    ],
+    defaultValue: default_heading|default('h2'),
+}) %}
+
+{% extends 'areas/base.html.twig' %}
+{% block configuration %}
+    {{ parent() }}
+
+    {% if editmode %}
+        <div class="flex flex-col gap-2">
+            <span class="font-bold">{{ 'Card Header Tag'|trans }}</span>
+            {{ card_header_tag|raw }}
+        </div>
+    {% endif %}
+{% endblock configuration %}
+
+{% block section %}
+    {% set block = pimcore_block('card-teasers', { manual: true }) %}
+    {% do block.start() %}
+    <section class="w-full">
+        {% set block_title = pimcore_input('block_title', {
+            placeholder: 'Block title'|trans
+        }) %}
+
+        {% if editmode or not block_title.isEmpty() %}
+            <{{ heading_tag.data }} class="w-full container mx-auto text-h4 pb-lg">
+                {{ block_title|raw }}
+            </{{ heading_tag.data }}>
+        {% endif %}
+        <div
+            class="w-full container mx-auto {% if not editmode %}grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl {% else %}flex flex-col px-2 md:px-0 {% endif %}">
+            {% for b in block.iterator %}
+            {% do block.blockConstruct() %}
+            {% do block.blockStart() %}
+            {% set image = pimcore_image('image', {
+                imgAttrs: {
+                    class: 'w-full'
+                }
+            }) %}
+            {% set title = pimcore_input('title', {
+                class: 'w-full',
+                placeholder: 'Card Title'|trans
+            }) %}
+            {% set text = pimcore_textarea('text', {
+                class: 'w-full',
+                placeholder: 'Card Text'|trans
+            }) %}
+            {% set link = pimcore_link('link') %}
+
+            {% if editmode %}
+            <div class="w-full container mx-auto flex flex-row gap-sm">
+                <div class="w-full">
+                    {{ image|raw }}
+                </div>
+                <div class="flex w-full flex-col gap-sm">
+                    <div class="flex">
+                        {{ title|raw }}
+                    </div>
+                    <div class="flex">
+                        {{ text|raw }}
+                    </div>
+                    <div>
+                        {{ link|raw }}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="group flex flex-col relative bg-white font-noto shadow">
+                <span class="w-0 absolute top-0 left-0 h-[5px] bg-primary-500 group-hover:w-full transition-all"></span>
+                {% if not image.isEmpty() %}
+                    <div class="w-full">
+                        {{ image.thumbnail('teaser-card').html({
+                            imgAttributes: {
+                                class: 'w-full'
+                            }
+                        })|raw }}
+                    </div>
+                {% endif %}
+                <div class="flex flex-row p-sm pb-md md:pt-md md:pl-md md:pb-lg md:pr-sm gap-md">
+                    <div class="w-full flex flex-col gap-md">
+                        {% if not title.isEmpty() %}
+                            <{{ card_header_tag.data }} class="text-h4 lg:text-left text-black">
+                                {{ title }}
+                            </{{ card_header_tag.data }}>
+                        {% endif %}
+
+                        {% if not text.isEmpty() %}
+                            <div class="text-black">
+                                {{ text }}
+                            </div>
+                        {% endif %}
+
+                </div>
+                <div class="w-sm">
+                    {% if not link.isEmpty() %}
+                        <a href="{{ link.href }}">
+                            <svg class="rotate-180" id="Icon_Pfeil" data-name="Icon Pfeil"
+                                 xmlns="http://www.w3.org/2000/svg" width="29.17" height="29.17"
+                                 viewBox="0 0 29.17 29.17">
+                                <path
+                                    class="group-hover:stroke-primary-500 group-hover:fill-primary-500"
+                                    id="Pfad_6592" data-name="Pfad 6592"
+                                    d="M138.389,4.044l-2.828-2.828L113.22,23.557V7.582h-4v22.8h22.8v-4H116.047Z"
+                                    transform="translate(-109.219 -1.216)"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% do block.blockEnd() %}
+        {% do block.blockDestruct() %}
+        {% endfor %}
+        </div>
+    </section>
+    {% do block.end() %}
+{% endblock %}

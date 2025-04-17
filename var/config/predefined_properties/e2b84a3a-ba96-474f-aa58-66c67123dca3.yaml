@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                e2b84a3a-ba96-474f-aa58-66c67123dca3:
+                    name: 'Navigation Links with Icon'
+                    description: ''
+                    key: navigation_links_with_icon
+                    type: document
+                    data: ''
+                    config: ''
+                    ctype: document
+                    inheritable: false
+                    creationDate: 1699939837
+                    modificationDate: 1700647084

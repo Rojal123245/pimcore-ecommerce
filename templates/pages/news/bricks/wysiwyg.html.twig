@@ -1,0 +1,15 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+
+{% set text = brick.text %}
+
+<div class="w-full">
+    <div class="container text-body mx-auto lg:max-w-[60%] px-sm lg:px-0">
+
+        <div class="prose prose-li:text-body prose-p:text-body max-w-[100%]">
+            {{ text|raw }}
+        </div>
+    </div>
+</div>
+{% endblock %}

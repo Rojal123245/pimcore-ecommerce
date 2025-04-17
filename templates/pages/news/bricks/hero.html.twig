@@ -1,0 +1,12 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+
+    {% set image = brick.image %}
+    {% if image is not empty %}
+        <div class="w-full">
+            {{ image.thumbnail('hero-thumbnail').html({ imgAttributes: { class: 'w-full' } })|raw }}
+        </div>
+    {% endif %}
+
+{% endblock %}

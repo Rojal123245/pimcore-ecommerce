@@ -1,0 +1,195 @@
+{% set quick_links = pimcore_block('quick_links', {manual: true}) %}
+{% set quick_links_second = pimcore_block('quick_links_second', {manual: true}) %}
+{% set action_button = pimcore_link('quick_links_action') %}
+
+{% if editmode %}
+
+    {{ encore_entry_link_tags('css') }}
+
+    <div class="flex flex-col gap-sm">
+        <span class="text-h4">{{ 'Quick Links First Group'|trans }}</span>
+        {% do quick_links.start() %}
+        <ul class="grid grid-cols-3 gap-sm">
+
+            {% for i in quick_links.iterator %}
+                {% do quick_links.blockConstruct() %}
+                {% set icon = pimcore_image('icon') %}
+                {% set link = pimcore_link('link') %}
+
+                {% do quick_links.blockStart(false) %}
+
+                <li class="flex flex-col gap-sm">
+                    <div class="flex flex-col gap-2">
+                        {% do quick_links.blockControls() %}
+                        <span class="font-bold">{{ 'Icon'|trans }}</span>
+                        <div class="w-[100px]">
+                            {{ icon|raw }}
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="font-bold">{{ 'Link'|trans }}</span>
+                        <div class="w-full">
+                            {{ link|raw }}
+                        </div>
+                    </div>
+                </li>
+
+                {% do quick_links.blockEnd() %}
+                {% do quick_links.blockDestruct() %}
+            {% endfor %}
+        </ul>
+        {% do quick_links.end() %}
+
+
+        <span class="text-h4 mt-lg">{{ 'Quick Links Second Group'|trans }}</span>
+        {% do quick_links_second.start() %}
+        <ul class="grid grid-cols-3 gap-sm">
+
+            {% for i in quick_links_second.iterator %}
+                {% do quick_links_second.blockConstruct() %}
+                {% set icon = pimcore_image('icon') %}
+                {% set link = pimcore_link('link') %}
+
+                {% do quick_links_second.blockStart(false) %}
+
+                <li class="flex flex-col gap-sm">
+                    <div class="flex flex-col gap-2">
+                        {% do quick_links_second.blockControls() %}
+                        <span class="font-bold">{{ 'Icon'|trans }}</span>
+                        <div class="w-[100px]">
+                            {{ icon|raw }}
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="font-bold">{{ 'Link'|trans }}</span>
+                        <div class="w-full">
+                            {{ link|raw }}
+                        </div>
+                    </div>
+                </li>
+
+                {% do quick_links_second.blockEnd() %}
+                {% do quick_links_second.blockDestruct() %}
+            {% endfor %}
+        </ul>
+        {% do quick_links_second.end() %}
+
+        <span class="text-h4 mt-lg">{{ 'Quick Links Action Button'|trans }}</span>
+        <div class="flex flex-col pb-xl">
+            <div class="max-w-sm">
+                {{ action_button|raw }}
+            </div>
+        </div>
+
+    </div>
+
+
+{% else %}
+
+
+    <div id="quickLinks"
+         class="absolute quick-links-backdrop hidden w-full h-full bg-black bg-opacity-30 top-0 left-0 z-50">
+        <div class="h-[100vh] bg-white shadow-xl w-full lg:max-w-[20%] md:max-w-[50%] fixed lg:left-[80%] md:left-[50%] top-0 ">
+            <div
+                class="h-[100px] border-b border-neutral-300 w-full flex flex-row items-center px-sm gap-10 justify-between">
+
+                <div class="flex flex-row gap-sm items-center justify-start">
+                    <a href="#">
+                        <svg id="Icon_Set_Quick_Links" data-name="Icon Set Quick Links" xmlns="http://www.w3.org/2000/svg"
+                             width="24" height="24" viewBox="0 0 24 24">
+                            <path id="Pfad_6585" data-name="Pfad 6585" d="M0,0H24V24H0Z" fill="none"/>
+                            <path id="Pfad_6516" data-name="Pfad 6516"
+                                  d="M206.5,17.515l-5.868-5.853a5.063,5.063,0,0,1-1.505.765,6.05,6.05,0,0,1-1.874.28,5.916,5.916,0,0,1-4.348-1.786A5.884,5.884,0,0,1,191.121,6.6a5.882,5.882,0,0,1,1.786-4.318,6.122,6.122,0,0,1,8.643,0,5.9,5.9,0,0,1,1.778,4.32,5.962,5.962,0,0,1-.272,1.842,5.462,5.462,0,0,1-.788,1.55l5.89,5.868Zm-9.257-7.12a3.623,3.623,0,0,0,2.68-1.1A3.68,3.68,0,0,0,201.016,6.6a3.677,3.677,0,0,0-1.094-2.688,3.626,3.626,0,0,0-2.678-1.1A3.775,3.775,0,0,0,193.433,6.6a3.772,3.772,0,0,0,3.812,3.792"
+                                  transform="translate(-188.121 2.5)"/>
+                        </svg>
+
+                    </a>
+
+
+                    {% include 'components/language-switcher-mobile.html.twig' with {
+                        shouldBeWhite: true
+                    } %}
+                </div>
+
+                <button class="bg-white quick-links-backdrop p-4">
+                    <svg id="Icon_Pfeil" width="29.17" height="29.17" class="quick-links-backdrop rotate-180" data-name="Icon Pfeil" xmlns="http://www.w3.org/2000/svg" width="29.17" height="29.17" viewBox="0 0 29.17 29.17">
+                        <path class="fill-primary-500 stroke-primary-500" id="Pfad_6592" data-name="Pfad 6592" d="M138.389,4.044l-2.828-2.828L113.22,23.557V7.582h-4v22.8h22.8v-4H116.047Z" transform="translate(-109.219 -1.216)"/>
+                    </svg>
+                </button>
+
+            </div>
+
+            <ul class="w-full">
+                {% do quick_links.start() %}
+                {% for i in quick_links.iterator %}
+
+                    {% do quick_links.blockConstruct() %}
+                    {% set icon = pimcore_image('icon') %}
+                    {% set link = pimcore_link('link') %}
+                    {% do quick_links.blockStart() %}
+                    {% if link.href is not empty %}
+                        <li class="w-full">
+                            <a href="{{ link.href }}"
+                               class="w-full p-sm border-b border-neutral-300 hover:bg-neutral-300 flex flex-row items-center gap-4">
+                                {% if icon is not empty %}
+                                    {{ icon.thumbnail({
+                                        height: 25,
+                                        width: 25
+                                    }).html|raw }}
+                                {% endif %}
+
+                                <span class="text-[19px] font-noto-regular">{{ link.text }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% do quick_links.blockEnd() %}
+                    {% do quick_links.blockDestruct() %}
+                {% endfor %}
+                {% do quick_links.end() %}
+
+                {% do quick_links_second.start() %}
+                {% for i in quick_links_second.iterator %}
+
+                    {% do quick_links_second.blockConstruct() %}
+                    {% set icon = pimcore_image('icon') %}
+                    {% set link = pimcore_link('link') %}
+                    {% do quick_links_second.blockStart() %}
+                    {% if link.href is not empty %}
+                        <li class="w-full {{ loop.first ? 'mt-xl border-t' : 'border-b' }} border-neutral-300">
+                            <a href="{{ link.href }}"
+                               class="w-full p-sm border-b border-neutral-300 hover:bg-neutral-300 flex flex-row items-center gap-4">
+                                {% if icon is not empty %}
+                                    {{ icon.thumbnail({
+                                        height: 25,
+                                        width: 25
+                                    }).html|raw }}
+                                {% endif %}
+
+                                <span class="text-[19px] font-noto-regular">{{ link.text }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% do quick_links_second.blockEnd() %}
+                    {% do quick_links_second.blockDestruct() %}
+                {% endfor %}
+                {% do quick_links_second.end() %}
+
+
+                {% if action_button.href is not empty %}
+                    <li class="w-full mt-xl p-sm">
+                        <a href="{{ action_button.href }}"
+                           class="w-full flex items-center gap-sm justify-center text-white cursor-pointer px-lg py-3 bg-primary-500 hover:bg-primary-700">
+                            <span class="font-bold">{{ action_button.text }}</span>
+                            <svg id="Icon_Pfeil" class="h-xs w-xs rotate-180" data-name="Icon Pfeil" xmlns="http://www.w3.org/2000/svg" width="29.17" height="29.17" viewBox="0 0 29.17 29.17">
+                                <path class="fill-white stroke-white" id="Pfad_6592" data-name="Pfad 6592" d="M138.389,4.044l-2.828-2.828L113.22,23.557V7.582h-4v22.8h22.8v-4H116.047Z" transform="translate(-109.219 -1.216)"/>
+                            </svg>
+
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+
+{% endif %}

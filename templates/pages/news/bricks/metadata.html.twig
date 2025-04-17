@@ -1,0 +1,18 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+{% set location = brick.location %}
+{% set time_to_read = brick.timeToRead %}
+{% set publishers = brick.publishers %}
+{% set photo_credit = brick.photoCredit %}
+{% set date = brick.date %}
+
+<div class="py-sm w-full container lg:max-w-[60%] px-sm lg:px-0 mx-auto">
+   <div class="w-full">
+        {{ 'Time to read'|trans }}: {{ time_to_read }} / {{ location }}, {{ date|date('d.m.Y') }} <br />
+        {{ 'Authors' | trans }}: {{ publishers }} <br />
+        {{ 'Photo credit' | trans }}: {{ photo_credit }}
+   </div>
+</div>
+
+{% endblock %}

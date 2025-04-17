@@ -1,0 +1,54 @@
+{% extends 'layouts/main.html.twig' %}
+
+{% do document.setProperty('navigation_is_transparent', 0, app.request.locale) %}
+{% do document.setProperty('navigation_is_white', 1, app.request.locale) %}
+
+{% block content %}
+
+    {% set error_page_image = pimcore_image('error_page_image') %}
+    {% set error_page_text = pimcore_input('error_page_text', {
+        placeholder: 'Error page heading' | trans
+    }) %}
+    {% set error_page_link = pimcore_link('error_page_link', {
+        title: 'Link' | trans
+    }) %}
+
+    <section class="w-full pt-xxxl min-h-[100vh] bg-primary-500 text-white font-noto gap-10 flex flex-col items-center justify-center">
+
+        <div class="flex flex-col my-xxxl gap-10 justify-around container">
+            <h4 class="text-white antialiased text-center font-noto-regular text-h2">
+                {{ error_page_text|raw }}
+            </h4>
+
+            <div class="w-full flex justify-center items-center align-center">
+                {% if editmode %}
+                    <div class="h-100 w-full">
+                        {{ error_page_image|raw }}
+                    </div>
+                {% else %}
+                    {% if not error_page_image.isEmpty() %}
+
+                            {{ error_page_image.thumbnail('error-page-image-thumbnail').html({
+                                imgAttr : {
+                                    class: "bg-black"
+                                }
+                            })|raw }}
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="w-full flex justify-center">
+                {% if editmode %}
+                    {{ error_page_link|raw }}
+                {% else %}
+                <a href="{{ error_page_link.href }}" class="px-8 py-4 transition shadow-lg hover:scale-105 bg-white text-red flex justify-center items-center gap-5">
+                    <span class="font-noto antialiased text-black font-bold">{{ error_page_link.text }}</span>
+                    <svg width="20px" height="20px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <path d="M16 0.997v9.003h-1v-7.297l-10.317 10.297-0.707-0.708 10.315-10.295h-7.316v-1h9.025z" class="fill-red stroke-red" />
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

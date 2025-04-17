@@ -1,0 +1,156 @@
+body .overwrite-image-text {
+    max-width: 100%;
+    gap: 0;
+
+    .overwrite-border {
+        border-bottom: 1px solid #DBDCDD;
+        padding: 8px 0;
+
+        &:first-of-type {
+            border-top: 1px solid #DBDCDD;
+        }
+
+        .overwrite-border-container {
+            width: 100%;
+            max-width: calc( 1366px + 20px + 20px);
+            margin: 0 auto;
+            padding: 0 20px;
+    
+            .overwrite-alignment {
+                align-items: center;
+                border: none;
+    
+                .overwrite-text-block {
+                    justify-content: center;
+                    padding: 30px 0;
+            
+                    .overwrite-gap {
+                        gap: 0;
+            
+                        .overwrite-title {
+                            padding: 0;
+                        }
+    
+                        .overwrite-text {
+                            padding: 0;
+                            margin-top: 30px;
+                        }
+                        
+                    }
+    
+                    .overwrite-icon {
+                        margin-top: 30px;
+                    }
+            
+                }
+            
+                .overwrite-image {
+            
+                    img {
+                        object-fit: cover;
+                        width: 100%;
+                        height: 100%;
+                    }
+            
+                }
+    
+            }
+    
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    body .overwrite-image-text {
+    
+        .overwrite-border {
+            transition: background 0.3s;
+    
+            &:hover {
+                background: #FFFFFF;
+    
+                .overwrite-svg {
+    
+                    path {
+                        fill: #FF0000;
+                    }
+                    
+                }
+    
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 1023px) {
+
+    body .overwrite-image-text {
+    
+        .overwrite-border {
+            padding: 15px 0;
+
+            .overwrite-border-container {
+                background: #FFFFFF;
+                padding: 10px 20px;
+                max-width: 650px;
+
+                .overwrite-alignment {
+                    gap: 20px;
+        
+                    .overwrite-text-block {
+                        padding: 0 20px 20px 20px;
+
+                        .overwrite-gap {
+
+                            .overwrite-title {
+
+                                .overwrite-svg {
+                                    width: 30px;
+
+                                    path {
+                                        transition: fill 0.3s;
+                                    }
+
+                                }
+    
+                            }
+
+                            .overwrite-text {
+                                margin-top: 20px;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+/* @media screen and (max-width: 640px) {
+
+    body .overwrite-image-text {
+    
+        .overwrite-border {
+
+            .overwrite-border-container {
+                max-width: 650px;
+            }
+
+        }
+
+    }
+
+} */

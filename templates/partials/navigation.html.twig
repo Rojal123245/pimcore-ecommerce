@@ -1,0 +1,139 @@
+{% set menuRenderer = pimcore_nav_renderer('menu') %}
+
+{% set shouldBeTransparent = document.getProperty('navigation_is_transparent') %}
+<script>
+    window.enableTransparentNavigation = {{ shouldBeTransparent ? 'true' : 'false' }};
+</script>
+{% set shouldBeWhite = not shouldBeTransparent %}
+<nav id="mainNavigation" class="z-50 group-main hidden lg:flex group/main fixed w-full {{ shouldBeWhite ? 'border-neutral-300 border-b border-solid bg-white text-black' : 'bg-gradient-to-b from-black to-[rgba(0,0,0,0)] text-white' }} font-noto-regular">
+    <div class="w-full h-[100px] relative transition-all group-hover/main:text-black group-hover/main:bg-white {{ shouldBeWhite ? 'bg-white' : 'bg-transparent' }}">
+        <div class="container mx-auto flex flex-row gap-32 justify-start items-center">
+            <div class="main-navigation min-w-[250px] py-[5px]">
+                <a href="/{{ app.request.locale }}">
+                    <img alt="{{ 'Logo' | trans }}" src="{{ shouldBeWhite ? asset('logo.svg') : asset('logo-white.svg') }}" id="navigationLogo" class="logo h-full {{ shouldBeWhite ? 'small' : 'large' }}" data-dark="{{ asset('logo.svg') }}" data-light="{{ asset('logo-white.svg') }}">
+                </a>
+            </div>
+            <div class="hidden lg:flex flex-row h-full justify-between items-center w-full">
+                <ul class="flex flex-row h-full font-noto-regular">
+                    {% for page in mainNavigation %}
+                        {% if page.isVisible() and menuRenderer.accept(page) %}
+                            {% set hasChildren = page.hasChildren() %}
+                            {% set doc = pimcore_document(page._documentId) %}
+                            <li class="group/first h-full flex justify-center">
+                                {% set type = page.documentType %}
+                                {% set target = doc.getProperty('navigation_target')|default('_self') %}
+                                <a target="{{ target }}" class="hover:text-primary-700 h-[100px] flex items-center {{ page.active ? 'text-primary-700' : shouldBeWhite ? 'text-black': 'text-white' }} group-hover:main/text-black p-4 py-8" href="{{ page.href }}">{{ page.label }}</a>
+                                {% if hasChildren %}
+
+                                    {% set hasLinksWithIcons = doc.getProperty('navigation_links_with_icon') is not empty %}
+                                    <div class="absolute shadow font-noto border-t-2 border-neutral-300 navigation-flyout transition-all top-[100%] left-0 hidden w-full {{ shouldBeWhite ? 'group-active/first:bg-white group-focus-within/first:bg-white group-hover/first:bg-white' : '' }} group-active/first:flex group-focus-within/first:flex group-hover/first:flex bg-white">
+                                        <div class="container mx-auto flex flex-row">
+                                            <ul class="grid {{ hasLinksWithIcons ? 'grid-cols-3 w-[75%]' : 'grid-cols-4 w-full' }} gap-10 mx-auto py-10">
+                                                {% set firstChildren = page.getPages() %}
+
+                                                {% for child in firstChildren %}
+                                                    {% if child.isVisible() and menuRenderer.accept(child) %}
+                                                        <li class="group/second min-w-[300px]">
+                                                            <div class="w-full pb-[15px] border-neutral-300 border-b-2">
+                                                                {% set childDoc = pimcore_document(child._documentId) %}
+                                                                <a target="{{ childDoc.getProperty('navigation_target')|default('_self') }}" class="hover:text-primary-700 font-bold {{ child.active ? 'text-primary-700' : 'text-black' }} font-noto cursor-pointer" href="{{ child.href }}">{{ child.label }}</a>
+                                                            </div>
+
+                                                            {% set childHasChildren = child.hasPages() %}
+
+                                                            {% if childHasChildren %}
+                                                                <ul class="mt-[5px] flex flex-col">
+                                                                    {% set secondChildren = child.getPages() %}
+
+                                                                    {% for secondChild in secondChildren %}
+                                                                        {% if secondChild.isVisible() and menuRenderer.accept(secondChild) %}
+                                                                            {% set secondChildDoc = pimcore_document(secondChild._documentId) %}
+                                                                            <li class="group/third py-[10px] border-b-2 border-neutral-300 border-solid">
+                                                                                <a target="{{ secondChildDoc.getProperty('navigation_target')|default('_self') }}" class="hover:text-primary-700 {{ secondChild.active ? 'text-primary-700' : 'text-black' }}" href="{{ secondChild.href }}">{{ secondChild.label }}</a>
+                                                                            </li>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            {% endif %}
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                            {% if hasLinksWithIcons %}
+                                                <div class="w-[25%] ml-5 py-10">
+                                                    {{ pimcore_inc(doc.getProperty('navigation_links_with_icon')) }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% include 'components/language-switcher-mobile.html.twig' %}
+            </div>
+        </div>
+    </div>
+    {% if document.getProperty('quick_links') is not empty %}
+        <button class="bg-primary-500 w-[120px] h-[100px] px-4 z-50 absolute top-0 right-0 quick-links-trigger overwrite-quicklinks-button">
+            <span class="text-white uppercase font-noto font-bold flex w-full px-4 text-right wrap">{{ 'Quick Links'|trans }}</span>
+            <svg id="Icon_Pfeil" class="" data-name="Icon Pfeil" xmlns="http://www.w3.org/2000/svg"
+                 width="29.17" height="29.17" viewBox="0 0 29.17 29.17">
+                <path class="fill-white stroke-white" id="Pfad_6592" data-name="Pfad 6592"
+                      d="M138.389,4.044l-2.828-2.828L113.22,23.557V7.582h-4v22.8h22.8v-4H116.047Z"
+                      transform="translate(-109.219 -1.216)"/>
+            </svg>
+
+        </button>
+    {% endif %}
+
+</nav>
+<nav id="mobileNavigation" class="z-50 absolute top-0 left-0 flex w-full flex-col lg:hidden text-black">
+    <div class="w-full px-4 {{ shouldBeWhite ? 'bg-white' : 'bg-transparent' }} py-2 items-center justify-between flex flex-row">
+        <div class="flex gap-4 justify-start items-center">
+            {% include 'components/language-switcher-mobile.html.twig' with {
+                shouldBeWhite: shouldBeWhite
+            } %}
+
+            <a href="/search">
+                <span class="fa fa-search text-[15px]"></span>
+            </a>
+        </div>
+
+        <div class="main-navigation">
+            <a href="/{{ app.request.locale }}">
+                <img alt="{{ 'Logo' | trans }}" src="{{ asset('logo.svg') }}" id="navigationLogo" class="logo h-[60px]">
+            </a>
+        </div>
+
+        <div class="pr-8">
+            <button class="relative toggle-menu flex flex-row transform  -translate-x-1/2 -translate-y-1/2 gap-4">
+                <span class="sr-only">{{ 'Open main menu'|trans }}</span>
+                <span class="bg-primary-500 absolute first block h-1 w-6 transform transition duration-250 ease-in-out"></span>
+                <span class="bg-black second absolute h-1 w-6 transform transition duration-250 ease-in-out"></span>
+                <span class="bg-primary-500 absolute third  h-1 w-6 transform  transition duration-250 ease-in-out"></span>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden shadow bg-white mobile-navigation">
+        <div class="flex flex-col">
+            <ul class="flex flex-col h-full font-noto-regular border-b border-neutral-300">
+                {% for page in mainNavigation %}
+                    {% if page.isVisible() and menuRenderer.accept(page) %}
+                        {% include 'partials/navigation/mobile-menu.html.twig' with {page: page, level: 3, menuRenderer: menuRenderer} %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <div class="flex flex-col sm:flex-row">
+                <div class="flex w-full flex-col py-xl px-lg">
+                    {% if document.getProperty('navigation_links_with_icon') is not empty %}
+                        {{ pimcore_inc(document.getProperty('navigation_links_with_icon')) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

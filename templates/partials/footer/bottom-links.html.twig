@@ -1,0 +1,26 @@
+{% set footer_bottom_links_block = pimcore_block('footer_bottom_links_block', {manual: true}).start() %}
+
+{% if editmode %}
+    <div class="flex flex-col gap-2">
+        <span class="font-bold">{{ 'Bottom Links'|trans }}</span>
+        {% for b in footer_bottom_links_block.iterator %}
+            {% do footer_bottom_links_block.blockConstruct() %}
+                {% set link = pimcore_link('link') %}
+                {% do footer_bottom_links_block.blockStart() %}
+                    <div class="flex flex-col gap-2">
+                        {{ link|raw }}
+                    </div>
+                {% do footer_bottom_links_block.blockEnd() %}
+            {% do footer_bottom_links_block.blockDestruct() %}
+        {% endfor %}
+    </div>
+{% else %}
+    {% for b in footer_bottom_links_block.iterator %}
+        {% do footer_bottom_links_block.blockConstruct() %}
+        {% set link = pimcore_link('link') %}
+        {% do footer_bottom_links_block.blockStart() %}
+            {{ link|raw }}
+        {% do footer_bottom_links_block.blockEnd() %}
+        {% do footer_bottom_links_block.blockDestruct() %}
+    {% endfor %}
+{% endif %}

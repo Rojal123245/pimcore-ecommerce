@@ -1,0 +1,208 @@
+body .overwrite-accordion {
+    padding: 0;
+
+    .overwrite-editmode {
+
+        * {
+            font-size: 16px;
+        }
+        
+        ul {
+            list-style-type: initial;
+            margin: initial;
+            padding: initial;
+            margin-left: 24px;
+            margin-bottom: 15px;
+        }
+
+        ol {
+            list-style: decimal;
+            padding: initial;
+            margin-left: 24px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+    }
+
+    .overwrite-border {
+        border: none;
+        border-top: 2px solid #F5F5F5;
+
+        &:last-of-type {
+            border-bottom: 2px solid #F5F5F5;
+        }
+
+        .overwrite-button {
+            padding: 0 24px;
+
+            > button {
+                padding: 24px 0;
+                max-width: 920px;
+                gap: 10px;
+                align-items: flex-start;
+
+                > span {
+                    text-align: left;
+                }
+
+                .icon-minus {
+                    margin-top: 10px;
+                    margin-right: -5px;
+                }
+
+            }
+
+        }
+
+        .overwrite-text {
+            padding: 0 24px;
+            max-width: 100%;
+
+            > div {
+                margin: 0 auto 24px auto;
+                max-width: 920px;
+                padding-right: 35px;
+
+                * {
+                    font-size: 16px;
+                }
+    
+                /* *:last-of-type {
+                    margin-bottom: 0;
+                } */
+                
+                ul {
+                    list-style-type: initial;
+                    margin: initial;
+                    padding: initial;
+                    margin-left: 24px;
+                    margin-bottom: 15px;
+                }
+    
+                ol {
+                    list-style: decimal;
+                    padding: initial;
+                    margin-left: 24px;
+                    margin-bottom: 15px;
+                }
+    
+                p {
+                    margin-bottom: 15px;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+
+    body .overwrite-accordion {
+
+        .overwrite-editmode {
+
+            * {
+                font-size: 18px;
+            }
+
+        }
+
+        .overwrite-border {
+    
+            .overwrite-button {
+                padding: 0 60px;
+
+                > button {
+                    gap: 25px;
+                }
+
+            }
+    
+            .overwrite-text {
+                padding: 0 60px;
+
+                > div {
+                    padding-right: 50px;
+
+                    * {
+                        font-size: 18px;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    body .overwrite-accordion {
+
+        .overwrite-border {
+    
+            .overwrite-button {
+                padding: 0 120px;
+
+                > button {
+                    padding: 30px 0;
+                }
+
+            }
+    
+            .overwrite-text {
+                padding: 0 120px;
+
+                > div {
+                    margin: 0 auto 30px auto;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1300px) {
+
+    body .overwrite-accordion {
+
+        .overwrite-editmode {
+
+            * {
+                font-size: 22px;
+            }
+
+        }
+
+        .overwrite-border {
+    
+            .overwrite-text {
+
+                > div {
+
+                    * {
+                        font-size: 22px;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}

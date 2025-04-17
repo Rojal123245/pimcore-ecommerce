@@ -1,0 +1,562 @@
+.veranstaltung-detail {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: "Noto Sans Regular", sans-serif;
+    margin-top: 76px;
+    background: #F5F5F5;
+
+    /* ------------------------ */
+    /* INTRO */
+    /* ------------------------ */
+
+    .intro {
+        background: rgb(102,109,118);
+        background: linear-gradient(180deg, rgba(102,109,118,1) 0%, rgba(147,149,152,1) 100%);
+
+        /* breadcrumbs */
+        .breadcrumbs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* intro */
+        .intro-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px 50px 48px;
+
+            .alignment {
+                display: flex;
+                flex-direction: column;
+
+                .left {
+                    width: 100%;
+                    color: white;
+
+                    .date {
+                        display: flex;
+                        position: relative;
+                        gap: 25px;
+                        padding: 0;
+
+                        .abgesagt {
+                            position: absolute;
+                            top: 50%;
+                            left: -20px;
+                            right: -20px;
+                            transform: translateY(-50%);
+                            padding: 5px 10px;
+                            text-align: center;
+                            z-index: 1;
+                            font-weight: 600;
+                            background: #FF0000;
+                        }
+
+                        .big-date {
+                            font-size: 55px;
+                            font-weight: 600;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .small-date {
+                            font-size: 23px;
+                            font-weight: 600;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 5px;
+                            text-transform: uppercase;
+                        }
+
+                    }
+
+                    .archiv {
+                        padding: 8px 25px;
+                        text-align: center;
+                        font-weight: 700;
+                        font-size: 16px;
+                        background: #FF0000;
+                        display: inline-block;
+                        margin-bottom: 20px;
+                        margin-top: 10px;
+                    }
+
+                    .themes {
+                        display: none;
+                    }
+
+                    .language {
+                        display: none;
+                    }
+
+                }
+
+                .right {
+                    width: 100%;
+                    margin-bottom: 50px;
+                    color: white;
+
+                    .archiv {
+                        display: none;
+                    }
+
+                    .title {
+                        font-size: 33px;
+                        line-height: 1.3;
+                        hyphens: auto;
+                        margin-bottom: 20px;
+                    }
+
+                    .subtitle {
+                        display: flex;
+                        flex-direction: column;
+
+                        .themes {
+                            display: flex;
+                            gap: 10px;
+                            margin-bottom: 5px;
+
+                            p {
+                                margin: 0;
+                                font-weight: 600;
+                            }
+
+                        }
+
+                        .language {
+                            display: flex;
+                            gap: 10px;
+                            margin-bottom: 5px;
+
+                            p {
+                                margin: 0;
+                                font-weight: 600;
+                            }
+
+                        }
+
+                        .type {
+                            font-weight: 600;
+                            margin-bottom: 5px;
+                        }
+
+                        .lehrmethode {
+                            font-weight: 600;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    /* ------------------------ */
+    /* BODY */
+    /* ------------------------ */
+
+    .body-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    
+        .alignment {
+            display: flex;
+            flex-direction: column;
+        
+            .sidebar {
+                width: 100%;
+                background: #FFFFFF;
+
+                .images {
+                    /* dev */
+                    height: 500px;
+                    background: gray;
+                    margin-top: -75px;
+                }
+
+                .abgesagt {
+                    color: #FF0000;
+                    font-weight: 700;
+                }
+
+                .sidebar-details {
+
+                    > div {
+                        padding: 15px 20px;
+                        border-bottom: 1px solid #E9E9E9;
+                        display: flex;
+                        gap: 20px;
+                        align-items: flex-start;
+                        hyphens: auto;
+                        font-size: 14px;
+
+                        &:last-of-type {
+                            border-bottom: none;
+                        }
+
+                        svg {
+                            flex-shrink: 0;
+                        }
+
+                    }
+
+                }
+
+                /* .orange-light-off {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: green;
+                }
+
+                .orange-light-on {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: orange;
+                } */
+
+                .anmelden,
+                .kalender {
+                    background: #FF0000;
+
+                    a {
+                        color: white;
+                        text-decoration: none;
+                        padding: 20px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 24px;
+
+                        svg {
+
+                            .st0 {
+                                fill: #FFFFFF;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            .main-content {
+                margin-top: 40px;
+
+                images {
+                    display: none;
+                }
+
+                .subtitle {
+                    font-size: 30px;
+                    margin-top: 50px;
+                    display: block;
+                }
+
+                .images {
+                    margin-top: -65px;
+                    display: flex;
+                    gap: 20px;
+                    overflow: auto;
+                    /* height: 100px; */
+                    /* background: red; */
+
+                    display: none;
+
+                    img {
+                        max-width: 300px;
+                    }
+
+                }
+
+                .lead {
+                    margin-top: 50px;
+                }
+
+            }
+
+        }
+
+    }
+
+    /* ------------------------ */
+    /* REGISTER */
+    /* ------------------------ */
+
+    .register-background {
+        background: rgb(201,0,0);
+        background: linear-gradient(180deg, rgba(201,0,0,1) 0%, rgba(255,0,0,1) 100%);
+        margin: 50px 0 0 0;
+
+        .register-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: white;
+
+            .register {
+                display: flex;
+                justify-content: space-between;
+                gap: 25px;
+                flex-wrap: wrap;
+                align-items: center;
+                padding: 20px 0 25px 0;
+
+                .title {
+                    font-size: 27px;
+                }
+
+                .link {
+
+                    a {
+                        background: #FFFFFF;
+                        padding: 15px 30px;
+                        color: #FF0000;
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                        font-size: 22px;
+                        font-weight: 600;
+
+                        svg {
+
+                            path {
+                                fill: #FF0000;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    /* ------------------------ */
+    /* EVENTS */
+    /* ------------------------ */
+
+    .veranstaltungen-title {
+        font-size: 23px;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 30px 20px;
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    .veranstaltung-detail {
+    
+        .intro {
+
+            .intro-container {
+                margin-top: 50px;
+                padding: 0 20px;
+    
+                .alignment {
+                    flex-direction: row;
+                    gap: 120px;
+
+                    .left {
+                        width: 380px;
+
+                        .date {
+                            margin-bottom: 30px;
+
+                            .archiv {
+                                max-width: 300px;
+                            }
+
+                            .big-date {
+                                font-size: 120px;
+                                line-height: 1;
+                            }
+
+                            .small-date {
+                                flex-direction: column;
+                                font-size: 40px;
+                                line-height: 1.2;
+                                gap: 0;
+                            }
+
+                        }
+
+                        .archiv {
+                            display: none;
+                        }
+
+                        .themes {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            margin-bottom: 5px;
+                            font-size: 18px;
+
+                            p {
+                                margin: 0;
+                                font-weight: 600;
+                            }
+
+                        }
+    
+                        .language {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            margin-bottom: 5px;
+                            font-size: 18px;
+
+                            p {
+                                margin: 0;
+                                font-weight: 600;
+                            }
+
+                        }
+
+                    }
+
+                    .right {
+                        width: calc(100% - 380px - 120px);
+                        margin-bottom: 100px;
+
+                        .archiv {
+                            padding: 10px 32px;
+                            text-align: center;
+                            font-weight: 700;
+                            font-size: 18px;
+                            background: #FF0000;
+                            display: inline-block;
+                            margin-bottom: 20px;
+                        }
+                        
+                        .title {
+                            font-size: 46px;
+                            line-height: 1.3;
+                            hyphens: none;
+                            margin-bottom: 20px;
+                        }
+    
+                        .subtitle {
+                            display: flex;
+                            flex-direction: row;
+                            gap: 40px;
+    
+                            .themes {
+                                display: none;
+                            }
+    
+                            .language {
+                                display: none;
+                            }
+    
+                            .type {
+                                font-size: 18px;
+                            }
+    
+                            .lehrmethode {
+                                font-size: 18px;
+                            }
+    
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+        }
+
+        .body-container {
+
+            .alignment {
+                flex-direction: row;
+                gap: 120px;
+
+                .sidebar {
+                    width: 380px;
+                    margin-top: 50px;
+                    align-self: flex-start;
+
+                    .images {
+                        display: none;
+                    }
+
+                    .sidebar-details {
+
+                        > div {
+                            padding: 15px 30px;
+                            font-size: 18px;
+
+                            svg {
+                                margin-top: 2px;
+                            }
+                            
+                        }
+
+                    }
+                }
+
+                .main-content {
+                    width: calc(100% - 380px - 120px);
+                    margin-top: 0;
+
+                    /* dev */
+                    .images {
+                        height: 500px;
+                        background: gray;
+                        margin-top: -75px;
+                        display: flex;
+                    }
+
+                }
+
+            }
+
+        }
+
+        .register-container {
+    
+            .register {
+    
+                .title {
+                    font-size: 38px;
+                }
+
+            }
+
+        }
+
+        .veranstaltungen-title {
+            font-size: 32px;
+    
+            .container {
+                padding: 50px 20px 50px 20px;
+            }
+    
+        }
+
+    }
+
+}

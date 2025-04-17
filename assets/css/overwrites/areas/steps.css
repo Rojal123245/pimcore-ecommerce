@@ -1,0 +1,140 @@
+body .overwrite-steps {
+
+    .overwrite-padding {
+        padding-top: 60px;
+        padding-bottom: 24px;
+    }
+   
+    .overwrite-number {
+        font-size: 80px;
+        font-weight: 400;
+        color: #000000;
+        margin-left: 35px;
+    }
+
+    .overwrite-editmode {
+
+        * {
+            font-size: 16px;
+        }
+        
+        ul {
+            list-style-type: initial;
+            margin: initial;
+            padding: initial;
+            margin-left: 24px;
+            margin-bottom: 15px;
+        }
+
+        ol {
+            list-style: decimal;
+            padding: initial;
+            margin-left: 24px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+    }
+
+    .prose {
+
+        * {
+            font-size: 16px;
+        }
+        
+        ul {
+            list-style-type: initial;
+            margin: initial;
+            padding: initial;
+            margin-left: 24px;
+            margin-bottom: 15px;
+
+            li::marker {
+                color: #000000;
+            }
+
+        }
+
+        ol {
+            list-style: decimal;
+            padding: initial;
+            margin-left: 24px;
+            margin-bottom: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+    }
+
+    .overwrite-link {
+        margin-bottom: 24px;
+
+        > a {
+            font-weight: 700;
+            margin-left: 24px;
+            color: #FF0000;
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+
+    body .overwrite-steps {
+
+        .overwrite-title {
+            padding-bottom: 75px;
+        }
+        
+        .overwrite-container {
+            gap: 90px 30px;
+        }
+
+        .overwrite-number {
+            font-size: 100px;
+            margin-left: 43px;
+        }
+
+        .prose {
+
+            * {
+                font-size: 18px;
+            }
+
+        }
+
+        .overwrite-link {
+    
+            > a {
+                font-size: 18px;
+            }
+    
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    body .overwrite-steps {
+        padding: 0 20px;
+
+        .overwrite-title {
+            padding-bottom: 110px;
+        }
+
+        .overwrite-container {
+            gap: 84px;
+        }
+
+    }
+
+}

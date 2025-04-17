@@ -1,0 +1,28 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    theme-teaser-thumbnail:
+                        items:
+                            -
+                                method: cover
+                                arguments:
+                                    width: 262
+                                    height: 366
+                                    positioning: center
+                                    forceResize: true
+                        medias: {  }
+                        name: theme-teaser-thumbnail
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703060908
+                        creationDate: 1697005220
+                        preserveAnimation: false

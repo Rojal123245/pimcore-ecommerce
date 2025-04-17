@@ -1,0 +1,36 @@
+{# 
+    Modal Component
+
+    Props:
+    id: string,                                 => required, Should be a unique id for this modal
+    type: 'video'|'youtube'|'youtube_id',       => required
+    data: string                                => required, should be youtube id or the video source as string
+
+
+ #}
+
+<div data-target="#{{ modal.id }}" id="{{ modal.id }}" class="hidden backdrop-blur modal-close fixed cursor-pointer w-full h-[100%] top-0 left-0 z-[100] bg-opacity-50 bg-black flex items-center justify-center">
+    <div class="container z-[105] cursor-auto bg-transparent flex flex-col">
+        <div class="w-full flex flex-row justify-between py-sm">
+            <h1></h1>
+            <button data-target="#{{ modal.id }}" title="{{ 'Close Popup' | trans }}" class="modal-close">
+                <svg class="modal-close" data-target="#{{ modal.id }}" id="Icon_Schliessen" data-name="Icon Schliessen" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 28.584 28.585">
+                    <path id="Pfad_6599"  data-target="#{{ modal.id }}" class="modal-close fill-white stroke-white" data-name="Pfad 6599" d="M137.657,3.411,134.829.583,123.365,12.047,111.9.583l-2.828,2.828,11.464,11.464L109.073,26.34l2.828,2.828L123.365,17.7l11.464,11.465,2.828-2.828L126.193,14.875Z" transform="translate(-109.073 -0.583)"/>
+                </svg>
+            </button>
+        </div>
+        <div class="w-full">
+            {% if modal.type == 'youtube' or modal.type == 'youtube_id' %}
+                <iframe class="w-full youtube_iframe aspect-video"
+                    src="https://www.youtube.com/embed/{{ modal.data }}?enablejsapi=1"
+                    title="{{ 'YouTube video player'|trans }}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+                </iframe>
+            {% elseif modal.type == 'video' %}
+                <video src="{{ modal.data }}" controls class="w-full"></video>
+            {% endif %}
+        </div>
+    </div>
+</div>
+

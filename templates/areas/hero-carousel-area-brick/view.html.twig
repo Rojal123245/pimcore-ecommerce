@@ -1,0 +1,169 @@
+{% set brick_title = 'Hero Carousel'|trans %}
+
+
+{% extends 'areas/base.html.twig' %}
+
+
+{% set carousel = pimcore_block('hero-carousels', {manual: true}).start() %}
+{% set carousel_link_1 = pimcore_link('hero-carousel-link-1') %}
+{% set carousel_link_2 = pimcore_link('hero-carousel-link-2') %}
+{% set carousel_link_3 = pimcore_link('hero-carousel-link-3') %}
+{% set slide_time = pimcore_numeric('slide_time', {
+    minValue: 3
+}) %}
+{% block configuration %}
+    {{ parent() }}
+    {% if editmode %}
+        <div class="flex flex-col gap-3">
+            <span class="font-bold">{{ 'Slide time (in seconds)'|trans }}</span>
+            <div class="w-full">
+                {{ slide_time|raw }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% set items = 0 %}
+{% block section %}
+    {% set random_id = random(100000000000, 999999999999) %}
+    {% if editmode %}
+        <div class="w-full container mx-auto flex flex-col gap-5 mt-5" data-enable="{{ editmode ? 'false' : 'true' }}">
+            <h2 class="text-h5 font-noto-regular">{{ 'Carousel Links'|trans }}</h2>
+            <div class="flex flex-row gap-5">
+                <div class="bg-primary-700 text-white w-full lg:w-[281px] p-4 flex justify-center">
+                    {{ carousel_link_1|raw }}
+                </div>
+                <div class="bg-neutral-900 text-white w-full lg:w-[281px] p-4 flex justify-center">
+                    {{ carousel_link_2|raw }}
+                </div>
+                <div class="bg-neutral-700 text-white w-full lg:w-[281px] p-4 flex justify-center">
+                    {{ carousel_link_3|raw }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <section class="w-full flex flex-col relative pb-xxl">
+        {% if editmode %}
+            <div class="w-full container mx-auto">
+                <h2 class="py-5 text-h5 font-noto-regular">{{ 'Carousel Items'|trans }}</h2>
+            </div>
+        {% endif %}
+        <div data-carousel-control="#heroCarouselControls{{random_id}}" class="hero-carousel w-full flex flex-col" data-slide-time="{{ slide_time.getData()|default(7) }}"
+             data-enable="{{ editmode ? 'false' : 'true' }}">
+            {% for item in carousel.iterator %}
+            {% set items = items + 1 %}
+            {% do carousel.blockConstruct() %}
+            <div class="w-full">
+                {% do carousel.blockStart(false) %}
+
+                {% set image = pimcore_image('hero_background_image') %}
+                {% set text = pimcore_input('hero_text', { placeholder: 'Enter text here'|trans }) %}
+                {% set link = pimcore_link('hero_link', {class: 'font-noto-regular text-primary-500 hover:text-primary-700'}) %}
+
+                {% if editmode %}
+                <div class="w-full container mx-auto flex flex-col">
+                    <div class="w-full">
+                        {% do carousel.blockControls() %}
+                    </div>
+                    <div class="flex flex-row w-full gap-10 items-center">
+                        <div class="w-full">
+                            {{ image|raw }}
+                        </div>
+                        <div class="w-full flex flex-col gap-5">
+                            <div class="w-full">
+                                <span>{{ 'Slide text'|trans }}</span>
+                                {{ text|raw }}
+                            </div>
+                            <div class="w-full">
+                                <span>{{ 'Slide link'|trans }}</span> <br/>
+                                {{ link|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="pb-xl">
+                    <div class="w-full relative bg-cover">
+                        {{ image.thumbnail('homepage-hero-thumbnail').html({
+                            imgAttributes: {
+                                class: 'w-full'
+                            }
+                        })|raw }}
+                        <div class="hidden">
+                            {% do carousel.blockControls() %}
+                        </div>
+
+                        <div class="absolute w-full -bottom-[10%] left-0 z-50">
+                            <div class="container mx-auto px-sm md:px-0">
+                                <div class="bg-white shadow mb-sm lg:w-[60%] p-sm lg:px-xl lg:py-lg flex flex-col gap-5 relative z-100">
+                                    <{{ heading_tag.getData() }} class="text-h1 font-noto-regular
+                                    text-black">{{ text.text }}</{{ heading_tag.getData() }}>
+                                {{ link|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% do carousel.blockEnd() %}
+        </div>
+        {% do carousel.blockDestruct() %}
+        {% endfor %}
+        </div>
+        {% if not editmode %}
+            <div class="lg:absolute bottom-0 right-0 flex flex-col lg:flex-col-reverse gap-10 justify-content-end items-end">
+                {# CAROUSEL CONTROLS #}
+                <div class="w-full container px-sm md:px-0 mx-auto pt-sm md:pb-sm md:pt-0 md:max-w-full md:w-[300px] flex flex-row items-center gap-10">
+                    <button class="carousel-pauser border-red-500 border rounded-full flex items-center justify-center p-4">
+                        <span class="text-primary-500 fa fa-pause text-[10px]"></span>
+                    </button>
+                    <button style="display: none"
+                            class="carousel-player flex border-red-500 border rounded-full items-center justify-center p-4">
+                        <span class="text-primary-500 fa fa-play text-[10px]"></span>
+                    </button>
+                    <div id="heroCarouselControls{{random_id}}" class="w-full carousel-dots flex gap-5">
+                        {% for item in range(0, items - 1) %}
+                            <div>
+                                <div class="w-3 h-3 bg-primary-500 cursor-pointer"
+                                     data-slide-to="{{ loop.index }}"></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {# CAROUSEL LINKS #}
+                <div class="w-full container px-sm md:px-0 mx-auto lg:max-w-full">
+                    {% if carousel_link_1.href is not empty %}
+                        <div class="bg-primary-700 text-white w-full lg:w-[281px] p-4 flex justify-center">
+                            <a href="{{ carousel_link_1.href }}"
+                               class="flex font-noto-regular-medium flex-row items-center gap-5">
+                                {{ carousel_link_1.text }}
+
+                                <span class="icon icon-arrow-down icon-sm icon-inverted upside-down"></span>
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if carousel_link_2.href is not empty %}
+                        <div class="bg-neutral-900 text-white w-full lg:w-[281px] p-4 flex justify-center">
+                            <a href="{{ carousel_link_2.href }}"
+                               class="flex font-noto-regular-medium flex-row items-center gap-5">
+                                {{ carousel_link_2.text }}
+
+                                <span class="icon icon-arrow-down icon-sm icon-inverted upside-down"></span>
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if carousel_link_3.href is not empty %}
+                        <div class="bg-neutral-700 text-white w-full lg:w-[281px] p-4 flex justify-center">
+                            <a href="{{ carousel_link_3.href }}"
+                               class="flex font-noto-regular-medium flex-row items-center gap-5">
+                                {{ carousel_link_3.text }}
+
+                                <span class="icon icon-arrow-down icon-sm icon-inverted upside-down"></span>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

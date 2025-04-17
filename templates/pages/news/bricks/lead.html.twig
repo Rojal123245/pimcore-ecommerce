@@ -1,0 +1,29 @@
+{% extends 'pages/news/bricks/base.html.twig' %}
+
+{% block content %}
+
+{% set text = brick.text %}
+{% set heading_tag = brick.headingTag|default('h3') %}
+{% set classes = '' %}
+
+{% if heading_tag == 'h1' %}
+    {% set classes = 'prose-p:text-h1 prose-a:text-h1 prose-li:text-h1' %}
+{% elseif heading_tag == 'h2' %}
+    {% set classes = 'prose-p:text-h2 prose-a:text-h2 prose-li:text-h2' %}
+{% elseif heading_tag == 'h3' %}
+    {% set classes = 'prose-p:text-h3 prose-a:text-h3 prose-li:text-h3' %}
+{% elseif heading_tag == 'h4' %}
+    {% set classes = 'prose-p:text-h4 prose-a:text-h4 prose-li:text-h4' %}
+{% elseif heading_tag == 'h5' %}
+    {% set classes = 'prose-p:text-h5 prose-a:text-h5 prose-li:text-h5' %}
+{% else %}
+    {% set classes = 'prose-p:text-body prose-a:text-body prose-li:text-body' %}
+{% endif %}
+
+<div class="w-full">
+    <div class="container prose max-w-full prose-ul:ml-sm prose-ol:ml-sm prose-li:marker:text-black {{ classes }} mx-auto lg:max-w-[60%] px-sm lg:px-0">
+        {{ text | raw }}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% set brick_title = 'Share Areabrick' | trans %}
+{% set remove_h1_tag = true %}
+        
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+
+{% set block = pimcore_block('share', { manual: true }) %}
+
+{% set heading = pimcore_input('heading',{
+    placeholder: 'Heading' | trans,
+}) %}
+
+{% do block.start() %}
+
+{% if editmode %}
+    <div class="flex items-center mx-auto text-h3">
+        <svg id="Icons_Set_Sticky" data-name="Icons Set Sticky" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+            <rect id="Rechteck_4326" data-name="Rechteck 4326" width="48" height="48" fill="none"/>
+            <path id="Pfad_6502" data-name="Pfad 6502" d="M165.956,25.408a3.462,3.462,0,0,1-3.47-4.029,2.562,2.562,0,0,1,.139-.536l-9.345-5.428a3.529,3.529,0,0,1-1.142.848,3.188,3.188,0,0,1-1.388.324,3.5,3.5,0,0,1-3.516-3.516,3.506,3.506,0,0,1,4.873-3.239,3.736,3.736,0,0,1,1.173.8l9.345-5.367a2.194,2.194,0,0,1-.139-.491,3.151,3.151,0,0,1-.046-.527,3.392,3.392,0,0,1,1.026-2.491,3.537,3.537,0,0,1,4.981,0,3.392,3.392,0,0,1,1.026,2.491,3.391,3.391,0,0,1-1.026,2.491,3.389,3.389,0,0,1-2.491,1.026,4.125,4.125,0,0,1-1.378-.231,2.638,2.638,0,0,1-1.12-.756l-9.345,5.182c.041.165.077.355.108.571a3.974,3.974,0,0,1,.046.547,2.43,2.43,0,0,1-.046.463c-.031.16-.067.322-.108.486l9.345,5.3a3.657,3.657,0,0,1,1.079-.694,3.592,3.592,0,0,1,1.419-.262,3.522,3.522,0,0,1,2.491,6.007,3.392,3.392,0,0,1-2.491,1.026" transform="translate(-134.234 11.267)" fill="#FF0000" stroke="#FF0000"/>
+        </svg>
+
+        <p class="text-h3">{{ heading | raw }}</p>
+    </div>
+
+{% else %}
+    <div class="container mx-auto overwrite-share">
+        <div class="flex items-center justify-end"> 
+            <svg id="Icons_Set_Sticky" data-name="Icons Set Sticky" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                <rect id="Rechteck_4326" data-name="Rechteck 4326" width="48" height="48" fill="none"/>
+                <path id="Pfad_6502" data-name="Pfad 6502" d="M165.956,25.408a3.462,3.462,0,0,1-3.47-4.029,2.562,2.562,0,0,1,.139-.536l-9.345-5.428a3.529,3.529,0,0,1-1.142.848,3.188,3.188,0,0,1-1.388.324,3.5,3.5,0,0,1-3.516-3.516,3.506,3.506,0,0,1,4.873-3.239,3.736,3.736,0,0,1,1.173.8l9.345-5.367a2.194,2.194,0,0,1-.139-.491,3.151,3.151,0,0,1-.046-.527,3.392,3.392,0,0,1,1.026-2.491,3.537,3.537,0,0,1,4.981,0,3.392,3.392,0,0,1,1.026,2.491,3.391,3.391,0,0,1-1.026,2.491,3.389,3.389,0,0,1-2.491,1.026,4.125,4.125,0,0,1-1.378-.231,2.638,2.638,0,0,1-1.12-.756l-9.345,5.182c.041.165.077.355.108.571a3.974,3.974,0,0,1,.046.547,2.43,2.43,0,0,1-.046.463c-.031.16-.067.322-.108.486l9.345,5.3a3.657,3.657,0,0,1,1.079-.694,3.592,3.592,0,0,1,1.419-.262,3.522,3.522,0,0,1,2.491,6.007,3.392,3.392,0,0,1-2.491,1.026" transform="translate(-134.234 11.267)" fill="#FF0000" stroke="#FF0000"/>
+            </svg>
+            <button class=" py-2 px-4" data-targer="">{{ heading | raw }}</button>
+
+            <div id="popup" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                <div class="bg-white p-6 rounded shadow-lg">
+                    <div class="flex justify-between mt-4">
+                        <a href="#" class="flex-1 py-2 px-4 border border-gray-500">Link kopieren</a>
+                    </div>
+                    <div class="flex justify-between mt-4">
+
+                        <a href="#" class=" flex-1 py-2 px-4 border border-gray-500 flex items-center">
+                            <svg id="Ebene_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.38 14.06" width="20" height="16">
+
+                                <g id="Ebene_5">
+                                    <path id="mail_FILL0_wght600_GRAD0_opsz24" class="cls-1" d="m2.2,14.06c-.59.01-1.15-.22-1.56-.64C.22,13.01-.01,12.45,0,11.86V2.2c-.01-.59.22-1.15.64-1.56C1.05.22,1.61-.01,2.2,0h12.98c.59-.01,1.15.22,1.56.64.42.41.65.97.64,1.56v9.67c.01.59-.22,1.15-.64,1.56-.41.42-.97.65-1.56.64H2.2Zm6.49-5.7L2.2,4.22v7.65h12.98v-7.65l-6.49,4.15Zm0-2.02l6.49-4.14H2.2l6.49,4.14Z"/>
+                                </g>
+                            </svg>
+                            <span class="px-2">per E-mail senden</span>
+                        </a>
+                    </div>
+                    <div class="flex justify-between mt-4">
+                    
+                        <a href="https://api.whatsapp.com/send?text=Check%20out%20this%20link:%20" class="flex-1 border border-gray-500 py-2 px-4 flex items-center">
+                            <svg id="Ebene_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 18.74 18.83" width="20" height="20">
+                                <defs>
+                                    <style>.cls-1{fill:url(#Unbenannter_Verlauf_3);fill-rule:evenodd;stroke-width:0px;}</style>
+                                    <linearGradient id="Unbenannter_Verlauf_3" x1="-927.79" y1="695.26" x2="-927.79" y2="694.65" gradientTransform="translate(28489.25 21443.42) scale(30.7 -30.84)" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#20b038"/>
+                                        <stop offset="1" stop-color="#60d66a"/>
+                                    </linearGradient>
+                                </defs>
+                                <g id="Ebene_5">
+                                    <path id="WhatsApp-White-Logo.wine" class="cls-1" d="m13.66,11.28c-.23-.12-1.38-.68-1.59-.76s-.37-.12-.52.12-.6.76-.74.92-.27.18-.51.06c-.69-.27-1.32-.67-1.88-1.16-.51-.47-.95-1.02-1.3-1.62-.14-.23-.01-.36.1-.48.1-.1.23-.27.35-.41.1-.12.17-.25.23-.39.06-.13.06-.28-.02-.41-.06-.12-.52-1.26-.72-1.73-.19-.45-.38-.39-.52-.4s-.29,0-.45,0c-.24,0-.46.11-.62.29-.53.5-.83,1.21-.82,1.94.08.88.41,1.72.95,2.41.12.16,1.64,2.51,3.98,3.52.43.19.88.35,1.33.49.48.14.98.18,1.47.09.66-.13,1.23-.54,1.57-1.11.15-.35.2-.73.14-1.11-.06-.1-.21-.16-.45-.27m-4.25,5.81h0c-1.39,0-2.75-.37-3.95-1.08l-.28-.17-2.94.77.78-2.86-.18-.29C.56,9.83,1.66,5.04,5.29,2.76c3.63-2.28,8.42-1.18,10.69,2.45,2.28,3.63,1.18,8.42-2.45,10.69-1.24.78-2.66,1.19-4.12,1.19m6.6-14.36c-3.65-3.64-9.56-3.64-13.2,0C-.17,5.72-.78,10.34,1.32,13.99l-1.32,4.84,4.94-1.3c1.37.75,2.9,1.14,4.46,1.14h0c5.16,0,9.33-4.18,9.33-9.34,0-2.47-.98-4.84-2.73-6.59"/>
+                                </g>
+                            </svg>
+                            <span class="px-2">WhatsApp</span>
+                        </a>
+                    </div>
+
+                    <button class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="closePopup()">Close</button>
+                </div>
+            </div>
+<script>
+                function openPopup() {
+                    document.getElementById('popup').classList.remove('hidden');
+                }
+
+                function closePopup() {
+                    document.getElementById('popup').classList.add('hidden');
+                }
+            </script>
+            
+
+        </div>
+    </div>
+{% endif %}
+
+{% do block.end() %}
+
+{% endblock %}

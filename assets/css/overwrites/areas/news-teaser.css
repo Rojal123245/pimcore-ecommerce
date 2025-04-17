@@ -1,0 +1,34 @@
+body .overwrite-news-teaser {
+
+    .slider {
+
+        .slick-track {
+            display: flex !important;
+
+            .slick-slide {
+                height: inherit !important;
+
+                > div {
+                    height: 100%;
+
+                    > article {
+                        height: 100%;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    body .overwrite-news-teaser {
+        padding: 0 20px;
+    }
+
+}

@@ -1,0 +1,28 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    area-image-text-element-thumbnail:
+                        items:
+                            -
+                                method: cover
+                                arguments:
+                                    width: 663
+                                    height: 442
+                                    positioning: center
+                                    forceResize: true
+                        medias: {  }
+                        name: area-image-text-element-thumbnail
+                        description: 'Thumbnail for rendering images in ImageTextElementAreaBrick'
+                        group: ''
+                        format: SOURCE
+                        quality: 100
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1702997676
+                        creationDate: 1695299246
+                        preserveAnimation: false

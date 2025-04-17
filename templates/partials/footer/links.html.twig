@@ -1,0 +1,56 @@
+<div class="box-border py-[25px] pl-[25px] lg:py-[85px] lg:pl-[85px] w-full">
+    {% set footer_links = pimcore_block('footer_links', {reload: true}) %}
+    {% set footer_social_media = pimcore_block('footer_social_media', {reload: true}) %}
+    <ul class="border-b-2 border-neutral-200">
+        {% if editmode %}
+            <h4 class="text-h2">{{ 'Quick Links'|trans }}</h4>
+        {% endif %}
+        {% for i in footer_links.iterator %}
+            {% set link = pimcore_link('pimcore_footer_link') %}
+            {% if editmode %}
+                {{ link | raw }}
+            {% endif %}
+            <li class="pr-[25px] lg:pr-[70px] py-2 border-t-2 border-neutral-200">
+                <a class="flex flex-row justify-between items-center" href="{{ link.href }}">
+                    <h4 class="font-noto-regular text-h4">{{ link.text ?? link.title }}</h4>
+                    <span class="icon icon-regular upside-down arrow-up"></span>
+                </a>
+            </li>
+        {% endfor %}
+
+        {% if editmode %}
+            <h4 class="border-t-2 border-neutral-300 text-h4">{{ 'Social Media Links'|trans }}</h4>
+            <div class="flex flex-row flex-wrap gap-2">
+                {% for i in footer_social_media.iterator %}
+                    <div class="px-4 flex flex-row items-center gap-4">
+                        {{ pimcore_image('pimcore_footer_social_media', {title: 'Social Media Icon' | trans, class: 'h-20 w-20'} ) | raw }}
+
+                        {{ pimcore_input('pimcore_footer_social_media_link', {placeholder: 'Social Media URL' | trans}) }}
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% else %}
+
+            <li class="pr-[25px] lg:pr-[70px] flex flex-row items-center justify-between border-t-2 border-neutral-200">
+                <h4 class=" hidden lg:block font-noto-regular text-h4 py-2">{{ 'Folgen Sie uns!'|trans }}</h4>
+                <div class="flex flex-row gap-4">
+
+                    {% for i in footer_social_media.iterator %}
+                        <a target="_blank" href="{{ pimcore_input('pimcore_footer_social_media_link', {placeholder: 'Social Media URL' | trans}) }}"
+                           class="flex flex-row items-center gap-4">
+                            {% set id = random() %}
+                            <style>
+                                .icon-{{ id }}::before {
+                                    background-image: url('{{pimcore_image("pimcore_footer_social_media", {title: "Social Media Icon" | trans} ).src}}');
+                                }
+                            </style>
+                            <span class="icon icon-xl icon-{{ id }}"></span>
+
+                        </a>
+                    {% endfor %}
+                </div>
+            </li>
+        {% endif %}
+    </ul>
+</div>

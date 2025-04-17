@@ -1,0 +1,16 @@
+<header class="flex w-full">
+    {% set navStartNode = document.getProperty('navigationRoot') %}
+    {% if not navStartNode is instanceof('\\Pimcore\\Model\\Document\\Page') %}
+        {% set navStartNode = pimcore_document(1) %}
+    {% endif %}
+
+    {% set mainNavigation = pimcore_build_nav({
+        active: document,
+        root: navStartNode,
+        maxDepth: 3
+    }) %}
+
+    {% if not editmode or document.getProperty('show_header_in_editmode') == true %}
+        {% include 'partials/navigation.html.twig' with { navigation: mainNavigation } %}
+    {% endif %}
+</header>

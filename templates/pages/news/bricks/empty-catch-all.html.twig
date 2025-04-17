@@ -1,0 +1,7 @@
+{% set debug = app.request.query.get('debug')|default(false) %}
+{% set key = 'asdf1234' %}
+{% set queryKey = app.request.query.get('key')|default(null) %}
+
+{% if debug %}
+    {{ dump(brick) }}
+{% endif %}

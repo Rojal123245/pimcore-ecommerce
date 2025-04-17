@@ -1,0 +1,13 @@
+<svg id="Icon_Set_Quick_Links" data-name="Icon Set Quick Links" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_4336" data-name="Rechteck 4336" width="22.077" height="19.203" fill="none"/>
+    </clipPath>
+  </defs>
+  <path id="Pfad_6585" data-name="Pfad 6585" d="M0,0H24V24H0Z" fill="none"/>
+  <g id="Gruppe_15759" data-name="Gruppe 15759" transform="translate(1 2)">
+    <g id="Gruppe_15759-2" data-name="Gruppe 15759" transform="translate(0 0)" clip-path="url(#clip-path)">
+      <path id="Pfad_6586" data-name="Pfad 6586" d="M14.379,9.463c-.095,0-1.948-2.32-4.734-1.392L11.036.742l1.577,6.681a6.24,6.24,0,0,1,2.04,1.391L12.89.093A8.009,8.009,0,0,1,9.178,0L7.138,10.205s-.743,2.969,1.3,4.639h0L1.113,17.255l5.38-4.639a5.042,5.042,0,0,1,.095-2.32L0,15.957a9.429,9.429,0,0,1,1.764,3.155s9.278-3.433,9.462-3.433a4.182,4.182,0,0,0,3.711-3.155L20.5,17.349l-6.219-2.042a12.514,12.514,0,0,1-2.875,1.205s8.72,2.69,8.814,2.69a7.223,7.223,0,0,1,1.853-3.153ZM11.04,13.729A2.042,2.042,0,0,1,9,11.782v-.029A1.979,1.979,0,0,1,11.04,9.834q.046,0,.093,0a1.9,1.9,0,0,1,1.855,1.948,1.956,1.956,0,0,1-1.947,1.947" transform="translate(0 0)"/>
+    </g>
+  </g>
+</svg>

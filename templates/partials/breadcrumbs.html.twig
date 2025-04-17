@@ -1,0 +1,27 @@
+{% set previousPage = pages[-2:1] %}
+
+{% set url = '' %}
+{% if previousPage is not empty %}
+    {% set url = previousPage[0].href %}
+{% else %}
+    {% set url = (document.getProperty('navigationRoot') ?? pimcore_document(1)).href %}
+{% endif %}
+
+<a class="text-primary-700" href="{{ url }}">
+    <div class="flex items-center">
+        <span class="flex items-center icon icon-regular icon-arrow-left-primary"><span>{{ 'Go Back'|trans }}</span></span>
+    </div>
+</a>
+
+<ul class="flex gap-2 divide flex-wrap divide-solid divide-black">
+    {% for page in pages[0: pages|length -1 ] %}
+        <li>
+            <a class="text-black"
+               href="{{ page.href }}">{{ page.label }}</a>
+            <span class="px-2">/</span>
+        </li>
+    {% endfor %}
+    <li>
+        <a disabled="true" class="text-neutral-500" href="{{ document.href }}">{{ document.getProperty('navigation_name') }}</a>
+    </li>
+</ul>

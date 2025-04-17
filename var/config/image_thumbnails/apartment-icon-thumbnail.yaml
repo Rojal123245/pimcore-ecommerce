@@ -1,0 +1,31 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    apartment-icon-thumbnail:
+                        items:
+                            -
+                                method: scaleByWidth
+                                arguments:
+                                    width: 10
+                                    forceResize: true
+                            -
+                                method: scaleByHeight
+                                arguments:
+                                    height: 27
+                                    forceResize: true
+                        medias: {  }
+                        name: apartment-icon-thumbnail
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703060908
+                        creationDate: 1702539808
+                        preserveAnimation: false

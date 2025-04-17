@@ -1,0 +1,26 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    cta-social-media-thumbnail:
+                        items:
+                            -
+                                method: resize
+                                arguments:
+                                    width: 40
+                                    height: 40
+                        medias: {  }
+                        name: cta-social-media-thumbnail
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703229145
+                        creationDate: 1703229089
+                        preserveAnimation: false

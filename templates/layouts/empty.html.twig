@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='preload'
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'"
+          href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+    {# style overwrites #}
+    <link rel="stylesheet" href="/overwrite.css">
+
+    {% apply spaceless %}
+        {# add global stylesheets and scripts outside of any blocsk to add them to the helpers before any others assets are added #}
+        {# we use the view helper to have cache buster functionality #}
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('css') }}
+        {% endblock %}
+
+        {% if not document is defined or not document %}
+            {% set document = pimcore_document(1) %}
+        {% endif %}
+
+        {% if document is instanceof('\\Pimcore\\Model\\Document\\Link') %}
+            {# @var document \Pimcore\Model\Document\Link #}
+            {% set document = document.getElement() %}
+        {% endif %}
+
+        {% if document is instanceof('\\Pimcore\\Model\\Document\\Page') %}
+            {% if document.getTitle() is not empty %}
+                {% do pimcore_head_title().set(document.getTitle()) %}
+            {% endif %}
+
+            {% if document.getDescription() is not empty %}
+                {% do pimcore_head_meta().setDescription(document.getDescription()) %}
+            {% endif %}
+
+            {% do pimcore_head_title().append('Pimcore Demo') %}
+            {% do pimcore_head_title().setSeparator(' : ') %}
+        {% endif %}
+
+        {% set isPortal = ((isPortal is defined) and isPortal) %}
+    {% endapply %}
+
+    {# we're using the deferred extension here to make sure this block is rendered after all helper calls #}
+    {% block layout_head_meta deferred %}
+    {{ pimcore_head_title() }}
+    {{ pimcore_head_meta() }}
+
+    {% if pimcore_placeholder('canonical').count() %}
+        <link rel="canonical" href="{{ pimcore_placeholder('canonical') }}"/>
+    {% endif %}
+
+    {% endblock %}
+
+    {% block head_stylesheets deferred %}
+    {{ pimcore_head_link() }}
+    {% endblock %}
+
+</head>
+
+<body class="antialiased scroll-smooth focus-visible:outline-2 focus-visible:outline-primary-500">
+<a href="#mainContent" class="absolute left-[-1000px] top-auto w-[1px] h-[1px] overflow-hidden focus:left-0 focus:top-0 focus:w-auto focus:h-auto focus:z-[1000] focus:overflow-visible focus:bg-white ">{{ 'Skip Navigation'|trans }}</a>
+{% if document.getProperty('quick_links') is not empty %}
+    <a href="#quickLinks" class="absolute left-[-1000px] top-auto w-[1px] h-[1px] overflow-hidden focus:left-0 focus:top-0 focus:w-auto focus:h-auto focus:z-[1000] focus:overflow-visible focus:bg-white ">{{ 'Skip to Quick Links'|trans }}</a>
+{% endif %}
+
+{% include 'partials/header.html.twig' %}
+
+<main class="w-full mx-auto bg-neutral-100">
+    {% if document.getProperty('quick_links') is not empty %}
+        {{ pimcore_inc(document.getProperty('quick_links')) }}
+    {% endif %}
+
+    <a id="mainContent"></a>
+    {{ block('content') }}
+
+
+    <script type="text/javascript">
+        window.locale = '{{ app.request.locale }}';
+    </script>
+
+    {{ encore_entry_script_tags('js') }}
+
+    {# {% include 'partials/google-tag-manager.html.twig' %} #}
+
+</main>
+
+{% if document.getProperty('footer_snippet') is not empty and (not editmode or document.getProperty('show_footer_in_editmode') == true) %}
+    {{ pimcore_inc(document.getProperty('footer_snippet')) }}
+{% endif %}
+
+</body>
+</html>

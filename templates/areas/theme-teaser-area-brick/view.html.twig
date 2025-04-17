@@ -1,0 +1,61 @@
+{% set brick_title = 'Theme Teaser' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+    <section class="w-full font-noto-regular">
+
+        {% set heading_text = pimcore_input('theme_teaser_heading', {placeholder: 'Enter theme teaser heading here'|trans}) %}
+        {% set teaser_relations = pimcore_relations('theme_teaser_objects', {
+            types: ['object'],
+            subtypes: {
+                object: ['object'],
+            },
+            classes: ['ThemeTeaser'],
+        }) %}
+
+        <div class="container mx-auto px-2 md:px-auto">
+            {% if editmode %}
+                <div class="flex flex-row my-5">
+                    <div class="w-full flex flex-col gap-5 py-5">
+                        <h1 class="text-h4 font-noto-regular">{{ 'Section Heading' }}</h1>
+                        {{ heading_text|raw }}
+                    </div>
+
+                    <div class="w-full flex flex-col gap-5 py-5">
+                        <h1 class="text-h4 font-noto-regular">{{ 'Teaser Objects' }}</h1>
+                        {{ teaser_relations|raw }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if heading_text.data is not empty %}
+                <{{ heading_tag.data }} class="text-{{ heading_tag.getData}} font-noto-regular mb-lg">
+                    {{ heading_text.data }}
+                </{{ heading_tag.data }}>
+            {% endif %}
+
+            <div class="grid lg:grid-cols-5 grid-cols-2 md:grid-cols-3 gap-5">
+                {% for teaser in teaser_relations.data %}
+                    <a href="{{ teaser.link.href ?? '#' }}" class="group/card w-full relative">
+                        {{ teaser.image.thumbnail('theme-teaser-thumbnail').html({
+                            imgAttributes: {
+                                class: 'w-full min-h-[366px]'
+                            }
+                        })|raw }}
+                        <div class="absolute flex flex-col justify-between top-0 left-0 w-full h-full group-hover/card:bg-primary-700 transition-colors bg-opacity-30 bg-black hover:bg-opacity-0">
+                            <h4 class="text-white font-noto-regular text-h4 p-sm">{{ teaser.title }}</h4>
+                            <div class="flex flex-row justify-end">
+                                {{ teaser.icon.thumbnail('theme-teaser-icon-thumbnail').html({
+                                    imgAttributes: {
+                                        class: 'fill-white stroke-white'
+                                    }
+                                })|raw }}
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% set brick_title = 'Partner Slider'|trans %}
+{% set allowed_headings = [
+    ['h2', 'H2'],
+    ['h3', 'H3'],
+] %}
+{% set default_heading = 'h3' %}
+{% set partners = pimcore_relations('partners', {
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['Partner']
+}) %}
+
+{% set title = pimcore_input('title') %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+    <div class="w-full bg-white">
+        <div class="w-full container mx-auto px-sm lg:px-0">
+            {% if editmode %}
+                <div class="flex flex-col gap-sm">
+                    <div class="flex w-full flex-col gap-sm">
+                        <span>{{ 'Title'|trans }}</span>
+                        <div class="w-full">
+                            {{ title|raw }}
+                        </div>
+                    </div>
+                    <div class="flex w-full flex-col gap-sm">
+                        <span>{{ 'Partners'|trans }}</span>
+                        <div class="w-full">
+                            {{ partners|raw }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="w-full flex flex-col gap-lg py-md">
+                    <div class="flex justify-between items-center flex-row">
+
+                        {% if not title.isEmpty() %}
+                            <{{ heading_tag.data }} class="text-h3">
+                                {{ title.text }}
+                            </{{ heading_tag.data }}>
+                        {% endif %}
+
+                        <div class="flex {% if partners.data|length <=4 %} lg:hidden {% endif %} {% if partners.data|length <=2 %} md:hidden {% endif %} {% if partners.data|length <=1 %} hidden {% endif %}">
+                            <div class="w-full flex flex-row gap-sm justify-end">
+                                <button
+                                    class="bg-primary-500 active:bg-primary-700 shadow text-white slider-previous px-3 py-2">
+                                    <i class="fa fa-chevron-left text-white"></i>
+                                </button>
+                                <button class="bg-primary-500 active:bg-primary-700 shadow text-white slider-next px-3 py-2">
+                                    <i class="fa fa-chevron-right text-white"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="slider w-full"
+                        data-slider="{{ {
+                            slidesToScroll: 1,
+                            slidesToShow: 1,
+                            prevArrow: '',
+                            nextArrow: '',
+                            mobileFirst: true,
+                            autoplay: true,
+                            infinite: true,
+                            responsive: [
+
+                                {
+                                    breakpoint: 654,
+                                    settings: {
+                                        slidesToShow: 1
+                                    }
+                                },
+                                {
+                                    breakpoint: 768,
+                                    settings: {
+                                        slidesToShow: 2
+                                    }
+                                },
+                                {
+                                    breakpoint: 1024,
+                                    settings: {
+                                        slidesToShow: 4,
+                                    }
+                                },
+                            ]
+                        }|json_encode }}"
+                    >
+
+                        {% for partner in partners %}
+
+                            {% set thumbnail = partner.image.thumbnail('partner-slider').html({
+                                imgAttributes: {
+                                    class: 'w-full'
+                                }
+                            }) %}
+
+                            {% if partner.link is not empty %}
+                                <a target="_blank" class="flex mb-sm" href="{{ partner.link.href }}">
+                                    {{ thumbnail|raw }}
+                                </a>
+                            {% else %}
+                                <div class="flex mb-sm">
+                                    {{ thumbnail|raw }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% set brick_title = 'Contact Person Areabrick' %}
+
+{% set heading = pimcore_input('heading_text', {placeholder: 'Please enter the heading' | trans}) %}
+{% set contact_person = pimcore_relation('contact_person', {
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['ContactPerson']
+}) %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+
+    <section class="w-full container mx-auto overwrite-contact-person">
+
+        {% if editmode %}
+            <div class="container mx-auto my-5">
+                <h4 class="text-h4">{{ 'Contact Person' | trans }}</h4>
+                <div class="flex flex-col gap-8">
+                    {# {% if not heading.isEmpty() %} #}
+                        <{{ heading_tag.getData() }} class="text-h3">
+                            {{ heading|raw }}
+                        </{{ heading_tag.getData() }}>
+                    {# {% endif %} #}
+
+                    {{ contact_person|raw }}
+                 </div>
+            </div>
+        {% else %}
+
+            <div class="max-w-6xl mx-auto">
+            {% if contact_person.element is not empty %}
+                {% set contact_person = contact_person.element %}
+                <div class="w-full bg-white flex flex-col lg:flex-row gap-5 font-noto-regular overwrite-container">
+
+                    <div class="flex lg:w-[40%] overwrite-image">
+                        {{ contact_person.image.thumbnail('contact-person-area-brick-thumbnail').html({
+                            imgAttributes: {
+                                class: 'w-full h-full object-cover'
+                            },
+                            pictureAttributes: {
+                                class: 'w-full h-full'
+                            }
+                        })|raw }}
+                    </div>
+
+                    <div class="p-4 flex flex-col justify-center items-start lg:w-[60%] overwrite-text">
+
+                        {% if not heading.isEmpty() %}
+                            <div class="overwrite-title">
+                                <{{ heading_tag.getData() }} class="text-h3 font-noto-regular">
+                                    {{ heading|raw }}
+                                </{{ heading_tag.getData() }}>
+                            </div>
+                        {% endif %}
+
+                        <div class="flex flex-col gap-4 font-noto-regular text-sm overwrite-name">
+                            <span>{{ contact_person.firstName }} {{ contact_person.lastName }}</span>
+                        </div>
+
+                        <div class="flex flex-row items-center gap-3 font-noto-regular text-sm overwrite-mail">
+                            <span class="fa fa-envelope text-primary-700 overwrite-mail-icon"></span> <a class="underline text-primary-700"
+                                                                                    href="mailto:{{ contact_person.email }}">{{ contact_person.email }}</a>
+                        </div>
+
+                        <div class="flex flex-row items-center gap-3 font-noto-regular text-sm overwrite-phone">
+                            <span class="fa fa-phone text-primary-700 overwrite-phone-icon"></span><a class="underline text-primary-700"
+                                                                                href="tel:{{ contact_person.phone }}">{{ contact_person.phone }}</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            {% endif %}
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

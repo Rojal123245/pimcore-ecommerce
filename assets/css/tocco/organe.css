@@ -1,0 +1,19 @@
+.tocco-organe {
+    /* font-family: Arial, Helvetica, sans-serif; */
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: lightgray;
+        padding: 20px;
+    }
+    
+    .organ {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+}

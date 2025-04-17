@@ -1,0 +1,195 @@
+{% set brick_title = 'Media Slider'|trans %}
+
+
+{% extends 'areas/base.html.twig' %}
+
+
+{% set carousel = pimcore_block('media-slider', {manual: true}) %}
+
+{% set slide_time = pimcore_numeric('slide_time', {
+    minValue: 3
+}) %}
+
+{% set slides = [] %}
+
+{% block configuration %}
+	{{ parent() }}
+	{% if editmode %}
+		<div class="flex flex-col gap-3">
+			<span class="font-bold">{{ 'Slide time (in seconds)'|trans }}</span>
+			<div class="w-full">
+				{{ slide_time|raw }}
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block section %}
+
+	{% set rand = random(1000000000, 9999999999) %}
+
+	{% set modal_elements = [] %}
+	<div class="w-full container mx-auto px-sm lg:px-0">
+		<div class="w-full relative {{ editmode ? '' : 'lg:w-2/3 mx-auto' }}">
+			<div class="w-full">
+				{% do carousel.start() %}
+				{% for i in carousel.iterator %}
+					{% do carousel.blockConstruct() %}
+					{% do carousel.blockStart(false) %}
+
+					{% set asset_type = pimcore_select('data-type', {
+                        store: [
+                            ["youtube", "Youtube ID"],
+                            ["video", "Video"],
+                            ["image", "Image"]
+                        ],
+                        reload: true
+                    }) %}
+
+					{% set image = pimcore_image('image', {
+                        reload: true
+                    }) %}
+
+					{% set video = pimcore_video('video', {
+                        reload: true,
+                        allowedTypes: ['asset']
+                    }) %}
+
+					{% set video_thumbnail = pimcore_image('video_thumbnail',{
+                        reload: true
+                    }) %}
+
+					{% set youtube_id = pimcore_input('youtube_id', {
+                        placeholder: 'Enter youtube video ID'|trans,
+                        reload: true
+                    }) %}
+
+					{% if asset_type.data in ['youtube', 'image', 'video'] %}
+						{% if asset_type.data == 'youtube' and not video_thumbnail.isEmpty() and not youtube_id.isEmpty() %}
+							{% set slides = slides|merge([{
+                                    type: asset_type.data,
+                                    thumbnail: pimcore_asset(video_thumbnail.id),
+                                    youtube_id: youtube_id.data,
+                                    video: null,
+                               }]) %}
+						{% elseif asset_type.data == 'image' and not image.isEmpty() %}
+							{% set slides = slides|merge([{
+                                    type: asset_type.data,
+                                    thumbnail: pimcore_asset(image.id),
+                                    youtube_id: null,
+                                    video: null
+                               }]) %}
+
+						{% elseif asset_type.data == 'video' and not video_thumbnail.isEmpty() and not video.isEmpty() %}
+							{% set slides = slides|merge([{
+                                    type: asset_type.data,
+                                    thumbnail: pimcore_asset(video_thumbnail.id),
+                                    video: pimcore_asset(video.id),
+                                    youtube_id: null
+                               }]) %}
+						{% endif %}
+					{% endif %}
+
+					{% if editmode %}
+						<div class="w-full pb-sm {{ loop.first ? '' : 'border-t-2' }} border-primary-500 flex flex-col gap-2">
+							{{ carousel.blockControls()|raw }}
+							<div class="w-full flex flex-col gap-2">
+								<span class="font-bold">{{ 'Slider Type'|trans }}</span>
+								<div class="w-full">
+									{{ asset_type|raw }}
+								</div>
+							</div>
+
+							{% if asset_type.data == 'youtube' %}
+								<div class="flex flex-row gap-sm w-full">
+									<div class="w-full flex flex-col gap-2">
+										<span class="font-bold">{{ 'Youtube ID'|trans }}</span>
+										<div class="w-full">
+											{{ youtube_id|raw }}
+										</div>
+
+										<span class="font-bold">{{ 'Thumbnail'|trans }}</span>
+										<div class="w-full flex flex-col gap-2">
+											<div class="w-full">
+												{{ video_thumbnail|raw }}
+											</div>
+
+											{% if video_thumbnail.isEmpty() %}
+												<span class="text-primary-500">*
+													{{ 'Video thumbnail is empty. Please set video thumbnail image. If left empty, this slide won\'t be shown in the page.' |trans }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex flex-col gap-2">
+                                        {% if not youtube_id.isEmpty() %}
+                                            <span class="font-bold">{{ 'Preview'|trans }}</span>
+                                            <iframe class="w-full youtube_iframe aspect-video" src="https://www.youtube.com/embed/{{ youtube_id.data }}?enablejsapi=1" title="{{ 'YouTube video player'|trans }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+                            {% if asset_type.data == 'video' %}
+                                <div class="w-full flex flex-row gap-md">
+
+                                    <div class="w-full flex flex-col gap-2">
+                                        <span class="font-bold">{{ 'Drag and Drop Video'|trans }}</span>
+                                        <div class="w-full">
+                                            {{ video|raw }}
+                                        </div>
+
+                                        <span class="font-bold">{{ 'Thumbnail'|trans }}</span>
+                                        <div class="w-full flex flex-col gap-2">
+                                            <div class="w-full">
+                                                {{ video_thumbnail|raw }}
+                                            </div>
+
+                                            {% if video_thumbnail.isEmpty() %}
+                                                <span
+                                                    class="text-primary-500">* {{ 'Video thumbnail is empty. Please set video thumbnail image. If left empty, this slide won\'t be shown in the page.'|trans }}</span>
+											{% endif %}
+										</div>
+									</div>
+
+									<div class="flex flex-col gap-2 w-full">
+										{% if not video.isEmpty() %}
+											<span class="font-bold">{{ 'Preview'|trans }}</span>
+											<video src="{{ video.data.path }}" controls class="w-full"></video>
+										{% endif %}
+									</div>
+								</div>
+							{% endif %}
+
+							{% if asset_type.data == 'image' %}
+								<div class="w-full flex flex-col gap-2">
+									<span class="font-bold">{{ 'Drag and Drop Image'|trans }}</span>
+									<div class="w-full">
+										{{ image|raw }}
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					{% else %}
+						{{ carousel.blockControls()|raw }}
+					{% endif %}
+					{% do carousel.blockEnd() %}
+					{% do carousel.blockDestruct() %}
+				{% endfor %}
+				{% do carousel.end() %}
+			</div>
+
+            {% include 'components/carousel/carousel.html.twig' with  {
+
+                slides: slides,
+                configurations: {
+                    slide_time: slide_time.data,
+                    config: {}
+                }
+            } %}
+		</div>
+
+
+	</div>
+
+{% endblock %}

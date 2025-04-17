@@ -1,0 +1,30 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    statement-icons-active:
+                        items:
+                            -
+                                method: grayscale
+                                arguments: {  }
+                            -
+                                method: brightnessSaturation
+                                arguments:
+                                    brightness: 360
+                                    saturation: 100
+                                    hue: 50
+                        medias: {  }
+                        name: statement-icons-active
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703060908
+                        creationDate: 1699004999
+                        preserveAnimation: false

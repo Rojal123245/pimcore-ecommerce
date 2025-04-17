@@ -1,0 +1,14 @@
+pimcore:
+    documents:
+        doc_types:
+            definitions:
+                5ae9a6a7-468f-44bf-9a57-26422a4de375:
+                    name: 'Footer Snippet'
+                    group: ''
+                    controller: 'App\Controller\DefaultController::renderFooterSnippetAction'
+                    template: null
+                    type: snippet
+                    priority: 0
+                    creationDate: 1695985180
+                    modificationDate: 1696497766
+                    staticGeneratorEnabled: false

@@ -1,0 +1,52 @@
+# prepare a gitlab ci pipeline with three steps, prepare, build and deploy which runs on a ubuntu machine
+# the build step is only executed if the prepare step is successful
+
+image: ubuntu:latest
+stages:
+    - prepare
+    - deploy
+
+build-application:
+    stage: prepare
+    script:
+        - chmod +x ./.gitlab/build-application.sh
+        - ./.gitlab/build-application.sh
+    artifacts:
+        paths:
+            - assets/
+            - bin/
+            - config/
+            - public/
+            - src/
+            - templates/
+            - translations/
+            - var/
+            - composer.json
+            - composer.lock
+            - postcss.config.js
+            - tsconfig.json
+            - webpack.config.js
+            - package.json
+    only:
+        - main
+        - deployment-pipeline
+
+deploy-via-ssh:
+    stage: deploy
+    script:
+        - chmod +x ./.gitlab/deploy-via-ssh.sh
+        - ./.gitlab/deploy-via-ssh.sh
+    variables:
+        SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+        SSH_USER: $SSH_USER
+        SSH_HOST: $SSH_HOST
+        SSH_PORT: $SSH_PORT
+        PHP_PATH: $PHP_PATH
+        COMPOSER_PATH: $COMPOSER_PATH
+        DEPLOY_PATH: $DEPLOY_PATH
+        ENABLE_MAINTENANCE_MODE: 0
+    dependencies:
+        - build-application
+    only:
+        - main
+        - deployment-pipeline

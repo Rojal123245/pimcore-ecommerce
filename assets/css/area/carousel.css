@@ -1,0 +1,40 @@
+@import "../../../node_modules/slick-carousel/slick/slick.css";
+
+.carousel-dots {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    .draggable {
+        width: 100%;
+        display: none !important;
+    }
+
+    .slick-arrow {
+        display: none !important;
+    }
+
+    .slick-dots {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        .slick-active {
+            background-color: red;
+            color: red;
+        }
+
+        & li {
+            margin: 0;
+            padding: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #C4C4C4;
+            color: #C4C4C4;
+            cursor: pointer;
+
+            & button {
+                display: none;
+            }
+        }
+    }
+}

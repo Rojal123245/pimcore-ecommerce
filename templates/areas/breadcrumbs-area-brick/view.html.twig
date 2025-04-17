@@ -1,0 +1,24 @@
+{% set brick_title = 'Breadcrumbs' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+    {% set root = document.getProperty('navigationRoot') %}
+    {% if not root is instanceof('\\Pimcore\\Model\\Document\\Page') %}
+        {% set root = pimcore_document(1) %}
+    {% endif %}
+    {% set breadcrumbsNavigation = pimcore_build_nav({
+        active: document,
+        root: root,
+        cache: false
+    }) %}
+    {% set renderer = pimcore_nav_renderer('breadcrumbs') %}
+    {% do renderer.setPartial('partials/breadcrumbs.html.twig') %}
+    {% set breadcrumbsNavigation = renderer.render(breadcrumbsNavigation) %}
+    <div class="w-full bg-neutral-100">
+        <div class="w-full py-2 flex gap-16 container mx-auto">
+            {{ breadcrumbsNavigation | raw }}
+        </div>
+    </div>
+{% endblock %}
+

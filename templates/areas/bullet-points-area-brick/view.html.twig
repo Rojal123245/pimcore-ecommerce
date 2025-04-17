@@ -1,0 +1,171 @@
+{% set brick_title = 'Title, Lead, Subtitle, Text and Bullet Points '|trans %}
+{% set bullet_point = pimcore_block('bullet_points', {manual: true}) %}
+{% set subheading_tag = pimcore_select('subheading_tag', {
+    store: [
+        ['h2', 'H2'],
+        ['h3', 'H3'],
+        ['h4', 'H4'],
+    ],
+    defaultValue: 'h3',
+}) %}
+
+{% set bullet_point_heading_tag = pimcore_select('bullet_point_heading_tag', {
+    store: [
+        ['h3', 'H3'],
+        ['h4', 'H4'],
+    ],
+    defaultValue: 'h3',
+}) %}
+{% set lead_text = pimcore_wysiwyg("lead_text",{
+    "nl2br": true,
+    "height": 100,
+    "placeholder": "Enter lead text here!"|trans
+}) %}
+
+{% set text = pimcore_wysiwyg("text",{
+    "nl2br": true,
+    "height": 100,
+    "placeholder": "Enter the text body here!"|trans
+}) %}
+{% set subheading = pimcore_input('subheading', {placeholder: 'Enter subheading here'|trans}) %}
+{% set title = pimcore_input('title', {placeholder: 'Enter title here'|trans}) %}
+
+
+{% set link = pimcore_link('link') %}
+{% extends 'areas/base.html.twig' %}
+
+{% block configuration %}
+    {% if editmode %}
+        {{ parent() }}
+        <div class="w-full flex flex-col">
+            <span class="font-bold font-noto-regular">{{ 'Subheading Tag' | trans }}</span>
+            <div class="w-full pt-3">
+                {{ subheading_tag|raw }}
+            </div>
+        </div>
+
+        <div class="w-full flex flex-col">
+            <span class="font-bold font-noto-regular">{{ 'Bullet Points Heading Tag' | trans }}</span>
+            <div class="w-full pt-3">
+                {{ bullet_point_heading_tag|raw }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block section %}
+<section class="px-4 md:px-0 lead-title-bullet-points-brick w-full {% if editmode %} mt-lg  {% endif %} flex flex-col relative overwrite-bullet-points">
+    <div class="w-full lg:max-w-5xl mx-auto overwrite-title-container">
+
+        {% if editmode or not title.isEmpty() %}
+            <{{ heading_tag.getData() }} class="text-h1 title-text font-noto-regular my-2
+            text-black">{{ title|raw }}</{{ heading_tag.getData() }}>
+        {% endif %}
+
+        {% if editmode or (lead_text.data|striptags)|trim is not empty %}
+            <div class="lead-text text-h3  mt-lg mb-xl font-noto-regular text-black overwrite-main-lead">
+                {{ lead_text|raw }}
+            </div>
+        {% endif %}
+
+        {% if editmode or (subheading.data|striptags)|trim is not empty %}
+            <{{subheading_tag.data}} class="lead-text text-h3  mt-lg mb-xl font-noto-regular text-black overwrite-main-lead">
+                {{ subheading|raw }}
+            </{{subheading_tag.data}}>
+        {% endif %}
+
+        {% if editmode or (text.data|striptags)|trim is not empty %}
+            <article class="w-full text-body my-sm overwrite-main-text">
+                {{ text|raw }}
+            </article>
+        {% endif %}
+
+        {% if editmode %}
+            <div class="flex flex-col gap-2">
+                <h4>{{ 'Link'|trans }}</h4>
+                <div>
+                    {{ link|raw }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if link.href is not empty %}
+            <div class="w-full flex flex-row gap-5">
+                <a href="{{ link.href }}" class="bg-primary-500 text-white font-noto px-lg py-3 my-md">{{ link.text }}</a>
+            </div>
+        {% endif %}
+    </div>
+
+
+    {% if editmode %}
+        <h2 class="py-5 text-h5 font-noto-regular">{{ 'Bullet Point Items'|trans }}</h2>
+    {% endif %}
+
+    <div class="w-full max-w-5xl mx-auto overwrite-title-container">
+        <{{ bullet_point_heading_tag.getData }} class="text-h3 my-md font-noto-regular">
+        {{ pimcore_input('bullet_point_heading', {
+            placeholder: 'Bullet point heading text here!'|trans,
+        }) }}
+        </{{ bullet_point_heading_tag.getData }}>
+    </div>
+
+    <div class="bullet_point w-full lg:max-w-5xl mx-auto flex flex-col overwrite-container">
+        {% do bullet_point.start() %}
+        {% for item in bullet_point.iterator %}
+            {% do bullet_point.blockConstruct() %}
+            <div class="w-full">
+                {% do bullet_point.blockStart(false) %}
+
+                {% set point = pimcore_wysiwyg('bullet_point_text', { placeholder: 'Enter text here'|trans }) %}
+
+                {% if editmode %}
+                    <div class="w-full container mx-auto flex flex-col">
+                        <div class="w-full">
+                            {% do bullet_point.blockControls() %}
+                        </div>
+                        <div class="flex flex-row w-full gap-10 items-center">
+                            <div class="w-full flex flex-col gap-5">
+                                <div class="w-full text-body overwrite-editmode">
+                                    <span>{{ 'Bullet Point text'|trans }}</span>
+                                    {{ point|raw }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="w-full">
+                        <div class="hidden">
+                            {% do bullet_point.blockControls() %}
+                        </div>
+
+                        <div class="border-neutral-300 container mx-auto border-b {% if loop.first %} border-t {% endif %} overwrite-spacing">
+                            <div class="container mx-auto overwrite-spacing">
+                                <div class="py-3 pl-6 justify-start items-center flex flex-row gap-5 relative z-100 overwrite-padding">
+
+                                    {# <svg width="15px" height="15px" class="overwrite-svg rotate-45" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <path d="M16 0.997v9.003h-1v-7.297l-10.317 10.297-0.707-0.708 10.315-10.295h-7.316v-1h9.025z" fill="#000000" />
+                                    </svg> #}
+
+                                    <svg class="overwrite-svg" xmlns="http://www.w3.org/2000/svg" width="21.438" height="21.438" viewBox="0 0 21.438 21.438">
+                                        <g transform="translate(10.719 21.438) rotate(-135)">
+                                            <path d="M13.745,0,2,11.744V3.293H0V15.159H11.866v-2H3.414L15.159,1.414Z" transform="translate(0 0)"/>
+                                        </g>
+                                    </svg>
+
+                                    <div class="text-body font-noto-regular text-black overwrite-bullet-text">
+                                        {{ point.text|raw }}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% do bullet_point.blockEnd() %}
+            </div>
+            {% do bullet_point.blockDestruct() %}
+        {% endfor %}
+        {% do bullet_point.end() %}
+    </div>
+    </section>
+{% endblock %}

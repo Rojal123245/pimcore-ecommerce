@@ -1,0 +1,144 @@
+<div class="sidebar">
+
+    <div class="images">
+
+        {% if veranstaltung.bild1 %}
+            <img src="{{ veranstaltung.bild1|raw }}">
+        {% endif %}
+
+        {% if veranstaltung.bild2 %}
+            <img src="{{ veranstaltung.bild2|raw }}">
+        {% endif %}
+
+        {% if veranstaltung.bild3 %}
+            <img src="{{ veranstaltung.bild3|raw }}">
+        {% endif %}
+
+    </div>
+
+    <div class="kalender">
+        <a href="" target="_blank">
+            {{ include('svg/veranstaltung/kalender.html.twig') }}
+            <span>Kalendereintrag</span>
+            {{ include('svg/veranstaltung/pfeil2.html.twig') }}
+        </a>
+    </div>
+
+    <div class="sidebar-details">
+
+        {% if veranstaltung.zeiten %}
+            <div class="times">
+                {{ include('svg/veranstaltung/zeit.html.twig') }}
+                <span>{{ veranstaltung.zeiten|raw }}</span>
+            </div>
+        {% endif %}
+
+        {% if veranstaltung.lokalitaet or veranstaltung.raum or veranstaltung.ort %}
+            <div class="location">
+                {{ include('svg/veranstaltung/ort.html.twig') }}
+                {% if veranstaltung.ort %}
+                    {{ veranstaltung.ort }}<br>
+                {% endif %}
+                {% if veranstaltung.raum %}
+                    {{ veranstaltung.raum }}<br>
+                {% endif %}
+                {% if veranstaltung.lokalitaet %}
+                    {{ veranstaltung.lokalitaet }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if veranstaltung.abgesagt %}
+            <div class="abgesagt">
+                {{ include('svg/veranstaltung/abgesagt.html.twig') }}
+                <span>Status: Abgesagt</span>
+            </div>
+        {% endif %}
+        
+        {% if not veranstaltung.archiv and not veranstaltung.abgesagt %}
+            <div>
+                {# {{ veranstaltung.status }} #}
+                {% if veranstaltung.orange_light %}
+                    {{ include('svg/veranstaltung/ampel-gruen.html.twig') }}
+                    <span>Status: Freie Plätze</span>
+                {% else %}
+                    {{ include('svg/veranstaltung/ampel-orange.html.twig') }}
+                    <span>Status: Wenige Plätze</span>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {# <div class="status">
+            <span class="debug">(Status:)</span> {{ veranstaltung.status_event }}
+        </div> #}
+        
+        {# <div>
+            <span class="debug">(Anmeldungen:)</span> {{ veranstaltung.anmeldungen }}
+        </div> #}
+
+        {# <div>
+            <span class="debug">(Orange Light:)</span> {{ veranstaltung.orangeLight }}
+        </div> #}
+
+        {% if veranstaltung.kosten %}
+            <div class="kosten">
+                {{ include('svg/veranstaltung/preis.html.twig') }}
+                {{ veranstaltung.kosten|nl2br }}
+            </div>
+        {% endif %}
+
+        {% if veranstaltung.kontaktName %}
+            <div class="kontakt">
+                {{ include('svg/veranstaltung/kontakt.html.twig') }}
+                {{ veranstaltung.kontaktName|nl2br }}
+                {% if veranstaltung.kontaktTelefon %}
+                    <br>{{ veranstaltung.kontaktTelefon }}
+                {% endif %}
+                {% if veranstaltung.kontaktEmail %}
+                    <br>{{ veranstaltung.kontaktEmail }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if veranstaltung.organisator.firma %}
+            <div class="organisator">
+                {{ include('svg/veranstaltung/organisator.html.twig') }}
+                {{ veranstaltung.organisator.firma }}<br>
+                {{ veranstaltung.organisator.plz }} {{ veranstaltung.organisator.ort }}
+            </div>
+        {% endif %}
+
+        {% if veranstaltung.teilnehmer_max %}
+            <div class="teilnehmer">
+                {{ include('svg/veranstaltung/teilnehmer.html.twig') }}
+                <span>Max. Teilnehmer: {{ veranstaltung.teilnehmer_max }}</span>
+            </div>
+        {% endif %}
+
+        {% if veranstaltung.treffpunkt %}
+            <div class="treffpunkt">
+                {{ include('svg/veranstaltung/treffpunkt.html.twig') }}
+                {{ veranstaltung.treffpunkt }}
+            </div>
+        {% endif %}
+
+        {% if veranstaltung.anmeldeschluss %}
+            <div class="anmeldeschluss">
+                {{ include('svg/veranstaltung/anmeldeschluss.html.twig') }}
+                <span>Anmeldeschluss: {{ veranstaltung.anmeldeschluss }}</span>
+            </div>
+        {% endif %}
+
+    </div>
+
+    {% if not veranstaltung.archiv and not veranstaltung.abgesagt and veranstaltung.anmelde_link[app.request.locale] %}
+        <div class="anmelden">
+            <a href="{{ veranstaltung.anmelde_link[app.request.locale] }}" target="_blank">
+                {{ include('svg/veranstaltung/anmeldeschluss.html.twig') }}
+                <span>Jetzt anmelden</span>
+                {{ include('svg/veranstaltung/pfeil2.html.twig') }}
+            </a>
+        </div>
+    {% endif %}
+
+</div>

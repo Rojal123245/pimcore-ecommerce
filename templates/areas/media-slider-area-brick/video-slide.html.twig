@@ -1,0 +1,14 @@
+<div class="relative w-full">
+    {{ video_thumbnail.thumbnail('media-slider-thumbnail').html({
+        imgAttributes: {
+            class: "w-full"
+        }
+    })|raw }}
+    <div class="absolute h-full w-full top-0 left-0 bg-transparent flex flex-col justify-center items-center">
+        <button data-target="#{{ id }}"
+            class="modal-open flex justify-center items-center shadow rounded-full p-3 bg-[#3c3c3c] ">
+            <i class="fa h-[30px] flex justify-center items-center w-[30px] fa-play text-white fa-lg"></i>
+        </button>
+    </div>
+</div>
+

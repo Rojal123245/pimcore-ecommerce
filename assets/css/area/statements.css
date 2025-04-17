@@ -1,0 +1,32 @@
+
+
+#statement_container:first-child {
+    @apply border-2 border-neutral-300;
+}
+
+#filter_category {
+    @apply appearance-none;
+}
+
+.date {
+    .icon {
+        background-image: url("../../images/calendar.svg") !important;
+    }
+}
+
+.date, .select {
+    @apply relative pr-[40px] flex w-full;
+
+    .icon {
+        &:before {
+            @apply hidden;
+        }
+        @apply absolute top-0 right-0 w-[40px] border h-[40px] border-neutral-300 bg-white cursor-pointer;
+
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}
+
+
+

@@ -1,0 +1,65 @@
+<div class="events-filter">
+
+    <div class="alignment">
+        
+        <div class="search-input">
+            <input type="text" placeholder="Volltextsuche">
+            <span class="icon">
+                {{ include('svg/veranstaltung/suche.html.twig') }}
+            </span>
+        </div>
+
+        <div class="filter-theme">
+            <button class="filter-button">
+                <span class="text">Thema filtern</span>
+                <span class="icon">
+                    {{ include('svg/veranstaltung/pfeil.html.twig') }}
+                </span>
+            </button>
+            <div class="filter-dropdown">
+                <ul>
+
+                    {% for thema in themen %}
+                        <li class="theme-option">{{ thema[app.request.locale] }}</li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="filter-date">
+            <button class="filter-button">
+                <span class="text">Datum filtern</span>
+                <span class="icon">
+                    {{ include('svg/veranstaltung/datum.html.twig') }}
+                </span>
+            </button>
+        </div>
+
+        <div class="filter-type">
+            <button class="filter-button">
+                <span class="text">Typ filtern</span>
+                <span class="icon">
+                    {{ include('svg/veranstaltung/pfeil.html.twig') }}
+                </span>
+            </button>
+            <div class="filter-dropdown">
+                <ul>
+
+                    {% for typ in typen %}
+                        <li class="type-option">{{ typ[app.request.locale] }}</li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+
+        {% if editmode or pimcore_link('archiveLink').href %}
+            <div class="archive-link">
+                {{ pimcore_link('archiveLink') }}
+            </div>
+        {% endif %}
+
+    </div>
+
+</div>

@@ -1,0 +1,181 @@
+<div class="main-content">
+
+    <div class="images">
+
+        {% if veranstaltung.bild1 %}
+            <img src="{{ veranstaltung.bild1|raw }}">
+        {% endif %}
+
+        {% if veranstaltung.bild2 %}
+            <img src="{{ veranstaltung.bild2|raw }}">
+        {% endif %}
+
+        {% if veranstaltung.bild3 %}
+            <img src="{{ veranstaltung.bild3|raw }}">
+        {% endif %}
+
+    </div>
+
+
+
+
+
+
+    {# {% set detailLink = path('veranstaltung-detail', {
+        id: veranstaltung.id,
+        title: toUrl(veranstaltung.bezeichnung[app.request.locale]),
+        path: 'veranstaltung-detail-route-path'|trans
+    }) %}
+
+    {% set detailLinkIT = path('veranstaltung-detail', {
+        id: veranstaltung.id,
+        title: toUrl(veranstaltung.bezeichnung['it']),
+        path: 'veranstaltung-detail-route-path'|trans
+    }) %}
+
+
+    {{ detailLink}}
+
+    <br>
+
+    {{ detailLinkIT }} #}
+
+
+
+
+
+    
+    {% if veranstaltung.lead %}
+        <div class="lead">
+            <span class="subtitle">Lead</span>
+            <p>
+                {{ veranstaltung.lead|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.programm %}
+        <div class="programm">
+            <span class="subtitle">Programm</span>
+            {{ veranstaltung.programm|raw }}
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.ziele %}
+        <div class="ziele">
+            <span class="subtitle">Ziele</span>
+            <p>
+                {{ veranstaltung.ziele|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.rahmenprogramm %}
+        <div class="rahmenprogramm">
+            <span class="subtitle">Rahmenprogramm</span>
+            <p>
+                {{ veranstaltung.rahmenprogramm|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.wegbeschreibung %}
+        <div class="wegbeschreibung">
+            <span class="subtitle">Wegbeschreibung</span>
+            <p>
+                {{ veranstaltung.wegbeschreibung|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.zielgruppe %}
+        <div class="zielgruppe">
+            <span class="subtitle">Zielgruppe</span>
+            <p>
+                {{ veranstaltung.zielgruppe|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.anforderungen %}
+        <div class="anforderungen">
+            <span class="subtitle">Anforderungen</span>
+            <p>
+                {{ veranstaltung.anforderungen|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.lehrmethode %}
+        <div class="lehrmethode">
+            <span class="subtitle">Lehrmethode</span>
+            <p>
+                {{ veranstaltung.lehrmethode|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.vorwissen %}
+        <div class="vorwissen">
+            <span class="subtitle">Vorwissen</span>
+            <p>
+                {{ veranstaltung.vorwissen|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if veranstaltung.zertifikat %}
+        <div class="zertifikat">
+            <span class="subtitle">Zertifikat</span>
+            <p>
+                {{ veranstaltung.zertifikat|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {# {% if veranstaltung.organisation %}
+        <div class="organisation">
+            <span class="subtitle">Organisation</span>
+            <p>
+                {{ veranstaltung.organisation|nl2br }}
+            </p>
+        </div>
+    {% endif %} #}
+
+    {% if veranstaltung.dozenten %}
+        <div class="dozenten">
+            <span class="subtitle">Dozenten / Referenten</span>
+            <p>
+                {{ veranstaltung.dozenten|nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {# {% if veranstaltung.lokalitaet %}
+        <div class="lokalitaet">
+            <span class="subtitle">Lokalität</span>
+            <p>
+                {{ veranstaltung.lokalitaet|nl2br }}
+            </p>
+        </div>
+    {% endif %} #}
+
+    {# {% if veranstaltung.raum %}
+        <div class="raum">
+            <span class="subtitle">Raum</span>
+            <p>
+                {{ veranstaltung.raum|nl2br }}
+            </p>
+        </div>
+    {% endif %} #}
+
+    {# {% if veranstaltung.adresse %}
+        <div class="raum">
+            <span class="subtitle">Adresse</span>
+            <p>
+                {{ veranstaltung.adresse|nl2br }}
+            </p>
+        </div>
+    {% endif %} #}
+
+</div>

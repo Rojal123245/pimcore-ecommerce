@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                5587d66a-36d8-4dd2-977c-b1b1f47a2bc5:
+                    name: 'Quick Links Snippet'
+                    description: ''
+                    key: quick_links
+                    type: document
+                    data: ''
+                    config: ''
+                    ctype: document
+                    inheritable: true
+                    creationDate: 1699442998
+                    modificationDate: 1699443018

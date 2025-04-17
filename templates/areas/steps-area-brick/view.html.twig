@@ -1,0 +1,74 @@
+{% set brick_title = 'Schritte Areabrick' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+    {% set block = pimcore_block('steps', { manual: true }) %}
+    {% do block.start() %}
+    <section class="w-full overwrite-steps">
+        {% set block_title = pimcore_input('block_title', {
+            placeholder: 'Block title'|trans
+        }) %}
+
+        {% if editmode or not block_title.isEmpty() %}
+            <div class="w-full px-sm lg:px-0 container mx-auto pb-lg overwrite-title">
+                <{{ heading_tag.data }} class="text-h3">{{ block_title|raw }}</{{ heading_tag.data }}>
+            </div>
+        {% endif %}
+
+        <div
+            class="w-full px-sm lg:px-0 container mx-auto  {% if not editmode %} lg:gap-xxxl md:gap-xxl gap-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  {% else %}flex flex-col px-2 md:px-0 {% endif %} overwrite-container">
+            {% for b in block.iterator %}
+                {% do block.blockConstruct() %}
+                {% do block.blockStart() %}
+                {% set text = pimcore_wysiwyg('text', {
+                    class: 'w-full',
+                    placeholder: 'Card Text'|trans,
+                    nl2br: true
+                }) %}
+                {% set link = pimcore_link('link') %}
+
+                {% if editmode %}
+                    <div class="w-full container mx-auto flex flex-row gap-sm  ">
+                        <div class="flex w-full flex-col gap-sm">
+                            <div class="flex overwrite-editmode">
+                                {{ text|raw }}
+                            </div>
+                            <div>
+                                {{ link|raw }}
+                            </div>
+                        </div>
+                    </div>
+                {% elseif not text.isEmpty() and text|striptags is not empty%}
+                    <div class="group flex flex-col relative bg-white font-noto shadow">
+                        <div class="flex flex-row p-sm pb-md md:pt-md  md:pb-md md:pr-sm gap-md overwrite-padding">
+                            <div class="w-full flex flex-col gap-md">
+                                <div class="text-black">
+                                    <div
+                                        class="absolute top-0 left-[20px] ml-5 transform -translate-x-1/2 -translate-y-1/2 rounded-full w-8 h-8 flex items-center justify-center text-neutral-600 font-bold text-h1 overwrite-number">
+                                        {{ b+1 }}.
+                                    </div>
+                                    <div class="prose">
+                                        {{ text|raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if not link.isEmpty() %}
+                            <div class="w-full mb-2 overwrite-link">
+                                <a href="{{ link.href }}" target="{{ link.target ?? '_self' }}"
+                                   class="text-red-600 ml-7">
+                                    {{ link.text }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endif %}
+                {% do block.blockEnd() %}
+                {% do block.blockDestruct() %}
+            {% endfor %}
+        </div>
+    </section>
+    {% do block.end() %}
+{% endblock %}

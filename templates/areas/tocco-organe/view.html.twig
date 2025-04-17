@@ -1,0 +1,51 @@
+{# <section class="api-cards">
+    <div class="container">
+        <div class="alignment">
+
+            {% for fachgruppe in fachgruppen %}
+
+                {% set detailLink = path('fachgruppe-detail', {
+                    id: fachgruppe.id,
+                    title: toUrl(fachgruppe.label),
+                    path: 'fachgruppe-detail-route-path'|trans
+                }) %}
+
+                <a href="{{ detailLink }}" target="_blank">
+                    <div class="card">
+                        <div class="title">
+                            <span>{{ 'fachgruppen.card.title'|trans }}</span> <span class="bold">{{ fachgruppe.label }}</span> <span> ID: {{ fachgruppe.id }}</span>
+                        </div>
+                        <div class="arrow">
+                            {{ include('svg/arrow/arrow.html.twig') }}
+                        </div>
+                    </div>
+                </a>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</section> #}
+
+{% if editmode %}
+
+    <section class="tocco-organe">
+        <div class="container">
+            <div class="alignment">
+
+                {% for organ in organe %}
+
+                    <div class="organ">
+                        <span>Titel: {{ organ.label }}</span>
+                        <span>ID: {{ organ.id }}</span>
+                        <span>Organ: {{ organ.typOrgan }}</span>
+                        <span>Vorstandsliste: {{ organ.typVorstandsliste }}</span>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+{% endif %}

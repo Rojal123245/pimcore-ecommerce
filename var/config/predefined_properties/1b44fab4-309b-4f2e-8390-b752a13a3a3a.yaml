@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                1b44fab4-309b-4f2e-8390-b752a13a3a3a:
+                    name: 'Show header in edit mode'
+                    description: 'Check this to show the header/navigation menu in admin edit mode'
+                    key: show_header_in_editmode
+                    type: bool
+                    data: '0'
+                    config: ''
+                    ctype: document
+                    inheritable: false
+                    creationDate: 1698994214
+                    modificationDate: 1698994287

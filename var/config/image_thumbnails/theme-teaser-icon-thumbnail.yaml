@@ -1,0 +1,26 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    theme-teaser-icon-thumbnail:
+                        items:
+                            -
+                                method: scaleByHeight
+                                arguments:
+                                    height: 76
+                                    forceResize: false
+                        medias: {  }
+                        name: theme-teaser-icon-thumbnail
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703060908
+                        creationDate: 1697006910
+                        preserveAnimation: false

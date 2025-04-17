@@ -1,0 +1,16 @@
+{% set classes = '' %}
+
+{% if brick is not empty %}
+    {% if brick.marginTop is not empty and brick.marginTop != ' ' %}
+        {% set classes = classes ~ 'pt-' ~ brick.marginTop %}
+    {% endif %}
+
+    {% if brick.marginBottom is not empty and brick.marginBottom != ' '%}
+        {% set classes = classes ~ ' pb-' ~ brick.marginBottom %}
+    {% endif %}
+{% endif %}
+
+<div class="w-full {{ classes }}">
+    <a href="#" id="{{ brick.anchor }}"></a>
+    {{ block('content') }}
+</div>

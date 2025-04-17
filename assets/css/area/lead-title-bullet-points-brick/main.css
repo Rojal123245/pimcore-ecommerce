@@ -1,0 +1,19 @@
+@tailwind base;
+@import '../../typography/base.css';
+
+@layer base {
+
+    .lead-title-bullet-points-brick {
+
+        .title-text {
+
+        }
+
+        .lead-text {
+            & p, & span {
+                font-size: var(--text-h3-font-size);
+            }
+        }
+
+    }
+}

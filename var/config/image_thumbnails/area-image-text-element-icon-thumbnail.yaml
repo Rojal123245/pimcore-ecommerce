@@ -1,0 +1,26 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    area-image-text-element-icon-thumbnail:
+                        items:
+                            -
+                                method: scaleByWidth
+                                arguments:
+                                    width: 100
+                                    forceResize: true
+                        medias: {  }
+                        name: area-image-text-element-icon-thumbnail
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703060926
+                        creationDate: 1698204140
+                        preserveAnimation: false

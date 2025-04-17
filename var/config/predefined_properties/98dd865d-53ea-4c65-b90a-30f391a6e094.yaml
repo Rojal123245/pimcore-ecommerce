@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                98dd865d-53ea-4c65-b90a-30f391a6e094:
+                    name: 'Set White as navigation links color'
+                    description: 'When using image backgrounds, if this option is checked, then the links will appear white instead of regular black links'
+                    key: use_white_navigation_links
+                    type: bool
+                    data: ''
+                    config: ''
+                    ctype: document
+                    inheritable: false
+                    creationDate: 1695911298
+                    modificationDate: 1695911433

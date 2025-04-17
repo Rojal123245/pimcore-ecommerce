@@ -1,0 +1,20 @@
+{% if not veranstaltung.archiv and not veranstaltung.abgesagt and veranstaltung.anmelde_link[app.request.locale] %}
+    <div class="register-background">
+        <div class="register-container">
+            <div class="register">
+
+                <div class="title">
+                    <span>Ich möchte teilnehmen</span>
+                </div>
+
+                <div class="link">
+                    <a href="{{ veranstaltung.anmelde_link[app.request.locale] }}" target="_blank">
+                        <span>Jetzt anmelden</span>
+                        {{ include('svg/veranstaltung/pfeil2.html.twig') }}
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                bd294334-7f2c-4ff7-af81-364fbbdfaa74:
+                    name: 'Footer Snippet'
+                    description: ''
+                    key: footer_snippet
+                    type: document
+                    data: ''
+                    config: ''
+                    ctype: document
+                    inheritable: true
+                    creationDate: 1696498018
+                    modificationDate: 1696498045

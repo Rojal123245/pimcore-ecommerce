@@ -1,0 +1,163 @@
+.link-cards {
+    font-family: "Noto Sans Regular", sans-serif;
+
+    .link-cards-container {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 0 48px;
+    }
+
+    .alignment {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        grid-auto-rows: 1fr;
+
+        > a {
+            text-decoration: none;
+            color: black;
+        }
+
+    }
+
+    .alignment-editmode .pimcore_editable_block {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+
+        .link-editmode {
+            margin: 20px 0;
+        }
+
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        transition: background-color 0.3s, color 0.3s;
+        position: relative;
+        height: 100%;
+    }
+
+    .title {
+        display: flex;
+        flex-wrap: wrap;
+        /*font-size: calc(1 / 16 * 19rem);*/
+        font-size: calc(1 / 16 * 18rem);
+        z-index: 1;
+    }
+
+    .arrow {
+        transform: rotate(180deg);
+        align-self: flex-start;
+        margin-left: 20px;
+        z-index: 1;
+
+        > svg {
+            width: 22px;
+            height: 22px;
+
+            .st0 {
+                transition: fill 0.3s;
+            }
+
+        }
+
+    }
+
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #FF0000;
+        background: linear-gradient(0deg, #FF0000 0%, #C90000 100%);
+        opacity: 0;
+        z-index: 0;
+        transition: opacity 0.3s;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    
+    .link-cards {
+   
+        .link-cards-container {
+            padding: 0 60px;
+        }
+
+        .alignment {
+            grid-template-columns: 1fr 1fr;
+            gap: 32px 24px;
+        }
+
+        .title {
+            /*font-size: calc(1 / 16 * 22rem);*/
+            font-size: calc(1 / 16 * 20rem);
+        }
+
+        .arrow {
+    
+            > svg {
+                width: 29px;
+                height: 29px;
+            }
+    
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+    
+    .link-cards {
+   
+        .link-cards-container {
+            padding: 0 60px;
+        }
+
+        .alignment {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 56px 73px;
+
+            > a:hover {
+                
+                .card {
+                    color: #FFFFFF;
+
+                    .arrow {
+
+                        .st0 {
+                            fill: #FFFFFF;
+                        }
+
+                    }
+
+                    .card-overlay {
+                        opacity: 1;
+                    }
+
+                }
+
+            }
+
+        }
+
+        .title {
+            /*font-size: calc(1 / 16 * 27rem);*/
+            font-size: calc(1 / 16 * 23rem);
+        }
+
+    }
+
+}

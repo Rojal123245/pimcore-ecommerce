@@ -1,0 +1,276 @@
+body .overwrite-bullet-points {
+
+    .overwrite-title-container {
+        max-width: calc(926px + 80px);
+        padding: 0 40px;
+    }
+
+    .overwrite-main-lead {
+        margin-bottom: 0;
+        margin-top: 40px;
+
+        * {
+            font-size: 27px;
+        }
+
+    }
+
+    .overwrite-main-text {
+        margin-top: 40px;
+
+        * {
+            font-size: 22px;
+        }
+
+        ul {
+            list-style-type: initial;
+            margin: initial;
+            padding: initial;
+            margin-left: 24px;
+        }
+
+        ol {
+            list-style: decimal;
+            padding: initial;
+            margin-left: 24px;
+        }
+
+    }
+
+    .overwrite-container {
+        max-width: calc(926px + 80px);
+        padding: 0 40px;
+
+        .overwrite-editmode {
+
+            * {
+                font-size: 16px;
+            }
+            
+            ul {
+                list-style-type: initial;
+                margin: initial;
+                padding: initial;
+                margin-left: 24px;
+                margin-bottom: 15px;
+            }
+
+            ol {
+                list-style: decimal;
+                padding: initial;
+                margin-left: 24px;
+                margin-bottom: 15px;
+            }
+
+            p {
+                margin-bottom: 15px;
+            }
+
+        }
+
+        .overwrite-spacing {
+            max-width: 100%;
+        }
+
+        .overwrite-padding {
+            padding: 25px 0;
+            align-items: flex-start;
+
+            .overwrite-bullet-text {
+                
+                * {
+                    font-size: 16px;
+                }
+
+                ul {
+                    list-style-type: initial;
+                    margin: initial;
+                    padding: initial;
+                    margin-left: 24px;
+                    margin-bottom: 15px;
+                }
+
+                ol {
+                    list-style: decimal;
+                    padding: initial;
+                    margin-left: 24px;
+                    margin-bottom: 15px;
+                }
+
+                p {
+                    margin-bottom: 15px;
+                }
+
+            }
+
+            .overwrite-svg {
+                flex-shrink: 0;
+                margin-top: 7px;
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 1023px) {
+
+    body .overwrite-bullet-points {
+
+        .overwrite-title-container {
+            padding: 0;
+        }
+
+        .overwrite-container {
+            padding: 0;
+
+            .overwrite-padding {
+                padding: 15px 0;
+    
+                .overwrite-svg {
+                    margin-top: 1px;
+                }
+    
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 375px) and (max-width: 1023px) {
+
+    body .overwrite-bullet-points {
+        padding: 0 40px;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+
+    body .overwrite-bullet-points {
+
+        .overwrite-main-lead {
+            margin-top: 35px;
+
+            * {
+                font-size: 19px;
+            }
+    
+        }
+
+        .overwrite-main-text {
+
+            * {
+                font-size: 16px;
+            }
+
+        }
+        
+        .overwrite-container {
+    
+            .overwrite-padding {
+                gap: 10px;
+
+                /* .overwrite-bullet-text {
+                
+                    * {
+                        font-size: 16px;
+                    }
+    
+                } */
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+
+    body .overwrite-bullet-points {
+
+        .overwrite-container {
+
+            .overwrite-editmode {
+
+                * {
+                    font-size: 18px;
+                }
+
+            }
+    
+            .overwrite-padding {
+
+                .overwrite-bullet-text {
+                
+                    * {
+                        font-size: 18px;
+                    }
+    
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1300px) {
+
+    body .overwrite-bullet-points {
+
+        .overwrite-container {
+
+            .overwrite-editmode {
+
+                * {
+                    font-size: 22px;
+                }
+
+            }
+    
+            .overwrite-padding {
+
+                .overwrite-bullet-text {
+                
+                    * {
+                        font-size: 22px;
+                    }
+    
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    body .overwrite-bullet-points {
+
+        .overwrite-container {
+
+            .overwrite-padding {
+                padding: 25px 0;
+    
+                .overwrite-svg {
+                    margin-top: 7px;
+                }
+    
+            }
+
+        }
+
+    }
+
+}

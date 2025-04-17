@@ -1,0 +1,58 @@
+{# 
+    
+Relations: News
+
+You can choose individual News-Objects.
+
+No more than 3 news will be displayed.
+
+#}
+{% set brick_title = 'News Highlights'|trans %}
+{% extends 'areas/base.html.twig' %}
+
+{% set news = pimcore_relations('news', {
+    reload: true,
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['News']
+}) %}
+
+{% set title = pimcore_input('title', { placeholder: 'Enter brick title'|trans }) %}
+
+{% block section %}
+    <div class="w-full">
+        {% if editmode %}
+            <div class="flex flex-col container mx-auto gap-sm pb-sm">
+                <div class="flex flex-col gap-2">
+                    <span>{{ 'Brick Title'|trans }}</span>
+                    <div class="w-full">{{ title|raw }}</div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <span>{{ 'News Objects'|trans }}</span>
+                    <div class="w-full">{{ news|raw }}</div>
+                    {% if news.data|length > 3 %}
+                        <span class="text-primary-500">*{{ 'It seems like there are more than 3 news items selected. Only the first 3 will be shown'|trans }}</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        {% else %}
+            <div class="container flex flex-col gap-md mx-auto px-sm lg:px-0">
+               {% if not title.isEmpty() %}
+                   <{{ heading_tag.data }} class="text-h3">{{ title }}</{{ heading_tag.data }}>
+               {% endif %}
+                <div class="grid grid-cols-1 gap-lg lg:grid-cols-3 ">
+                    {% for news in news.data %}
+                        {% if loop.index <= 3 %}
+                            {% include 'areas/news-highlights-area-brick/article.html.twig' with {news: news} %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

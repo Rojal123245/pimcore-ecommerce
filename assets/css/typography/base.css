@@ -1,0 +1,76 @@
+@tailwind base;
+
+
+.prose-neutral {
+
+    --tw-prose-counters: black !important;
+    --tw-prose-bullets: black !important;
+}
+
+@layer base {
+
+    .font-italic {
+        font-family: "Noto Sans Italics", sans-serif;
+        font-style: italic;
+    }
+
+    a {
+        @apply text-primary-500;
+    }
+
+    p {
+        @apply text-body font-noto-regular;
+        & a {
+            @apply text-primary-500;
+        }
+    }
+
+    .text-quote {
+        font-size: var(--text-quote-font-size);
+        line-height: var(--text-quote-line-height);
+        letter-spacing: var(--text-quote-letter-spacing);
+        @apply font-noto-regular text-primary-500 flex w-full font-italic;
+    }
+
+    .text-sm {
+        font-size: var(--text-sm-font-size);
+        line-height: var(--text-sm-line-height);
+        letter-spacing: var(--text-sm-letter-spacing);
+        @apply font-noto-regular;
+    }
+
+    .text-body {
+        font-size: var(--text-body-font-size);
+        line-height: var(--text-body-line-height);
+        letter-spacing: var(--text-body-letter-spacing);
+        @apply font-noto-regular;
+    }
+
+    .text-h4 {
+        font-size: var(--text-h4-font-size);
+        line-height: var(--text-h4-line-height);
+        letter-spacing: var(--text-h4-letter-spacing);
+        @apply font-noto-regular;
+    }
+
+    .text-h3 {
+        font-size: var(--text-h3-font-size);
+        line-height: var(--text-h3-line-height);
+        letter-spacing: var(--text-h3-letter-spacing);
+        @apply font-noto-regular;
+    }
+
+    .text-h2 {
+        font-size: var(--text-h2-font-size);
+        line-height: var(--text-h2-line-height);
+        letter-spacing: var(--text-h2-letter-spacing);
+        @apply font-noto-regular;
+    }
+
+    .text-h1 {
+        font-size: var(--text-h1-font-size);
+        line-height: var(--text-h1-line-height);
+        letter-spacing: var(--text-h1-letter-spacing);
+        @apply font-noto;
+    }
+}

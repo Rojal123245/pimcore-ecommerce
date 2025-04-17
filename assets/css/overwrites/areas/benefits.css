@@ -1,0 +1,196 @@
+body .overwrite-benefits {
+    background: #FFFFFF;
+    max-width: 640px;
+
+    .overwrite-container {
+        border: none;
+
+        .overwrite-position {
+            flex-direction: column;
+
+            .overwrite-gradient {
+                position: relative;
+                background: rgb(201,0,0);
+                background: linear-gradient(180deg, rgba(201,0,0,1) 0%, rgba(255,0,0,1) 100%);
+                padding: 24px 0;
+
+                > span {
+                    text-align: right;
+                    line-height: 1.5;
+                    margin: 0 24px;
+                }
+
+            }
+
+        }
+
+        .overwrite-content {
+            padding: 40px 48px 48px 48px;
+            border: 2px solid #DBDCDD;
+            margin: 0;
+
+            .overwrite-title {
+                padding: 0 0 20px 0;
+            }
+
+            .overwrite-text {
+
+                > div {
+                    padding: 0;
+                }
+
+            }
+
+            .overwrite-link {
+                margin-top: 40px;
+
+                a {
+                    margin: 0;
+                    color: #FFFFFF;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    body .overwrite-benefits {
+        background: #F5F5F5;
+        max-width: 1300px;
+
+        .overwrite-container {
+            flex-direction: row;
+            transition: background-color 0.3s;
+
+            &:last-of-type {
+
+                .overwrite-content {
+                    border-bottom: 2px solid #DBDCDD;
+                }
+
+            }
+
+            .overwrite-position {
+                flex-direction: row;
+
+                picture {
+                    width: 100%;
+
+                    img {
+                        object-fit: cover;
+                    }
+
+                }
+        
+                .overwrite-gradient {
+                    position: absolute;
+                    padding: 12px 0 0 0;
+                    width: 500px;
+                    background: linear-gradient(270deg, rgba(201,0,0,1) 0%, rgba(255,0,0,1) 100%);
+
+                    > span {
+                        font-size: 24px;
+                        max-width: 100%;
+                        margin: 0 24px;
+                    }
+
+                }
+
+            }
+
+            .overwrite-content {
+                min-height: 500px;
+                justify-content: center;
+                border-bottom: none;
+
+                .overwrite-title {
+                    padding: 0 0 30px 0;
+                }
+    
+                .overwrite-text {
+    
+                    > div {
+                        font-size: 18px;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1300px) {
+
+    body .overwrite-benefits {
+
+        .overwrite-container {
+
+            .overwrite-position {
+
+                .overwrite-gradient {
+                    width: 550px;
+
+                    > span {
+                        max-width: 100%;
+                        margin: 0 24px;
+                    }
+
+                }
+
+            }
+
+            .overwrite-content {
+                margin: 0;
+                padding: 40px 80px;
+                min-height: 550px;
+
+                .overwrite-title {
+                    padding: 0 0 20px 0;
+                }
+    
+                .overwrite-text {
+    
+                    > div {
+                        padding: 0;
+                        font-size: 22px;
+                    }
+    
+                }
+    
+                .overwrite-link {
+                    margin-top: 40px;
+    
+                    a {
+                        margin: 0;
+                        color: #FFFFFF;
+                    }
+    
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/*
+
+transform-origin: top left;
+    transform: rotate(-90deg);
+    top: 100%;
+    left: 0;
+    bottom: 100%;
+
+    */

@@ -1,0 +1,118 @@
+{% set brick_title = 'Image Text Element' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% block section %}
+    {% set block = pimcore_block('text-images', { manual: true }).start() %}
+
+    <div class="container mx-auto flex flex-col gap-md overwrite-image-text">
+        {% for b in block.iterator %}
+            {% do block.blockConstruct() %}
+            {% do block.blockStart() %}
+
+                <div class="overwrite-border">
+                    <div class="overwrite-border-container">
+                        <div class="hover:bg-white my-2 w-full flex flex-col group/card gap-10 lg:flex-row space-between group relative border-b-2 overwrite-alignment">
+
+                            <div class="flex flex-1 overwrite-image">
+                                {% set image = pimcore_image('image', {
+                                    class: 'w-full'
+                                }) %}
+
+                                {% if editmode %}
+                                    {{ image|raw }}
+                                {% else %}
+                                    {% if image.getThumbnail('area-image-text-element-thumbnail') is not empty %}
+                                        {{ image.getThumbnail('area-image-text-element-thumbnail').html | raw }}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <div class="flex flex-1 flex-col justify-around overwrite-text-block">
+                                <div class="w-full flex flex-col gap-lg overwrite-gap">
+
+                                    {% set header = pimcore_input('heading', {
+                                        class: 'w-full text-3xl font-bold',
+                                        placeholder: 'Heading' | trans
+                                    }) %}
+
+                                    {% set text = pimcore_textarea('text', {
+                                        class: 'w-full',
+                                        placeholder: 'Description' | trans
+                                    }) %}
+
+                                    {% set link = pimcore_link('link', {
+                                        class: 'w-full',
+                                        title: 'Link' | trans
+                                    }) %}
+
+                                    <div class="w-full py-4 flex flex-row justify-between items-center overwrite-title">
+                                        {% if editmode %}
+                                            {{ header | raw }}
+                                        {% elseif not header.isEmpty() %}
+                                            <{{ heading_tag.getData() }} class="text-h3  font-noto-regular">
+                                                {{ header |raw }}
+                                            </{{ heading_tag.getData() }}>
+                                        {% endif %}
+
+                                        {% if editmode %}
+                                            {{ link | raw }}
+                                        {% else %}
+                                            {% if link.href %}
+                                                <a href="{{ link.href }}" class="group-hover:text-red group-hover:-translate-y-2 transition-all text-[#0072ce] font-noto-regular-medium text-[19.8px]">
+                                                    {# <svg width="80px" height="80px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                        <path d="M16 0.997v9.003h-1v-7.297l-10.317 10.297-0.707-0.708 10.315-10.295h-7.316v-1h9.025z" class="fill-black stroke-black group-hover/card:fill-primary-500 group-hover/card:stroke-primary-500 group-hover:fill-red group-hover:stroke-red" />
+                                                    </svg> #}
+                                                    <svg class="overwrite-svg" xmlns="http://www.w3.org/2000/svg" width="46.833" height="46.833" viewBox="0 0 46.833 46.833">
+                                                        <g transform="translate(46.833 46.833) rotate(180)">
+                                                            <path d="M5,38.929,5,12.186H0l0,35.28H35.281v-5H8.535l38.3-38.3L43.3.633Z" transform="translate(0 -0.633)"/>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="w-full py-4 font-noto-regular-medium text-[19.8px] overwrite-text">
+                                        {{ text |raw }}
+                                    </div>
+
+                                </div>
+
+                                {% set icon = pimcore_image('icon', {
+                                    width: 100,
+                                    height: 100
+                                }) %}
+
+                                {% if editmode or icon is not empty %}
+                                    <div class="flex flex-row overwrite-icon">
+                                        <div class="w-full">
+                                            {% if editmode %}
+                                                <div class="w-full">
+                                                    <h4>{{ 'Icon'|trans }}</h4>
+                                                    <div class="w-full">{{ icon | raw }}</div>
+                                                </div>
+                                            {% else %}
+                                                {% if icon is not empty %}
+                                                    {{ icon.getThumbnail('area-image-text-element-icon-thumbnail').html | raw }}
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            {% do block.blockEnd() %}
+            {% do block.blockDestruct() %}
+        {% endfor %}
+        
+    </div>
+
+    {% do block.end() %}
+{% endblock %}

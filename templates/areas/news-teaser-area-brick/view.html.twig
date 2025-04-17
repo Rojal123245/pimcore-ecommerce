@@ -1,0 +1,183 @@
+{#
+
+Select: type of news (News, Success Stories, Medienmitteilungen, All)
+Relations: NewsCategory
+Relations: News
+
+You can either choose multiple NewsCategory-Objects, individual News-Objects or leave both empty and it will show all News-Objects
+
+It only shows the news of the selected type, if it is set to All, it shows all news.
+
+It only shows max 6 entries sorted by descending date.
+
+Priorities in case the user drops something into all relations-fields:
+    1. individual News-Objects
+    2. NewsCategory-Objects
+    3. all News-Objects
+
+#}
+
+{% set brick_title = "News Teaser"|trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% set heading = pimcore_input('title', {
+    placeholder: 'Enter Brick Title'|trans,
+    required: true,
+}) %}
+
+{% set type = pimcore_select('news_type', {
+    store: [
+        ['all', 'All News'|trans],
+        ['category', 'News By Category'|trans],
+        ['news', 'Select News'|trans]
+    ],
+    defaultValue: 'all',
+    reload: true
+}) %}
+
+{% set category = pimcore_relation('news_category', {
+    reload: true,
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['NewsCategory']
+}) %}
+
+{% set news = pimcore_relations('news', {
+    reload: true,
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['News'],
+}) %}
+
+{% set all_news_link = pimcore_link('all_news') %}
+
+{% block section %}
+
+<div class="w-full flex flex-col overwrite-news-teaser">
+
+    {% if editmode %}
+
+    <div class="container mx-auto flex flex-col gap-sm pb-sm">
+        <div class="flex flex-col gap-2">
+            <span>{{'News Type'|trans}}</span>
+            <div class="w-full">{{ type|raw }}</div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <span>{{'Title'|trans}}</span>
+            <div class="w-full">{{ heading|raw }}</div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <span>{{'All News Link'|trans}}</span>
+            <div class="w-full">{{ all_news_link|raw }}</div>
+        </div>
+
+        {% if type.data == 'category' %}
+
+        <div class="w-full flex flex-col gap-sm">
+            <span>{{'News Category'|trans}}</span>
+            <div class="w-full">{{ category|raw }}</div>
+        </div>
+
+        {% elseif type.data == 'news' %}
+        <div class="w-full flex flex-col gap-sm">
+            <span>{{'News'|trans}}</span>
+            <div class="w-full">{{ news|raw }}</div>
+
+            {% if news.data | length > 6 %}
+                <span class="text-primary-500 text-sm">*{{'More than 6 records detected. Only the first 6 news elements will be displayed'|trans}}</span>
+            {% endif %}
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% else %}
+
+    {% set news_entries = [] %}
+
+    {% if type.data == 'category'  %}
+        {% set news_entries = category.element.news %}
+    {% elseif type.data == 'news' %}
+        {% set news_entries = news.data %}
+    {% else %}
+        {% set news_entries = swiss_engineering_news().setLimit(6).data %}
+    {% endif %}
+
+    <div class="container px-sm lg:px-0 mx-auto flex flex-row items-center justify-between gap-sm pb-sm">
+        <{{heading_tag.data}} class="text-h3">{{ heading }}</{{heading_tag.data}}>
+
+        <div class="flex flex-row gap-2 font-bold {% if news_entries|length <= 4 %} lg:hidden {%elseif news_entries|length <= 2%} md:hidden {% endif %}">
+            <button class="slider-previous bg-primary-500 hover:bg-primary-700 px-4 p-2 text-white">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <button class="slider-next bg-primary-500 hover:bg-primary-700 px-4 p-2 text-white">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    <div data-slider="{{ {
+        'slidesToShow': 1,
+        'slidesToScroll': 1,
+        'infinite': true,
+        'autoplay': true,
+        prevArrow: '',
+        cols: 1,
+        nextArrow: '',
+        dots: false,
+        mobileFirst: true,
+        responsive: [
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    cols: 1
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    cols: 2
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    cols: 4
+                }
+            },
+        ]
+
+        }|json_encode }}"
+    class="slider gap-sm mx-auto px-sm container lg:px-0">
+        {% for item in news_entries %}
+            {% if loop.index <= 6 %}
+                {% include 'areas/news-teaser-area-brick/article.html.twig' with { 'news': item } %}
+            {% endif %}
+        {% endfor %}
+
+    </div>
+        {% if not all_news_link.isEmpty() %}
+            <div class="container mx-auto mt-md px-sm lg:px-0 flex flex-row justify-end">
+                <a title="{{ 'All News'|trans }}" class="px-lg py-3 bg-primary-500 text-white hover:bg-primary-700" href="{{ all_news_link.href }}">{{ 'All News'|trans }}</a>
+            </div>
+        {% endif %}
+    {% endif %}
+
+</div>
+
+
+{% endblock %}
+

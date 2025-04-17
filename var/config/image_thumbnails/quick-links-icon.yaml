@@ -1,0 +1,26 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    quick-links-icon:
+                        items:
+                            -
+                                method: resize
+                                arguments:
+                                    width: 20
+                                    height: 20
+                        medias: {  }
+                        name: quick-links-icon
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1703060908
+                        creationDate: 1699617014
+                        preserveAnimation: false

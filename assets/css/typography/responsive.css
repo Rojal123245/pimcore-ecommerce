@@ -1,0 +1,215 @@
+@tailwind base;
+
+
+
+@layer base {
+    p {
+        @apply text-body;
+    }
+    h1 {
+        @apply text-h1;
+    }
+
+    .text-quote {
+        --text-quote-font-size: 23px;
+        --text-quote-line-height: 1.6;
+        --text-quote-letter-spacing: 0;
+    }
+
+    .text-sm {
+
+        --text-sm-font-size: 14px;
+        --text-sm-line-height: 1.6;
+        --text-sm-letter-spacing: 0;
+    }
+
+    .text-body {
+        --text-body-font-size: 16px;
+        --text-body-line-height: 1.6;
+        --text-body-letter-spacing: 0;
+    }
+
+    .text-h4 {
+        --text-h4-font-size: 19px;
+        --text-h4-line-height: 1.5;
+        --text-h4-letter-spacing: 0;
+    }
+
+    .text-h3 {
+        --text-h3-font-size: 23px;
+        --text-h3-line-height: 1.5;
+        --text-h3-letter-spacing: 0;
+    }
+
+    .text-h2 {
+        --text-h2-font-size: 27px;
+        --text-h2-line-height: 1.5;
+        --text-h2-letter-spacing: 0;
+    }
+
+    .text-h1 {
+        --text-h1-font-size: 33px;
+        --text-h1-line-height: 1.4;
+        --text-h1-letter-spacing: 0;
+    }
+
+
+    @screen md {
+        .text-quote {
+            --text-quote-letter-spacing: 0;
+            --text-quote-font-size: 26px;
+            --text-quote-line-height: 1.5;
+        }
+
+        .text-sm {
+            --text-sm-letter-spacing: 0;
+            --text-sm-font-size: 15px;
+            --text-sm-line-height: 1.6;
+        }
+
+        .text-body {
+            --text-body-letter-spacing: 0;
+            --text-body-font-size: 18px;
+            --text-body-line-height: 1.6;
+        }
+
+        .text-h4 {
+            --text-h4-letter-spacing: 0;
+            --text-h4-font-size: 22px;
+            --text-h4-line-height: 1.5;
+        }
+
+        .text-h3 {
+            --text-h3-letter-spacing: 0;
+            --text-h3-font-size: 26px;
+            --text-h3-line-height: 1.5;
+        }
+
+        .text-h2 {
+            --text-h2-letter-spacing: 0;
+            --text-h2-font-size: 31px;
+            --text-h2-line-height: 1.5;
+        }
+
+        .text-h1 {
+            --text-h1-letter-spacing: 0;
+            --text-h1-font-size: 37px;
+            --text-h1-line-height: 1.4;
+        }
+
+
+    }
+
+    @screen lg {
+        font-size: 20px;
+        .text-quote {
+            --text-quote-font-size: 29px;
+            --text-quote-line-height: 1.6;
+            --text-quote-letter-spacing: 0;
+        }
+
+        .text-sm {
+            --text-sm-font-size: 17px;
+            --text-sm-line-height: 1.6;
+            --text-sm-letter-spacing: 0;
+        }
+
+        .text-body {
+            --text-body-font-size: 20px;
+            --text-body-line-height: 1.6;
+            --text-body-letter-spacing: 0;
+        }
+
+        .text-h4 {
+            --text-h4-font-size: 24px;
+            --text-h4-line-height: 1.5;
+            --text-h4-letter-spacing: 0;
+        }
+
+        .text-h3 {
+            --text-h3-font-size: 29px;
+            --text-h3-line-height: 1.5;
+            --text-h3-letter-spacing: 0;
+        }
+
+        .text-h2 {
+            --text-h2-font-size: 35px;
+            --text-h2-line-height: 1.5;
+            --text-h2-letter-spacing: 0;
+        }
+
+        .text-h1 {
+            --text-h1-font-size: 42px;
+            --text-h1-line-height: 1.4;
+            --text-h1-letter-spacing: 0;
+            @apply font-noto;
+        }
+
+    }
+
+    @screen xl {
+        font-size: 22px;
+        .text-quote {
+            --text-quote-font-size: 32px;
+            --text-quote-line-height: 1.6;
+            --text-quote-letter-spacing: 0;
+        }
+
+        .text-sm {
+            --text-sm-font-size: 18px;
+            --text-sm-line-height: 1.6;
+            --text-sm-letter-spacing: 0;
+        }
+
+        .text-body {
+            --text-body-font-size: 22px;
+            --text-body-line-height: 1.6;
+            --text-body-letter-spacing: 0;
+        }
+
+        .text-h4 {
+            --text-h4-font-size: 27px;
+            --text-h4-line-height: 1.5;
+            --text-h4-letter-spacing: 0;
+        }
+
+        .text-h3 {
+            --text-h3-font-size: 32px;
+            --text-h3-line-height: 1.5;
+            --text-h3-letter-spacing: 0;
+        }
+
+        .text-h2 {
+            --text-h2-font-size: 38px;
+            --text-h2-line-height: 1.5;
+            --text-h2-letter-spacing: 0;
+        }
+
+        .text-h1 {
+            --text-h1-font-size: 46px;
+            --text-h1-line-height: 1.4;
+            --text-h1-letter-spacing: 0;
+        }
+    }
+}
+
+
+.loading {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        background: url("../../images/spinner.gif") no-repeat center center;
+        background-size: 100px;
+    }
+}

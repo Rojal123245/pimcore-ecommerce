@@ -1,0 +1,25 @@
+{% do document.setProperty('language', app.request.locale, app.request.locale) %}
+{% do document.setProperty('navigation_is_transparent', 'boolean', news.isHeaderTransparent) %}
+{% set cannonical_url = url('news-detail', {
+    _locale: app.request.locale,
+    title: toUrl(news.title),
+    id: news.id
+}) %}
+
+
+
+
+{% extends 'layouts/empty.html.twig' %}
+
+{% block content %}
+    {% do pimcore_placeholder('canonical').captureStart('SET') %}{{ cannonical_url }}{% do pimcore_placeholder('canonical').captureEnd()%}
+    {% set news_content = news.contents %}
+
+    <div class="flex flex-col overwrite-news-detail">
+        {% if news_content is not empty %}
+            {% for brick in news_content.items %}
+                {% include ['pages/news/bricks/' ~ brick.type ~ '.html.twig', 'pages/news/bricks/empty-catch-all.html.twig'] with { brick : brick, news: news } %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% set brick_title = 'Hero Image' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+
+{% set is_homepage_hero = pimcore_checkbox('homepage_hero') %}
+
+{% block configuration %}
+    {{ parent() }}
+
+    <div class="w-full flex flex-col gap-2">
+        <span class="font-bold">{{ 'Is homepage hero?' }}</span>
+        <div>
+            {{ is_homepage_hero|raw }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block section %}
+
+    {% set backgroundImage = pimcore_image('hero_background_image') %}
+
+    {% if editmode %}
+        <div class="flex px-4 mx-auto flex-col gap-3">
+            <span class="text-bold">{{ 'Background Image'|trans }}</span>
+            {{ backgroundImage|raw }}
+        </div>
+
+    {% endif %}
+
+    {% set thumbnailUrl = '' %}
+
+    {% if backgroundImage is not empty %}
+    {% endif %}
+
+    {% set srcset  = '' %}
+
+    {% if not editmode %}
+        <section class="w-full bg-cover">
+            {% if not backgroundImage.isEmpty() %}
+                {{ backgroundImage.getThumbnail(is_homepage_hero.isEmpty() ? 'hero-thumbnail' : 'homepage-hero-thumbnail').html({
+                    imgAttributes: {
+                        class: 'w-full'
+                    }
+                })|raw }}
+            {% endif %}
+        </section>
+    {% endif %}
+{% endblock %}

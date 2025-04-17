@@ -1,0 +1,52 @@
+@import 'air-datepicker/air-datepicker.css';
+
+/*.air-datepicker {*/
+
+/*    .air-datepicker-cell {*/
+/*        font-family: "Noto Sans Regular", sans-serif;*/
+/*    }*/
+
+/*    .-current- {*/
+/*        @apply text-primary-500;*/
+/*    }*/
+
+/*    .-other-decade- {*/
+/*        @apply bg-primary-500 bg-opacity-20;*/
+/*    }*/
+
+/*    .-selected- {*/
+/*        @apply bg-primary-500;*/
+
+/*        &:hover, &:focus, &:active {*/
+/*            @apply bg-primary-700;*/
+/*        }*/
+/*    }*/
+/*}*/
+
+
+.air-datepicker {
+    .air-datepicker--content {
+        .air-datepicker-cell {
+            font-family: "Noto Sans Regular", sans-serif;
+        }
+
+        .-current- {
+            @apply text-primary-500;
+        }
+
+        .-selected- {
+            @apply bg-primary-500 text-white bg-opacity-100 !important;
+        }
+
+        .-focus- {
+            @apply bg-primary-500 text-black bg-opacity-20;
+        }
+
+        .-disabled- {
+            @apply text-gray-400;
+            &:hover {
+                @apply bg-neutral-300 bg-opacity-20;
+            }
+        }
+    }
+}

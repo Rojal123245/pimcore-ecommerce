@@ -1,0 +1,31 @@
+{% set brick_title = 'Quote' | trans %}
+
+{% extends 'areas/base.html.twig' %}
+{% set quote = pimcore_textarea("quote", { required: true }) %}
+{% set author = pimcore_input("author", { required: true }) %}
+
+{% block section %}
+	{% if editmode %}
+		<div class="w-full container mx-auto py-sm flex flex-row gap-sm">
+			<div class="flex flex-col gap-2 w-full">
+				<span class="font-bold">{{'Quote'|trans}}</span>
+				<div class="w-full">
+					{{ quote|raw }}
+				</div>
+			</div>
+			<div class="flex flex-col gap-2 w-full">
+				<span class="font-bold">{{'Author'|trans}}</span>
+				<div class="w-full">
+					{{ author|raw }}
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="w-full">
+			<div class="container lg:max-w-[60%] mx-auto px-sm lg:px-0">
+				<span class="flex w-full lg:text-[32px] text-quote">«{{ quote|raw }}»</span>
+				<span class="flex text-body w-full pt-sm text-primary-500">{{ author ~ '.' }}</span>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}

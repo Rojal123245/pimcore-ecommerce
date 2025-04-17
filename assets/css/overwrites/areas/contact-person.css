@@ -1,0 +1,195 @@
+body .overwrite-contact-person {
+
+    .overwrite-container {
+        gap: 0;
+
+        .overwrite-image {
+            width: 376px;
+        }
+
+        .overwrite-text {
+            padding: 60px;
+            flex: 1;
+
+            .overwrite-title {
+                margin-bottom: 30px;
+
+                .text-h3 {
+                    font-size: 19px;
+                }
+
+            }
+
+            .overwrite-name {
+                font-size: 20px;
+            }
+
+            .overwrite-mail {
+                font-size: 20px;
+                gap: 0;
+                margin-top: 10px;
+                margin-left: 2px;
+
+                .overwrite-mail-icon {
+                    color: #FF0000;
+                    width: 35px;
+                    font-size: 18px;
+                }
+
+                a {
+                    color: #FF0000;
+                }
+
+            }
+
+            .overwrite-phone {
+                font-size: 20px;
+                gap: 0;
+                margin-top: 10px;
+                margin-left: 2px;
+
+                .overwrite-phone-icon {
+                    color: #FF0000;
+                    width: 35px;
+                    font-size: 18px;
+                }
+
+                a {
+                    color: #FF0000;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    
+    body .overwrite-contact-person {
+        padding: 0 24px;
+        max-width: calc(1112px + 24px + 24px);
+
+        .overwrite-container {
+            flex-direction: row;
+
+            .overwrite-text {
+                padding: 32px;
+
+                .overwrite-title {
+
+                    .text-h3 {
+                        font-size: 22px;
+                    }
+    
+                }
+
+                .overwrite-name {
+                    font-size: 18px;
+                }
+
+                .overwrite-mail {
+                    font-size: 18px;
+                }
+
+                .overwrite-phone {
+                    font-size: 18px;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+    
+    body .overwrite-contact-person {
+        padding: 0 20px;
+        max-width: calc(1112px + 20px + 20px);
+
+        .overwrite-container {
+
+            .overwrite-text {
+                padding: 60px;
+
+                .overwrite-name {
+                    font-size: 20px;
+                }
+
+                .overwrite-mail {
+                    font-size: 20px;
+                    margin-top: 15px;
+                }
+
+                .overwrite-phone {
+                    font-size: 20px;
+                    margin-top: 15px;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+
+    body .overwrite-contact-person {
+        max-width: 640px !important;
+
+        .overwrite-container {
+
+            .overwrite-image {
+                width: 100%;
+                height: 155px;
+            }
+
+            .overwrite-text {
+                padding: 25px;
+
+                .overwrite-title {
+                    margin-bottom: 20px;
+                }
+
+                .overwrite-name {
+                    font-size: 14px;
+                }
+
+                .overwrite-mail {
+                    font-size: 14px;
+                }
+
+                .overwrite-phone {
+                    font-size: 14px;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 374px) {
+
+    body .overwrite-contact-person {
+        padding: 0 25px;
+    }
+
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+
+    body .overwrite-contact-person {
+        padding: 0 45px;
+    }
+
+}

@@ -1,0 +1,131 @@
+<div class="veranstaltungen-title">
+    <div class="container">
+        <span>Aktuelle Veranstaltungen</span>
+    </div>
+</div>
+
+<section class="tocco-veranstaltungen">
+
+    {% if veranstaltungen|length < 1 %}
+        <span>Keine Veranstaltungen gefunden</span>
+    {% endif %}
+
+    {% for veranstaltung in veranstaltungen %}
+
+        {% if veranstaltung.bezeichnung %}
+
+            {# detaillink #}
+            {% set detailLink = path('veranstaltung-detail', {
+                id: veranstaltung.id,
+                title: toUrl(veranstaltung.bezeichnung),
+                path: 'veranstaltung-detail-route-path'|trans
+            }) %}
+
+            <div class="alignment">
+                <a href="{{ detailLink }}" target="_blank">
+                    <div class="event">
+
+                        <div class="left">
+
+                            <div class="big-date">
+                                <span>{{ veranstaltung.day }}</span>
+                            </div>
+
+                            <div class="small-date">
+                                <span>{{ veranstaltung.month }}</span>
+                                <span>{{ veranstaltung.year }}</span>
+                            </div>
+
+                            <div class="arrow-mobile">
+                                {{ include('svg/arrow/arrow.html.twig') }}
+                            </div>
+
+                        </div>
+
+                        <div class="middle">
+
+                            <div class="title">
+
+                                {% if veranstaltung.abgesagt %}
+                                    <span class="abgesagt">Abgesagt:</span> <span>{{ veranstaltung.bezeichnung }}</span><br>
+                                {% else %}
+                                    <span>{{ veranstaltung.bezeichnung }}</span><br>
+                                {% endif %}
+                                
+                            </div>
+
+                            <div class="sub">
+
+                                <div class="time">
+                                    {{ include('svg/veranstaltung/zeit.html.twig') }}
+                                    
+                                    {% if veranstaltung.start_zeit and not veranstaltung.ende_zeit %}
+                                        <span>{{ veranstaltung.start_zeit }} Uhr</span>
+                                    {% elseif veranstaltung.start_zeit and veranstaltung.ende_zeit %}
+                                        <span>{{ veranstaltung.start_zeit }} - {{ veranstaltung.ende_zeit }} Uhr</span>
+                                    {% endif %}
+                                </div>
+
+                                {% if veranstaltung.city %}
+                                    <div class="location">
+                                        {{ include('svg/veranstaltung/ort.html.twig') }}
+
+                                        <span>{{ veranstaltung.city }}</span>
+                                    </div>
+                                {% endif %}
+
+                                {% if veranstaltung.event_nr %}
+                                    <div class="event-number">
+                                        <span>ID:&nbsp;{{ veranstaltung.event_nr }}</span>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                            <div class="sub">
+
+                                {% if veranstaltung.typ[app.request.locale] %}
+                                    <div class="typ">
+                                        {{ include('svg/veranstaltung/typ.html.twig') }}
+
+                                        <span>{{ veranstaltung.typ[app.request.locale] }}</span>
+                                    </div>
+                                {% endif %}
+
+                                {% if veranstaltung.theme|length > 0 %}
+                                    <div class="thema">
+                                        {{ include('svg/veranstaltung/thema.html.twig') }}
+
+                                        {% for theme in veranstaltung.theme %}
+                                            <span>{{ theme[app.request.locale] }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                {% if veranstaltung.event_nr %}
+                                    <div class="event-number-mobile">
+                                        <span>ID:&nbsp;{{ veranstaltung.event_nr }}</span>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        <div class="right">
+
+                            <div class="arrow">
+                                {{ include('svg/arrow/arrow.html.twig') }}
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                </a>
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</section>

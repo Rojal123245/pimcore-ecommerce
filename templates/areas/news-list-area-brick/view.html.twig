@@ -1,0 +1,115 @@
+{# 
+    
+Select: type of news (News, Success Stories, Medienmitteilungen, All)
+Relations: NewsCategory
+
+You can either choose multiple NewsCategory-Objects or leave it empty and it will show all News-Objects.
+
+It only shows the news of the selected type, if it is set to All, it shows all news.
+
+#}
+
+{% set brick_title = 'News List'|trans %}
+{% extends 'areas/base.html.twig' %}
+
+{% set source = pimcore_select('news-list-source', {
+    store: [
+        ['all', 'All News'],
+        ['categories', 'News by Categories']
+    ],
+    reload: true,
+    defaultValue: 'all'
+}) %}
+
+{% set categories = pimcore_relations('categories', {
+    types: ['object'],
+    subtypes: {
+        object: ['object']
+    },
+    classes: ['NewsCategory'],
+    reload: true
+}) %}
+
+{% set cat = '' %}
+{% if source.data == 'categories' %}
+    {% for category in categories %}
+        {% set cat = cat ~ ',' ~ category.id %}
+    {% endfor %}
+{% endif %}
+
+{% set title = pimcore_input('title', {
+    placeholder: 'Enter title' | trans
+}) %}
+
+{% set lead_text = pimcore_wysiwyg('lead', {
+    placeholder: 'Enter lead text'| trans
+}) %}
+
+{% block section %}
+    <div class="w-full flex flex-col">
+        {% if editmode %}
+            <div class="container mx-auto flex flex-col gap-sm">
+                <div class="w-full flex flex-col gap-2">
+                    <span class="font-bold">{{ 'Title'|trans }}</span>
+                    <div class="w-full">
+                        {{ title|raw }}
+                    </div>
+                </div>
+                <div class="w-full flex flex-col gap-2">
+                    <span class="font-bold">{{ 'Lead'|trans }}</span>
+                    <div class="w-full">
+                        {{ lead_text|raw }}
+                    </div>
+                </div><div class="w-full flex flex-col gap-2">
+                    <span class="font-bold">{{ 'News Source'|trans }}</span>
+                    <div class="w-full">
+                        {{ source|raw }}
+                    </div>
+                </div>
+                {% if source.data == 'categories' %}
+                    <div class="w-full flex flex-col gap-2">
+                        <span class="font-bold">{{ 'News Source'|trans }}</span>
+                        <div class="w-full">
+                            {{ categories|raw }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+
+            {% set news_items = [] %}
+            {% if source.data == 'categories' %}
+                {% set news_items = swiss_engineering_get_news_by_categories(categories)%}
+            {% else %}
+                {% set news_items = swiss_engineering_news() %}
+            {% endif %}
+            <div class="container  mx-auto px-sm lg:px-0">
+                <div class="w-full mx-auto flex flex-col ">
+                    {% if not title.isEmpty() %}
+                        <{{ heading_tag.data }} class="text-h3">{{ title|raw }}</{{ heading_tag.data }}>
+                    {% endif %}
+                    {% if not lead_text|escape is empty %}
+                        <div class="prose mt-lg max-w-full">
+                            {{ lead_text|raw }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% include 'areas/news-list-area-brick/filters.html.twig' %}
+                <div data-categories="{{ cat|trim(',') }}" class="news-overview grid grid-cols-1 mt-lg lg:grid-cols-3 gap-lg">
+
+                </div>
+                <div class="w-full error-container">
+                </div>
+
+                {% include 'areas/news-list-area-brick/article.html.twig' %}
+                <template class="empty-template">
+                    <div class="w-full">
+                        <h3 class="text-h3">
+                            {{ 'No news found. Please use different filters.' | trans }}
+                        </h3>
+                    </div>
+                </template>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

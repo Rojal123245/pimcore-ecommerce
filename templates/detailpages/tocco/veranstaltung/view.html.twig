@@ -1,0 +1,27 @@
+{% extends 'layouts/main.html.twig' %}
+
+{% block content %}
+
+    <section class="veranstaltung-detail">
+
+        {{ include('detailpages/tocco/veranstaltung/bricks/intro.html.twig') }}
+
+        <div class="body-container">
+            <div class="alignment">
+
+                {{ include('detailpages/tocco/veranstaltung/bricks/sidebar.html.twig') }}
+
+                {{ include('detailpages/tocco/veranstaltung/bricks/main-content.html.twig') }}
+
+            </div>
+        </div>
+
+        {{ include('detailpages/tocco/veranstaltung/bricks/register.html.twig') }}
+
+        {{ include('detailpages/tocco/veranstaltung/bricks/weitere-veranstaltungen.html.twig', {
+            veranstaltungen: weitereVeranstaltungen
+        }) }}
+
+    </section>
+
+{% endblock %}
