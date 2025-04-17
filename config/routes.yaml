@@ -4,3 +4,7 @@ _pimcore:
 app:
     resource: "../src/Controller/"
     type: annotation
+
+product_routes:
+    resource: "../src/Controller/ProductController.php"
+    type: attribute

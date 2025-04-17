@@ -7,11 +7,13 @@ pimcore:
             - de
             - fr
             - it
+            - en_CA
         fallback_languages:
             de: ''
             fr: ''
             it: ''
-        default_language: de
+            en_CA: ''
+        default_language: en_CA
         debug_admin_translations: false
     documents:
         versions:
