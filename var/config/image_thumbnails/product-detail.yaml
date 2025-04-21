@@ -1,0 +1,26 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    product-detail:
+                        items:
+                            -
+                                method: cover
+                                arguments:
+                                    width: 800
+                                    height: 800
+                                    positioning: center
+                                    forceResize: true
+                        medias: {  }
+                        name: product-detail
+                        description: 'Thumbnail for product detail page images'
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        preserveAnimation: false

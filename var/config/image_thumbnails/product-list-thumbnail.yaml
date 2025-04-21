@@ -1,0 +1,26 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    product-list-thumbnail:
+                        items:
+                            -
+                                method: cover
+                                arguments:
+                                    width: 400
+                                    height: 400
+                                    positioning: center
+                                    forceResize: true
+                        medias: {  }
+                        name: product-list-thumbnail
+                        description: 'Thumbnail for product listing images'
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: null
+                        preserveColor: true
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        preserveAnimation: false

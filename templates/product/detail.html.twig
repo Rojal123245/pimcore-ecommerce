@@ -14,25 +14,34 @@
         </nav>
 
         <div class="flex flex-col md:flex-row gap-8">
-            {# Product Images Gallery #}
+            {# Product Images #}
             <div class="md:w-1/2">
                 <div class="relative">
-                    {% if product.images is not empty %}
-                        <div class="main-image mb-4">
-                            <img src="{{ product.images[0].getThumbnail('product_detail') }}" 
+                    <div class="main-image mb-4">
+                        {% if product.images is not empty %}
+                            {% set firstImage = product.images.getItems()[0] %}
+                            <img src="{{ firstImage.getThumbnail('product-detail') }}" 
                                  alt="{{ product.name }}" 
                                  class="w-full rounded-lg shadow-lg">
-                        </div>
-                        {% if product.images|length > 1 %}
-                            <div class="grid grid-cols-4 gap-4">
-                                {% for image in product.images %}
-                                    <img src="{{ image.getThumbnail('product_thumbnail') }}" 
-                                         alt="{{ product.name }}" 
-                                         class="w-full rounded-lg cursor-pointer hover:opacity-75 transition-opacity"
-                                         onclick="updateMainImage(this.src)">
-                                {% endfor %}
+                        {% else %}
+                            <div class="w-full aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
                             </div>
                         {% endif %}
+                    </div>
+                    {% if product.images is not empty %}
+                        <div class="grid grid-cols-4 gap-4">
+                            {% for image in product.images.getItems() %}
+                                <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                                    <img src="{{ image.getThumbnail('product-list-thumbnail') }}" 
+                                         alt="{{ product.name }} - Image {{ loop.index }}" 
+                                         class="w-full h-full object-cover cursor-pointer hover:opacity-75"
+                                         onclick="updateMainImage('{{ image.getThumbnail('product-detail') }}')">
+                                </div>
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -40,7 +49,7 @@
             {# Product Info #}
             <div class="md:w-1/2">
                 <h1 class="text-3xl font-bold mb-4">{{ product.name }}</h1>
-                
+
                 {% if product.featured %}
                     <span class="inline-block bg-yellow-400 text-black px-3 py-1 rounded-full text-sm mb-4">
                         Featured Product
@@ -56,19 +65,26 @@
                             </svg>
                         {% endfor %}
                     </div>
-                    <span class="ml-2 text-gray-600">{{ product.rating }} out of 5</span>
+                    <span class="ml-2 text-gray-600">SKU: {{ product.sku }}</span>
                 </div>
 
-                <p class="text-gray-600 mb-6">SKU: {{ product.sku }}</p>
-                
-                <div class="text-3xl font-bold mb-6">${{ product.price|number_format(2) }}</div>
-                
-                <div class="prose max-w-none mb-8">
-                    {{ product.description|raw }}
+                {# Pricing Section #}
+                <div class="mb-6">
+                    <div class="text-3xl font-bold">${{ product.price|number_format(2) }}</div>
                 </div>
-                
+
+                {# Stock Status #}
+                <div class="mb-4">
+                    {% if product.quantity > 0 %}
+                        <span class="text-green-600 font-semibold">In Stock ({{ product.quantity }} available)</span>
+                    {% else %}
+                        <span class="text-red-600 font-semibold">Out of Stock</span>
+                    {% endif %}
+                </div>
+
+                {# Add to Cart Form #}
                 {% if product.quantity > 0 %}
-                    <form id="addToCartForm" class="mb-8">
+                    <form id="addToCartForm" class="my-8">
                         <div class="flex items-center gap-4">
                             <div class="w-24">
                                 <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
@@ -82,85 +98,53 @@
                             </div>
                             <div class="flex-1">
                                 <button type="submit" 
-                                        class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 flex items-center justify-center gap-2">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                    </svg>
+                                        class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700">
                                     Add to Cart
                                 </button>
                             </div>
                         </div>
                     </form>
-                {% else %}
-                    <div class="mb-8">
-                        <span class="inline-block bg-red-100 text-red-800 px-4 py-2 rounded-md">
-                            Out of Stock
-                        </span>
-                    </div>
                 {% endif %}
 
-                {# Product Meta #}
-                <div class="border-t border-gray-200 pt-6">
-                    <div class="mb-4">
-                        <h3 class="text-sm font-medium text-gray-900">Categories</h3>
-                        <div class="mt-2">
-                            <a href="{{ path('product_list', {category: product.category.id}) }}" 
-                               class="text-blue-600 hover:text-blue-800">
-                                {{ product.category.name }}
-                            </a>
-                        </div>
+                {# Product Details #}
+                <div class="prose max-w-none mb-8">
+                    <h2 class="text-2xl font-bold mb-4">Description</h2>
+                    <div class="text-gray-600">
+                        {{ product.description|raw }}
                     </div>
 
-                    {% if product.tags is not empty %}
-                        <div class="mb-4">
-                            <h3 class="text-sm font-medium text-gray-900">Tags</h3>
-                            <div class="mt-2 flex flex-wrap gap-2">
-                                {% for tag in product.tags %}
-                                    <span class="inline-block bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-700">
-                                        {{ tag }}
-                                    </span>
-                                {% endfor %}
-                            </div>
-                        </div>
+                    {# Category Information #}
+                    {% if product.category %}
+                        <h3 class="text-xl font-semibold mt-6 mb-3">Category</h3>
+                        <a href="{{ path('product_list', {category: product.category.id}) }}" 
+                           class="text-blue-600 hover:text-blue-800">
+                            {{ product.category.name }}
+                        </a>
                     {% endif %}
+                </div>
+
+                {# Service Info #}
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="text-center p-4 bg-white rounded-lg border">
+                        <p class="font-semibold">Free Delivery</p>
+                        <p class="text-gray-600">2-4 business days</p>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-lg border">
+                        <p class="font-semibold">Returns</p>
+                        <p class="text-gray-600">30-Day Returns</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         {# Related Products #}
-        {% if relatedProducts is not empty %}
-            <div class="mt-16">
-                <h2 class="text-2xl font-bold mb-8">Related Products</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {% for relatedProduct in relatedProducts %}
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                            <a href="{{ path('product_detail', {id: relatedProduct.id}) }}">
-                                {% if relatedProduct.images is not empty %}
-                                    <img src="{{ relatedProduct.images[0].getThumbnail('product_thumbnail') }}"
-                                         alt="{{ relatedProduct.name }}"
-                                         class="w-full h-48 object-cover">
-                                {% endif %}
-                                <div class="p-4">
-                                    <h3 class="text-lg font-semibold mb-2">{{ relatedProduct.name }}</h3>
-                                    <p class="text-gray-600">${{ relatedProduct.price|number_format(2) }}</p>
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
+        
     </div>
 
     <script>
-        function updateMainImage(src) {
-            document.querySelector('.main-image img').src = src;
-        }
-
         document.getElementById('addToCartForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Add your cart functionality here
+            // Add cart functionality
             alert('Product added to cart!');
         });
     </script>

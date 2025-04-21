@@ -10,7 +10,7 @@
  * - price [numeric]
  * - sku [input]
  * - category [manyToOneRelation]
- * - images [image]
+ * - images [imageGallery]
  * - quantity [numeric]
  * - featured [numeric]
  * - rating [numeric]
@@ -23,7 +23,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1744906775,
+   'modificationDate' => 1745249134,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -224,7 +224,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'width' => '',
           )),
           5 => 
-          \Pimcore\Model\DataObject\ClassDefinition\Data\Image::__set_state(array(
+          \Pimcore\Model\DataObject\ClassDefinition\Data\ImageGallery::__set_state(array(
              'name' => 'images',
              'title' => 'Images',
              'tooltip' => '',
@@ -243,8 +243,11 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
             array (
             ),
              'uploadPath' => '',
-             'width' => '',
+             'ratioX' => NULL,
+             'ratioY' => NULL,
+             'predefinedDataTemplates' => '',
              'height' => '',
+             'width' => '',
           )),
           6 => 
           \Pimcore\Model\DataObject\ClassDefinition\Data\Numeric::__set_state(array(
